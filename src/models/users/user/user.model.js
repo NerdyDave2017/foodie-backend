@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema(
       state: { type: String },
       zipCode: { type: String },
     },
+    dateCreated: { type: Date, default: Date.now },
   },
   {
     timestamps: true,

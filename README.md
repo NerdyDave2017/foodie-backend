@@ -15,7 +15,7 @@ Use Swagger to detect endpoints for documentation
 
 Write script to automate deployment
 
-Database - MongoDB
+Database - MongoDB (use populate function to add to data query)
 Server - Render / Heroku
 
 UberEats Clone Working Process:
