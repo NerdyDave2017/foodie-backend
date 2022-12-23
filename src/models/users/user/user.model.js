@@ -18,7 +18,18 @@ const UserSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+const Users = mongoose.model("User", UserSchema);
 
-const User = mongoose.model("User", UserSchema);
+class UserModel {
+  Users = Users;
 
-module.exports = User;
+  create() {}
+
+  signIn() {}
+
+  findBy() {}
+
+  getAll() {}
+}
+
+module.exports = UserModel;

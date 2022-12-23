@@ -24,4 +24,16 @@ const DriverSchema = new mongoose.Schema(
 
 const Drivers = mongoose.model("Drivers", DriverSchema);
 
-module.exports = Drivers;
+class DriverModel {
+  Drivers = Drivers;
+
+  create() {}
+
+  signIn() {}
+
+  findBy() {}
+
+  getAll() {}
+}
+
+module.exports = DriverModel;
