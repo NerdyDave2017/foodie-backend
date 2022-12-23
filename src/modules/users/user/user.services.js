@@ -44,6 +44,28 @@ class UserService {
       return { updatedUser };
     } catch (error) {}
   }
+
+  async updatePassword(userData) {
+    try {
+      const { user } = await UserModel.findBy(userData.email);
+
+      if (!user) {
+        throw new Error(`User does not exist`);
+      }
+
+      const { password, newPassword } = userData;
+
+      const validPassword = await UserModel.matchPassword(password);
+
+      if (!validPassword) {
+        throw new Error(`Invalid credentials`);
+      }
+
+      const { updatedUser } = await UserModel.update({ password: newPassword });
+
+      return { updatedUser };
+    } catch (error) {}
+  }
 }
 
 module.exports = UserService;

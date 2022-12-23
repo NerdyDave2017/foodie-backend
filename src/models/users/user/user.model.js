@@ -65,6 +65,7 @@ class UserModel {
           new: true,
         }
       );
+      return { updatedUser };
     } catch (error) {}
   }
 
