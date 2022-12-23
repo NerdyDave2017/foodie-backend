@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+
 const UserSchema = new mongoose.Schema(
   {
     _id: ObjectId(),
@@ -18,18 +20,53 @@ const UserSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+UserSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
 const Users = mongoose.model("User", UserSchema);
 
 class UserModel {
   Users = Users;
 
-  create() {}
+  async create(userData) {
+    const { fullname, email, password, role, customerAddress } = userData;
 
-  signIn() {}
+    try {
+      const newUser = new Users({
+        fullname,
+        email,
+        password,
+        role,
+        customerAddress,
+      });
+      await newUser.save();
+      return { user: newUser };
+    } catch (error) {}
+  }
 
-  findBy() {}
+  async findBy(userData) {
+    try {
+      const user = await Users.findOne({ userData });
+      return { user };
+    } catch (error) {}
+  }
 
-  getAll() {}
+  async getAll() {
+    try {
+      const users = await Users.find({});
+      return { users };
+    } catch (error) {}
+  }
 }
 
 module.exports = UserModel;

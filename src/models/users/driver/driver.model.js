@@ -27,13 +27,13 @@ const Drivers = mongoose.model("Drivers", DriverSchema);
 class DriverModel {
   Drivers = Drivers;
 
-  create() {}
+  async create() {}
 
-  signIn() {}
+  async signIn() {}
 
-  findBy() {}
+  async findBy() {}
 
-  getAll() {}
+  async getAll() {}
 }
 
 module.exports = DriverModel;

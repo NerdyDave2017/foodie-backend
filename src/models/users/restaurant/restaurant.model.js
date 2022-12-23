@@ -35,13 +35,13 @@ const Restaurants = mongoose.model("Restaurants", RestaurantSchema);
 class RestaurantModel {
   Restaurant = Restaurants;
 
-  create() {}
+  async create() {}
 
-  signIn() {}
+  async signIn() {}
 
-  findBy() {}
+  async findBy() {}
 
-  getAll() {}
+  async getAll() {}
 }
 
 module.exports = RestaurantModel;
