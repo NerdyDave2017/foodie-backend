@@ -54,6 +54,13 @@ class UserModel {
     } catch (error) {}
   }
 
+  async matchPassword(password) {
+    try {
+      const validPassword = await Users.matchPassword(password);
+      return { validPassword };
+    } catch (error) {}
+  }
+
   async findBy(userData) {
     try {
       const user = await Users.findOne({ userData });
