@@ -54,6 +54,20 @@ class UserModel {
     } catch (error) {}
   }
 
+  async update(userData) {
+    try {
+      const updatedUser = await Users.findOneAndUpdate(
+        { email },
+        {
+          ...userData,
+        },
+        {
+          new: true,
+        }
+      );
+    } catch (error) {}
+  }
+
   async matchPassword(password) {
     try {
       const validPassword = await Users.matchPassword(password);

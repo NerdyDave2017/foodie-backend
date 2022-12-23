@@ -18,15 +18,30 @@ class UserService {
   async signIn(userData) {
     try {
       const { user } = await UserModel.findBy(userData.email);
-      const validPassword = await UserModel.matchPassword(
-        userData.matchPassword
-      );
+      const validPassword = await UserModel.matchPassword(userData.password);
 
       if (user && validPassword) {
         return { user };
       } else {
         throw new Error(`Invalid credentials`);
       }
+    } catch (error) {}
+  }
+
+  async updateData(userData) {
+    try {
+      if (userData.password) {
+        throw new Error(`Password cannot be updated`);
+      }
+      const { user } = await UserModel.findBy(userData.email);
+
+      if (!user) {
+        throw new Error(`User does not exist`);
+      }
+
+      const { updatedUser } = await UserModel.update(userData);
+
+      return { updatedUser };
     } catch (error) {}
   }
 }
