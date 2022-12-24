@@ -1,6 +1,8 @@
-const UserModel = require("../../../models/users/user");
-
 class UserService {
+  constructor(UserModel) {
+    this.UserModel = UserModel;
+  }
+
   async signUp(userData) {
     try {
       const { userExist } = await UserModel.findBy(userData.email);

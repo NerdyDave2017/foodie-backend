@@ -36,13 +36,15 @@ UserSchema.methods.matchPassword = async function (enteredPassword) {
 const Users = mongoose.model("User", UserSchema);
 
 class UserModel {
-  Users = Users;
+  constructor() {
+    this.Users = Users;
+  }
 
   async create(userData) {
     const { fullname, email, password, role, customerAddress } = userData;
 
     try {
-      const newUser = new Users({
+      const newUser = new this.Users({
         fullname,
         email,
         password,
@@ -55,8 +57,9 @@ class UserModel {
   }
 
   async update(userData) {
+    const { email } = userData;
     try {
-      const updatedUser = await Users.findOneAndUpdate(
+      const updatedUser = await this.Users.findOneAndUpdate(
         { email },
         {
           ...userData,
@@ -71,21 +74,21 @@ class UserModel {
 
   async matchPassword(password) {
     try {
-      const validPassword = await Users.matchPassword(password);
+      const validPassword = await this.Users.matchPassword(password);
       return { validPassword };
     } catch (error) {}
   }
 
   async findBy(userData) {
     try {
-      const user = await Users.findOne({ userData });
+      const user = await this.Users.findOne({ userData });
       return { user };
     } catch (error) {}
   }
 
   async getAll() {
     try {
-      const users = await Users.find({});
+      const users = await this.Users.find({});
       return { users };
     } catch (error) {}
   }

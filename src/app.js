@@ -28,4 +28,7 @@ app.use(cookieParser());
 // mongoDB connection
 connectDB();
 
+// Load Routers
+app.use("/api/v1", require("./apis/routes/index.routes"));
+
 module.exports = app;
