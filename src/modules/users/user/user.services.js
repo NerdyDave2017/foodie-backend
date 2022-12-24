@@ -13,6 +13,8 @@ class UserService {
 
       const { user } = await UserModel.create(userData);
 
+      // Email verification dependency
+
       return { user };
     } catch (error) {}
   }
@@ -67,6 +69,11 @@ class UserService {
 
       return { updatedUser };
     } catch (error) {}
+  }
+
+  async fetchAllUser() {
+    const { users } = await this.UserModel.getAll();
+    return { users };
   }
 }
 

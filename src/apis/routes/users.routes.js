@@ -7,6 +7,7 @@ const userRoutes = (app) => {
   app.post("/signin", userController.signIn);
   app.put("/", userController.updateData);
   app.put("/password", userController.updatePassword);
+  app.get("/", userController.fetcAllUsers);
 };
 
 module.exports = userRoutes;

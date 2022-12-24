@@ -64,6 +64,7 @@ class UserModel {
         {
           ...userData,
         },
+        { password: 0 }, //Don't return password
         {
           new: true,
         }
@@ -81,14 +82,14 @@ class UserModel {
 
   async findBy(userData) {
     try {
-      const user = await this.Users.findOne({ userData });
+      const user = await this.Users.findOne({ userData }, { password: 0 }); //Don't return password
       return { user };
     } catch (error) {}
   }
 
   async getAll() {
     try {
-      const users = await this.Users.find({});
+      const users = await this.Users.find({}, { password: 0 }); //Don't return password
       return { users };
     } catch (error) {}
   }
