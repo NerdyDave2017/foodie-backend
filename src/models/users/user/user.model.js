@@ -60,7 +60,7 @@ class UserModel {
     const { email } = userData;
     try {
       const updatedUser = await this.Users.findOneAndUpdate(
-        { email },
+        { email: email },
         {
           ...userData,
         },
@@ -80,9 +80,9 @@ class UserModel {
     } catch (error) {}
   }
 
-  async findBy(userData) {
+  async findBy(data) {
     try {
-      const user = await this.Users.findOne({ userData }, { password: 0 }); //Don't return password
+      const user = await this.Users.findOne({ data }, { password: 0 }); //Don't return password
       return { user };
     } catch (error) {}
   }

@@ -30,18 +30,78 @@ const RestaurantSchema = new mongoose.Schema(
   }
 );
 
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+UserSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
 const Restaurants = mongoose.model("Restaurants", RestaurantSchema);
 
 class RestaurantModel {
-  Restaurant = Restaurants;
+  constructor() {
+    this.Users = Users;
+  }
 
-  async create() {}
+  async create(userData) {
+    const { fullname, email, password, role, customerAddress } = userData;
 
-  async signIn() {}
+    try {
+      const newUser = new this.Users({
+        fullname,
+        email,
+        password,
+        role,
+        customerAddress,
+      });
+      await newUser.save();
+      return { user: newUser };
+    } catch (error) {}
+  }
 
-  async findBy() {}
+  async update(userData) {
+    const { email } = userData;
+    try {
+      const updatedUser = await this.Users.findOneAndUpdate(
+        { email },
+        {
+          ...userData,
+        },
+        { password: 0 }, //Don't return password
+        {
+          new: true,
+        }
+      );
+      return { updatedUser };
+    } catch (error) {}
+  }
 
-  async getAll() {}
+  async matchPassword(password) {
+    try {
+      const validPassword = await this.Users.matchPassword(password);
+      return { validPassword };
+    } catch (error) {}
+  }
+
+  async findBy(userData) {
+    try {
+      const user = await this.Users.findOne({ userData }, { password: 0 }); //Don't return password
+      return { user };
+    } catch (error) {}
+  }
+
+  async getAll() {
+    try {
+      const users = await this.Users.find({}, { password: 0 }); //Don't return password
+      return { users };
+    } catch (error) {}
+  }
 }
 
 module.exports = RestaurantModel;
