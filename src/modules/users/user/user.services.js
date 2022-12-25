@@ -34,16 +34,18 @@ class UserService {
 
   async updateData(userData) {
     try {
-      if (userData.password) {
+      const { email, password, ...rest } = userData;
+      if (password) {
         throw new Error(`Password cannot be updated`);
       }
-      const { user } = await UserModel.findBy(userData.email);
+
+      const { user } = await UserModel.findBy(email);
 
       if (!user) {
         throw new Error(`User does not exist`);
       }
 
-      const { updatedUser } = await UserModel.update(userData);
+      const { updatedUser } = await UserModel.update(email, { ...rest });
 
       return { updatedUser };
     } catch (error) {}
@@ -65,7 +67,9 @@ class UserService {
         throw new Error(`Invalid credentials`);
       }
 
-      const { updatedUser } = await UserModel.update({ password: newPassword });
+      const { updatedUser } = await UserModel.update(email, {
+        password: newPassword,
+      });
 
       return { updatedUser };
     } catch (error) {}

@@ -56,8 +56,7 @@ class UserModel {
     } catch (error) {}
   }
 
-  async update(userData) {
-    const { email } = userData;
+  async update(email, userData) {
     try {
       const updatedUser = await this.Users.findOneAndUpdate(
         { email: email },
