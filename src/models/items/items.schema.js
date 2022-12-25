@@ -2,7 +2,9 @@ const mongoose = require("monngoose");
 
 const ItemSchema = new mongoose.Schema(
   {
-    _id: ObjectId(),
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
     name: { type: String },
     price: { type: Number },
     restaurant: {

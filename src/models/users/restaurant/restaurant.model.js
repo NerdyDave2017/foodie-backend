@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const RestaurantSchema = new mongoose.Schema(
   {
-    _id: ObjectId(),
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     restaurantName: { type: String, required: true },
@@ -30,7 +32,7 @@ const RestaurantSchema = new mongoose.Schema(
   }
 );
 
-UserSchema.pre("save", async function (next) {
+RestaurantSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
@@ -38,7 +40,7 @@ UserSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-UserSchema.methods.matchPassword = async function (enteredPassword) {
+RestaurantSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 

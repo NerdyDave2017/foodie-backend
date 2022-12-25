@@ -1,17 +1,25 @@
 const testSchema = {
   users: {
-    _id: ObjectId(),
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
     name: String,
     email: String,
     password: String,
     role: String, // one of "driver", "user", "merchant", "admin"
   },
   orders: {
-    _id: ObjectId(),
-    user_id: ObjectId(), // references the _id field in the users collection
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+    }, // references the _id field in the users collection
     items: [
       {
-        item_id: ObjectId(), // references the _id field in the items collection
+        item_id: {
+          type: mongoose.Schema.Types.ObjectId,
+        }, // references the _id field in the items collection
         quantity: Number,
         price: Number,
       },
@@ -20,10 +28,14 @@ const testSchema = {
     status: String, // one of "pending", "in_progress", "delivered"
   },
   items: {
-    _id: ObjectId(),
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
     name: String,
     price: Number,
-    merchant_id: ObjectId(), // references the _id field in the users collection for the merchant who added this item
+    merchant_id: {
+      type: mongoose.Schema.Types.ObjectId,
+    }, // references the _id field in the users collection for the merchant who added this item
   },
 };
 

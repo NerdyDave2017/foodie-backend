@@ -1,5 +1,5 @@
 const UserModel = require("../../../models/users/user/user.model");
-const UserService = require("./user.controller");
+const UserService = require("./user.services");
 
 class UserController {
   constructor() {
@@ -42,7 +42,7 @@ class UserController {
     }
   }
 
-  async fetcAllUsers(req, res) {
+  async fetchAllUsers(req, res) {
     try {
       const { users } = await this.userService.fetchAllUser();
       return res.status(200).json({ users });

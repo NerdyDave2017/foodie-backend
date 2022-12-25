@@ -1,5 +1,5 @@
 const RestaurantModel = require("../../../models/users/restaurant/restaurant.model");
-const RestaurantService = require("./restaurant.controller");
+const RestaurantService = require("./restaurant.services");
 
 class UserController {
   constructor() {
@@ -46,7 +46,7 @@ class UserController {
     }
   }
 
-  async fetcAllUsers(req, res) {
+  async fetchAllUsers(req, res) {
     try {
       const { restaurants } = await this.restaurantService.fetchAllUser();
       return res.status(200).json({ restaurants });
