@@ -50,7 +50,7 @@ class UserModel {
     }
   };
 
-  async update(email, userData) {
+  update = async (email, userData) => {
     try {
       const updatedUser = await this.Users.findOneAndUpdate(
         { email: email },
@@ -64,14 +64,14 @@ class UserModel {
       );
       return { updatedUser };
     } catch (error) {}
-  }
+  };
 
-  async matchPassword(password) {
+  matchPassword = async (password) => {
     try {
       const validPassword = await this.Users.matchPassword(password);
       return { validPassword };
     } catch (error) {}
-  }
+  };
 
   async findBy(data, field) {
     try {
@@ -80,12 +80,13 @@ class UserModel {
     } catch (error) {}
   }
 
-  async getAll() {
+  getAll = async () => {
     try {
+      console.log("fetching all users");
       const users = await this.Users.find({}, { password: 0 }); //Don't return password
       return { users };
     } catch (error) {}
-  }
+  };
 }
 
 module.exports = UserModel;

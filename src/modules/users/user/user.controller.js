@@ -46,14 +46,15 @@ class UserController {
     }
   }
 
-  async fetchAllUsers(req, res) {
+  fetchAllUsers = async (req, res) => {
     try {
+      console.log("controller fetch");
       const { users } = await this.userService.fetchAllUser();
       return res.status(200).json({ users });
     } catch (error) {
       return res.status(400).json({ error });
     }
-  }
+  };
 }
 
 module.exports = UserController;

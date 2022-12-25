@@ -85,10 +85,12 @@ class UserService {
     } catch (error) {}
   }
 
-  async fetchAllUser() {
+  fetchAllUser = async () => {
+    console.log("service fetch");
+    console.log(this.userModel);
     const { users } = await this.UserModel.getAll();
     return { users };
-  }
+  };
 }
 
 module.exports = UserService;
