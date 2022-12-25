@@ -1,4 +1,4 @@
-const UserModel = require("../../../models/users/user");
+const UserModel = require("../../../models/users/user/user.model");
 const UserService = require("./user.controller");
 
 class UserController {
