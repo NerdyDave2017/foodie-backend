@@ -46,30 +46,23 @@ const Restaurants = mongoose.model("Restaurants", RestaurantSchema);
 
 class RestaurantModel {
   constructor() {
-    this.Users = Users;
+    this.Restaurants = Restaurants;
   }
 
   async create(userData) {
-    const { fullname, email, password, role, customerAddress } = userData;
-
     try {
-      const newUser = new this.Users({
-        fullname,
-        email,
-        password,
-        role,
-        customerAddress,
+      const newUser = new this.Restaurants({
+        ...userData,
       });
       await newUser.save();
       return { user: newUser };
     } catch (error) {}
   }
 
-  async update(userData) {
-    const { email } = userData;
+  async update(email, userData) {
     try {
-      const updatedUser = await this.Users.findOneAndUpdate(
-        { email },
+      const updatedUser = await this.Restaurants.findOneAndUpdate(
+        { email: email },
         {
           ...userData,
         },
@@ -84,21 +77,24 @@ class RestaurantModel {
 
   async matchPassword(password) {
     try {
-      const validPassword = await this.Users.matchPassword(password);
+      const validPassword = await this.Restaurants.matchPassword(password);
       return { validPassword };
     } catch (error) {}
   }
 
-  async findBy(userData) {
+  async findBy(data, field) {
     try {
-      const user = await this.Users.findOne({ userData }, { password: 0 }); //Don't return password
+      const user = await this.Restaurants.find(
+        { field: data },
+        { password: 0 }
+      ); //Don't return password
       return { user };
     } catch (error) {}
   }
 
   async getAll() {
     try {
-      const users = await this.Users.find({}, { password: 0 }); //Don't return password
+      const users = await this.Restaurants.find({}, { password: 0 }); //Don't return password
       return { users };
     } catch (error) {}
   }

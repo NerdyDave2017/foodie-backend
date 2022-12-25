@@ -5,7 +5,8 @@ class UserService {
 
   async signUp(userData) {
     try {
-      const { userExist } = await UserModel.findBy(userData.email);
+      const { email } = userData;
+      const { userExist } = await UserModel.findBy(email, "email");
 
       if (userExist) {
         throw new Error(`User Already Exists`);
@@ -20,9 +21,10 @@ class UserService {
   }
 
   async signIn(userData) {
+    const { email, password } = userData;
     try {
-      const { user } = await UserModel.findBy(userData.email);
-      const validPassword = await UserModel.matchPassword(userData.password);
+      const { user } = await UserModel.findBy(email, "email");
+      const validPassword = await UserModel.matchPassword(password);
 
       if (user && validPassword) {
         return { user };
@@ -39,7 +41,7 @@ class UserService {
         throw new Error(`Password cannot be updated`);
       }
 
-      const { user } = await UserModel.findBy(email);
+      const { user } = await UserModel.findBy(email, "email");
 
       if (!user) {
         throw new Error(`User does not exist`);
@@ -52,14 +54,13 @@ class UserService {
   }
 
   async updatePassword(userData) {
+    const { email, password, newPassword } = userData;
     try {
-      const { user } = await UserModel.findBy(userData.email);
+      const { user } = await UserModel.findBy(email, "email");
 
       if (!user) {
         throw new Error(`User does not exist`);
       }
-
-      const { password, newPassword } = userData;
 
       const validPassword = await UserModel.matchPassword(password);
 

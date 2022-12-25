@@ -41,15 +41,9 @@ class UserModel {
   }
 
   async create(userData) {
-    const { fullname, email, password, role, customerAddress } = userData;
-
     try {
       const newUser = new this.Users({
-        fullname,
-        email,
-        password,
-        role,
-        customerAddress,
+        ...userData,
       });
       await newUser.save();
       return { user: newUser };
@@ -79,9 +73,9 @@ class UserModel {
     } catch (error) {}
   }
 
-  async findBy(data) {
+  async findBy(data, field) {
     try {
-      const user = await this.Users.findOne({ data }, { password: 0 }); //Don't return password
+      const user = await this.Users.find({ field: data }, { password: 0 }); //Don't return password
       return { user };
     } catch (error) {}
   }

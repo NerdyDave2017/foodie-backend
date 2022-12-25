@@ -18,6 +18,8 @@ Write script to automate deployment
 Database - MongoDB (use populate function to add to data query)
 Server - Render / Heroku
 
+Use agendajs for scheduling 
+
 UberEats Clone Working Process:
 The customer places a new order
 The restaurant accepts/rejects the new order
