@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const DriverSchema = new mongoose.Schema(
   {
-    _id: {
-      type: mongoose.Schema.Types.ObjectId,
-    },
     fullname: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
@@ -17,7 +14,6 @@ const DriverSchema = new mongoose.Schema(
     },
     isActive: { type: Boolean },
     location: { type: String },
-    dateCreated: { type: Date, default: Date.now },
   },
   {
     timestamps: true,

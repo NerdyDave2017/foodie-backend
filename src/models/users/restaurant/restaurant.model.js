@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const RestaurantSchema = new mongoose.Schema(
   {
-    _id: {
-      type: mongoose.Schema.Types.ObjectId,
-    },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     restaurantName: { type: String, required: true },
@@ -25,7 +22,6 @@ const RestaurantSchema = new mongoose.Schema(
       state: { type: String },
       zipCode: { type: String },
     },
-    dateCreated: { type: Date, default: Date.now },
   },
   {
     timestamps: true,

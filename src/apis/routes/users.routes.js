@@ -1,13 +1,12 @@
+const Router = require("express").Router();
 const UserController = require("../../modules/users/user/user.controller");
-
+const UserService = require("../../modules/users/user/user.services");
 const userController = new UserController();
 
-const userRoutes = (app) => {
-  app.post("/create", userController.create);
-  app.post("/signin", userController.signIn);
-  app.put("/update", userController.updateData);
-  app.put("/password", userController.updatePassword);
-  app.get("/", userController.fetcAllUsers);
-};
+Router.post("/create", userController.create);
+Router.post("/signin", userController.signIn);
+Router.put("/update", userController.updateData);
+Router.put("/password", userController.updatePassword);
+Router.get("/", userController.fetchAllUsers);
 
-module.exports = userRoutes;
+module.exports = Router;

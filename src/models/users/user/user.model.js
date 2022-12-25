@@ -3,10 +3,7 @@ const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema(
   {
-    _id: {
-      type: mongoose.Schema.Types.ObjectId,
-    },
-    fullname: { type: String, required: true },
+    fullname: { type: String },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     role: { type: String, require: true, default: "user" }, // one of "driver", "user", "merchant", "admin"
@@ -16,7 +13,6 @@ const UserSchema = new mongoose.Schema(
       state: { type: String },
       zipCode: { type: String },
     },
-    dateCreated: { type: Date, default: Date.now },
   },
   {
     timestamps: true,
@@ -42,15 +38,17 @@ class UserModel {
     this.Users = Users;
   }
 
-  async create(userData) {
+  create = async (userData) => {
     try {
-      const newUser = new this.Users({
+      const newUser = await this.Users.create({
         ...userData,
       });
-      await newUser.save();
+
       return { user: newUser };
-    } catch (error) {}
-  }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   async update(email, userData) {
     try {

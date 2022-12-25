@@ -6,14 +6,18 @@ class UserController {
     this.userService = new UserService(UserModel);
   }
 
-  async create(req, res) {
+  create = async (req, res) => {
+    console.log(this);
+    console.log(this.userService);
+    console.log(req.body);
     try {
-      const { user } = await this.userService.create(req.body);
+      const { user } = await this.userService.signUp(req.body);
       return res.status(201).json({ user });
     } catch (error) {
+      console.log(error);
       return res.status(400).json({ error });
     }
-  }
+  };
 
   async signIn(req, res) {
     try {

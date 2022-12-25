@@ -1,10 +1,7 @@
 const mongoose = require("monngoose");
 
-const orderSchema = new mongoose.Schema(
+const OrderSchema = new mongoose.Schema(
   {
-    _id: {
-      type: mongoose.Schema.Types.ObjectId,
-    },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -28,7 +25,6 @@ const orderSchema = new mongoose.Schema(
     status: { type: String, required: true }, // one of "pending", "in_progress", "delivered"
     deliveryStartTime: { type: Date },
     deliveryEndTime: { type: Date },
-    dateCreated: { type: Date, default: Date.now },
   },
   {
     timestamps: true,

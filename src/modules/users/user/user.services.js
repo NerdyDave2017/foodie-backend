@@ -1,30 +1,39 @@
+const UserModel = require("../../../models/users/user/user.model");
+
 class UserService {
-  constructor(UserModel) {
-    this.UserModel = UserModel;
+  constructor() {
+    this.userModel = new UserModel();
   }
 
-  async signUp(userData) {
+  signUp = async (userData) => {
+    console.log("user services signUp");
+    console.log(this.userModel);
+
     try {
       const { email } = userData;
-      const { userExist } = await UserModel.findBy(email, "email");
+      console.log(email);
+
+      const { userExist } = await this.userModel.findBy(email, "email");
+
+      console.log(userExist);
 
       if (userExist) {
         throw new Error(`User Already Exists`);
       }
 
-      const { user } = await UserModel.create(userData);
+      const { user } = await this.userModel.create(userData);
 
       // Email verification dependency
 
       return { user };
     } catch (error) {}
-  }
+  };
 
   async signIn(userData) {
     const { email, password } = userData;
     try {
-      const { user } = await UserModel.findBy(email, "email");
-      const validPassword = await UserModel.matchPassword(password);
+      const { user } = await this.userModel.findBy(email, "email");
+      const validPassword = await this.userModel.matchPassword(password);
 
       if (user && validPassword) {
         return { user };
@@ -41,13 +50,13 @@ class UserService {
         throw new Error(`Password cannot be updated`);
       }
 
-      const { user } = await UserModel.findBy(email, "email");
+      const { user } = await this.userModel.findBy(email, "email");
 
       if (!user) {
         throw new Error(`User does not exist`);
       }
 
-      const { updatedUser } = await UserModel.update(email, { ...rest });
+      const { updatedUser } = await this.userModel.update(email, { ...rest });
 
       return { updatedUser };
     } catch (error) {}
@@ -56,13 +65,13 @@ class UserService {
   async updatePassword(userData) {
     const { email, password, newPassword } = userData;
     try {
-      const { user } = await UserModel.findBy(email, "email");
+      const { user } = await this.userModel.findBy(email, "email");
 
       if (!user) {
         throw new Error(`User does not exist`);
       }
 
-      const validPassword = await UserModel.matchPassword(password);
+      const validPassword = await this.userModel.matchPassword(password);
 
       if (!validPassword) {
         throw new Error(`Invalid credentials`);
