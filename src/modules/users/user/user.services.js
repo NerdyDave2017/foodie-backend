@@ -29,7 +29,7 @@ class UserService {
     } catch (error) {}
   };
 
-  async signIn(userData) {
+  signIn = async (userData) => {
     const { email, password } = userData;
     try {
       const { user } = await this.userModel.findBy(email, "email");
@@ -41,9 +41,9 @@ class UserService {
         throw new Error(`Invalid credentials`);
       }
     } catch (error) {}
-  }
+  };
 
-  async updateData(userData) {
+  updateData = async (userData) => {
     try {
       const { email, password, ...rest } = userData;
       if (password) {
@@ -60,9 +60,9 @@ class UserService {
 
       return { updatedUser };
     } catch (error) {}
-  }
+  };
 
-  async updatePassword(userData) {
+  updatePassword = async (userData) => {
     const { email, password, newPassword } = userData;
     try {
       const { user } = await this.userModel.findBy(email, "email");
@@ -77,18 +77,16 @@ class UserService {
         throw new Error(`Invalid credentials`);
       }
 
-      const { updatedUser } = await UserModel.update(email, {
+      const { updatedUser } = await this.userModel.update(email, {
         password: newPassword,
       });
 
       return { updatedUser };
     } catch (error) {}
-  }
+  };
 
   fetchAllUser = async () => {
-    console.log("service fetch");
-    console.log(this.userModel);
-    const { users } = await this.UserModel.getAll();
+    const { users } = await this.userModel.getAll();
     return { users };
   };
 }

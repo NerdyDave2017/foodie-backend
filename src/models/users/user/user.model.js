@@ -3,15 +3,33 @@ const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema(
   {
-    fullname: { type: String },
+    firstname: { type: String },
+    lastname: { type: String },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     role: { type: String, require: true, default: "user" }, // one of "driver", "user", "merchant", "admin"
+    favourites: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Item",
+        // references the _id field in the items collection
+      },
+    ],
     customerAddress: {
       street: { type: String },
       city: { type: String },
       state: { type: String },
       zipCode: { type: String },
+    },
+    restaurants: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Restaurant",
+        // references the _id field in the restaurant collection
+      },
+    ],
+    driver: {
+      driverPhone: { type: String },
     },
   },
   {
@@ -82,7 +100,6 @@ class UserModel {
 
   getAll = async () => {
     try {
-      console.log("fetching all users");
       const users = await this.Users.find({}, { password: 0 }); //Don't return password
       return { users };
     } catch (error) {}

@@ -19,32 +19,32 @@ class UserController {
     }
   };
 
-  async signIn(req, res) {
+  signIn = async (req, res) => {
     try {
       const { user } = await this.userService.signIn(req.body);
       return res.status(200).json({ user });
     } catch (error) {
       return res.status(400).json({ error });
     }
-  }
+  };
 
-  async updateData(req, res) {
+  updateData = async (req, res) => {
     try {
       const { updatedUser } = await this.userService.updateData(req.body);
       return res.status(200).json({ updatedUser });
     } catch (error) {
       return res.status(400).json({ error });
     }
-  }
+  };
 
-  async updatePassword(req, res) {
+  updatePassword = async (req, res) => {
     try {
       const { updatedUser } = await this.userService.updatePassword(req.body);
       return res.status(200).json({ updatedUser });
     } catch (error) {
       return res.status(400).json({ error });
     }
-  }
+  };
 
   fetchAllUsers = async (req, res) => {
     try {

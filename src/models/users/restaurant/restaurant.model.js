@@ -1,13 +1,9 @@
 const mongoose = require("mongoose");
 const RestaurantSchema = new mongoose.Schema(
   {
-    email: { type: String, required: true, unique: true, lowercase: true },
-    password: { type: String, required: true },
-    restaurantName: { type: String, required: true },
-    restaurantPhone: {
-      type: String,
-      required: true,
-    },
+    restaurantName: { type: String },
+    restaurantPhone: { type: String },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // references the _id field in the user collection
     items: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -15,7 +11,6 @@ const RestaurantSchema = new mongoose.Schema(
         // references the _id field in the items collection
       },
     ],
-    role: { type: String, require: true, default: "restaurant" }, // one of "driver", "user", "restaurant", "admin"
     restaurantAddress: {
       street: { type: String },
       city: { type: String },
@@ -47,7 +42,7 @@ class RestaurantModel {
     this.Restaurants = Restaurants;
   }
 
-  async create(userData) {
+  create = async (userData) => {
     try {
       const newUser = new this.Restaurants({
         ...userData,
@@ -55,9 +50,9 @@ class RestaurantModel {
       await newUser.save();
       return { user: newUser };
     } catch (error) {}
-  }
+  };
 
-  async update(email, userData) {
+  update = async (email, userData) => {
     try {
       const updatedUser = await this.Restaurants.findOneAndUpdate(
         { email: email },
@@ -71,31 +66,31 @@ class RestaurantModel {
       );
       return { updatedUser };
     } catch (error) {}
-  }
+  };
 
-  async matchPassword(password) {
+  matchPassword = async (password) => {
     try {
       const validPassword = await this.Restaurants.matchPassword(password);
       return { validPassword };
     } catch (error) {}
-  }
+  };
 
-  async findBy(data, field) {
+  findByEmail = async (email) => {
     try {
       const user = await this.Restaurants.find(
-        { field: data },
+        { email: email },
         { password: 0 }
       ); //Don't return password
       return { user };
     } catch (error) {}
-  }
+  };
 
-  async getAll() {
+  getAll = async () => {
     try {
       const users = await this.Restaurants.find({}, { password: 0 }); //Don't return password
       return { users };
     } catch (error) {}
-  }
+  };
 }
 
 module.exports = RestaurantModel;

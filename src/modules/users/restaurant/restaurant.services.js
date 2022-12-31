@@ -6,7 +6,7 @@ class RestaurantService {
   async signUp(restaurantData) {
     try {
       const { email } = restaurantData;
-      const { restaurantExist } = await RestaurantModel.findBy(email, "email");
+      const { restaurantExist } = await RestaurantModel.findByEmail(email);
 
       if (restaurantExist) {
         throw new Error(`Restaurant Already Exists`);
@@ -23,7 +23,7 @@ class RestaurantService {
   async signIn(restaurantData) {
     try {
       const { email, password } = restaurantData;
-      const { restaurant } = await RestaurantModel.findBy(email, "email");
+      const { restaurant } = await RestaurantModel.findByEmail(email);
       const validPassword = await RestaurantModel.matchPassword(password);
 
       if (restaurant && validPassword) {
@@ -41,7 +41,7 @@ class RestaurantService {
         throw new Error(`Password cannot be updated`);
       }
 
-      const { restaurant } = await RestaurantModel.findBy(email, "email");
+      const { restaurant } = await RestaurantModel.findByEmail(email);
 
       if (!restaurant) {
         throw new Error(`Restaurant does not exist`);
@@ -58,7 +58,7 @@ class RestaurantService {
   async updatePassword(restaurantData) {
     const { email, password, newPassword } = restaurantData;
     try {
-      const { restaurant } = await RestaurantModel.findBy(email, "email");
+      const { restaurant } = await RestaurantModel.findByEmail(email);
 
       if (!restaurant) {
         throw new Error(`Restaurant does not exist`);
