@@ -5,6 +5,7 @@ const DriverSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     driverPhone: { type: String, required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // references the _id field in the user collection
     role: { type: String, require: true, default: "driver" }, // one of "driver", "user", "merchant", "admin"
     driverAddress: {
       street: { type: String },

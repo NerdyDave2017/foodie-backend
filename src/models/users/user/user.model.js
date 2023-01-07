@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema(
     lastname: { type: String },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
-    role: { type: String, require: true, default: "user" }, // one of "driver", "user", "merchant", "admin"
+    role: [{ type: String, require: true, default: "user" }], // one or more of "driver", "user", "merchant", "admin"
     favourites: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema(
       },
     ],
     driver: {
-      driverPhone: { type: String },
+      type: mongoose.Schema.Types.ObjectId,
     },
   },
   {
