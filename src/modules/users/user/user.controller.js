@@ -1,18 +1,24 @@
 const UserModel = require("../../../models/users/user/user.model");
 const UserService = require("./user.services");
+const UserNotFound = require("../../../exceptions/UserNotFound");
 
 class UserController {
   constructor() {
-    this.userService = new UserService(UserModel);
+    this.userService = new UserService();
   }
 
-  create = async (req, res) => {
-    console.log(this);
-    console.log(this.userService);
-    console.log(req.body);
+  register = async (req, res) => {
+    const { email } = req.body;
     try {
-      const { user } = await this.userService.signUp(req.body);
-      return res.status(201).json({ user });
+      const user = this.userService.findUserByEmail(email);
+
+      if (!user) {
+        throw new UserNotFound();
+      }
+
+      return res
+        .status(201)
+        .json({ status: "success", messsage: "User Created", user });
     } catch (error) {
       console.log(error);
       return res.status(400).json({ error });
@@ -20,9 +26,15 @@ class UserController {
   };
 
   signIn = async (req, res) => {
+    const { email } = req.body;
     try {
-      const { user } = await this.userService.signIn(req.body);
-      return res.status(200).json({ user });
+      const { user } = await this.userService.findUserByEmail(email);
+      if (!user) {
+        throw new UserNotFound();
+      }
+      return res
+        .status(200)
+        .json({ status: "success", message: "User signin", user });
     } catch (error) {
       return res.status(400).json({ error });
     }

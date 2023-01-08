@@ -1,93 +1,66 @@
 const UserModel = require("../../../models/users/user/user.model");
+const Users = require("../../../models/users/user");
 
 class UserService {
+  users;
   constructor() {
-    this.userModel = new UserModel();
+    this.users = Users;
   }
 
-  signUp = async (userData) => {
-    console.log("user services signUp");
-    console.log(this.userModel);
-
+  create = async (userData) => {
     try {
-      const { email } = userData;
-      console.log(email);
+      const newUser = await this.Users.create({
+        ...userData,
+      });
+      return { user: newUser };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      const { userExist } = await this.userModel.findBy(email, "email");
+  findUserById = async (id) => {
+    try {
+      const user = await this.user.findById(id, { password: 0 });
 
-      console.log(userExist);
-
-      if (userExist) {
-        throw new Error(`User Already Exists`);
-      }
-
-      const { user } = await this.userModel.create(userData);
-
-      // Email verification dependency
-
-      return { user };
+      return user;
     } catch (error) {}
   };
 
-  signIn = async (userData) => {
-    const { email, password } = userData;
+  findUserByEmail = async (email) => {
     try {
-      const { user } = await this.userModel.findBy(email, "email");
-      const validPassword = await this.userModel.matchPassword(password);
+      const user = await this.users.findOne({ email: email }, { password: 0 });
 
-      if (user && validPassword) {
-        return { user };
-      } else {
-        throw new Error(`Invalid credentials`);
-      }
+      return user;
     } catch (error) {}
   };
 
   updateData = async (userData) => {
     try {
-      const { email, password, ...rest } = userData;
-      if (password) {
-        throw new Error(`Password cannot be updated`);
-      }
-
-      const { user } = await this.userModel.findBy(email, "email");
-
-      if (!user) {
-        throw new Error(`User does not exist`);
-      }
-
-      const { updatedUser } = await this.userModel.update(email, { ...rest });
-
-      return { updatedUser };
+      const updatedUser = await this.users.findOneAndUpdate(
+        { email: email },
+        {
+          ...userData,
+        },
+        { password: 0 }, //Don't return password
+        {
+          new: true,
+        }
+      );
+      return updatedUser;
     } catch (error) {}
   };
 
-  updatePassword = async (userData) => {
-    const { email, password, newPassword } = userData;
+  matchPassword = async (userData) => {
     try {
-      const { user } = await this.userModel.findBy(email, "email");
+      const validPassword = await this.users.matchPassword(password);
 
-      if (!user) {
-        throw new Error(`User does not exist`);
-      }
-
-      const validPassword = await this.userModel.matchPassword(password);
-
-      if (!validPassword) {
-        throw new Error(`Invalid credentials`);
-      }
-
-      const { updatedUser } = await this.userModel.update(email, {
-        password: newPassword,
-      });
-
-      return { updatedUser };
+      return validPassword;
     } catch (error) {}
   };
 
   fetchAllUser = async () => {
-    const { users } = await this.userModel.getAll();
-    return { users };
+    const users = await this.users.find({}, { password: 0 });
+    return users;
   };
 }
 
