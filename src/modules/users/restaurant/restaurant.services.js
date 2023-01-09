@@ -23,6 +23,14 @@ class RestaurantService {
     } catch (error) {}
   };
 
+  findOneAndUpdate = async (id, restaurantData) => {
+    try {
+      const restaurant = await this.restaurants.findByIdAndUpdate(id, {
+        restaurantData,
+      });
+    } catch (error) {}
+  };
+
   fetchAllRestaurant = async () => {
     const { restaurants } = await this.restaurants.find({});
     return restaurants;

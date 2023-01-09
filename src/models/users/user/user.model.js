@@ -23,9 +23,11 @@ const UserSchema = new mongoose.Schema(
       },
     ],
     customerAddress: {
-      street: { type: String },
+      address: { type: String },
       city: { type: String },
+      apartmentSuite: { type: String },
       state: { type: String },
+      country: { type: String },
       zipCode: { type: String },
     },
     restaurants: [

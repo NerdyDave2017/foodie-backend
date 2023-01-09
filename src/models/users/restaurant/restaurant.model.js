@@ -39,9 +39,11 @@ const RestaurantSchema = new mongoose.Schema(
       },
     ],
     restaurantAddress: {
-      street: { type: String },
+      address: { type: String },
       city: { type: String },
+      apartmentSuite: { type: String },
       state: { type: String },
+      country: { type: String },
       zipCode: { type: String },
     },
     deliverySetting: { type: Boolean },

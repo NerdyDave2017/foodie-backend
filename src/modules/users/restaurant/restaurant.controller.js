@@ -20,31 +20,10 @@ class UserController {
     }
   }
 
-  async signIn(req, res) {
-    try {
-      const user = this.userService.create(req.body);
-
-      const restaurant = await this.restaurantService.signIn(req.body);
-      return res.status(200).json({ restaurant });
-    } catch (error) {
-      return res.status(400).json({ error });
-    }
-  }
-
   async updateData(req, res) {
+    const { id } = req.body;
     try {
       const { updatedRestaurant } = await this.restaurantService.updateData(
-        req.body
-      );
-      return res.status(200).json({ updatedRestaurant });
-    } catch (error) {
-      return res.status(400).json({ error });
-    }
-  }
-
-  async updatePassword(req, res) {
-    try {
-      const { updatedRestaurant } = await this.restaurantService.updatePassword(
         req.body
       );
       return res.status(200).json({ updatedRestaurant });
