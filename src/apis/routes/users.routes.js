@@ -5,8 +5,9 @@ const userController = new UserController();
 
 Router.post("/create", userController.create);
 Router.post("/signin", userController.signIn);
-Router.put("/update", userController.updateData);
-Router.put("/updatePassword", userController.updatePassword);
+Router.patch("/update", userController.updateData);
+Router.patch("/updatePassword", userController.updatePassword);
 Router.get("/", userController.fetchAllUsers);
+Router.delete("/delete", userController.deleteUser);
 
 module.exports = Router;

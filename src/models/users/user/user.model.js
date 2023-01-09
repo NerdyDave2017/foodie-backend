@@ -3,11 +3,12 @@ const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema(
   {
-    firstname: { type: String },
-    lastname: { type: String },
+    firstname: { type: String, required: true },
+    lastname: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
-    phoneNumber: { type: Number },
+    phoneNumber: { type: Number, required: true },
+    profileImage: { type: String },
     role: [{ type: String, require: true, default: "user" }], // one or more of "driver", "user", "merchant", "admin"
     settings: {
       allowPushNotifications: { type: Boolean },
