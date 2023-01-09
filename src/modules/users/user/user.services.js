@@ -33,7 +33,7 @@ class UserService {
     } catch (error) {}
   };
 
-  updateData = async (userData) => {
+  updateData = async (email, userData) => {
     try {
       const updatedUser = await this.users.findOneAndUpdate(
         { email: email },

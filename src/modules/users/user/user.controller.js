@@ -30,10 +30,20 @@ class UserController {
   signIn = async (req, res, next) => {
     const { email } = req.body;
     try {
-      const { user } = await this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserByEmail(email);
       if (!user) {
         throw next(new UserNotFound());
       }
+
+      const validPassword = await this.userService.matchPassword({
+        password,
+        newPassword,
+      });
+
+      if (!validPassword) {
+        throw next(new InvalidCredentials());
+      }
+
       return res
         .status(200)
         .json({ status: "success", message: "User signin", user });
@@ -43,13 +53,13 @@ class UserController {
   };
 
   updateData = async (req, res, next) => {
-    const { email } = req.body;
+    const { email, ...rest } = req.body;
     try {
       const { user } = await this.userService.findUserByEmail(email);
       if (!user) {
         throw next(new UserNotFound());
       }
-      const { updatedUser } = await this.userService.updateData(req.body);
+      const updatedUser = await this.userService.updateData(email, ...rest);
       return res
         .status(200)
         .json({ status: "success", message: "User updated", updatedUser });
@@ -59,13 +69,24 @@ class UserController {
   };
 
   updatePassword = async (req, res, next) => {
-    const { email } = req.user;
+    const { email, password, newPassword } = req.user;
     try {
       const { user } = await this.userService.findUserByEmail(email);
       if (!user) {
         throw next(new UserNotFound());
       }
-      const { updatedUser } = await this.userService.updatePassword(req.body);
+      const validPassword = await this.userService.matchPassword({
+        password,
+        newPassword,
+      });
+
+      if (!validPassword) {
+        throw next(new InvalidCredentials());
+      }
+      const updatedUser = await this.userService.updatePassword(email, {
+        password,
+        newPassword,
+      });
       return res
         .status(200)
         .json({ status: "success", message: "Password updated", updatedUser });

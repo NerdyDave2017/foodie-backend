@@ -1,15 +1,20 @@
-const RestaurantModel = require("../../../models/users/restaurant/restaurant.model");
 const RestaurantService = require("./restaurant.services");
+const UserService = require("../user/user.services");
 
 class UserController {
   constructor() {
-    this.restaurantService = new RestaurantService(RestaurantModel);
+    this.restaurantService = new RestaurantService();
+    this.userService = new UserService();
   }
 
   async create(req, res) {
     try {
-      const { restaurant } = await this.restaurantService.create(req.body);
-      return res.status(201).json({ restaurant });
+      const restaurant = await this.restaurantService.createRestaurant(
+        req.body
+      );
+      return res
+        .status(201)
+        .json({ status: "success", message: "Restaurant created", restaurant });
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -17,7 +22,9 @@ class UserController {
 
   async signIn(req, res) {
     try {
-      const { restaurant } = await this.restaurantService.signIn(req.body);
+      const user = this.userService.create(req.body);
+
+      const restaurant = await this.restaurantService.signIn(req.body);
       return res.status(200).json({ restaurant });
     } catch (error) {
       return res.status(400).json({ error });
