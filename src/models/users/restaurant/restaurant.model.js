@@ -4,8 +4,31 @@ const RestaurantSchema = new mongoose.Schema(
     restaurantName: { type: String },
     restaurantPhone: { type: String },
     Decription: { type: String },
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // references the _id field in the user collection
-    categories: { type: String },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "Users" }, // references the _id field in the user collection
+    categories: {
+      type: String,
+      enum: {
+        values: [
+          "Potes de Sorvetes",
+          "Multon FR",
+          "Wine Beer",
+          "high carb",
+          "wine Shop",
+          "beauty",
+          "veg Pizza",
+          "hair spa",
+          "Coffee",
+          "Sushi",
+          "Ramen",
+          "Bar Food",
+          "Japanese",
+          "New Mexican",
+          "Sandwiches",
+          "Mediterrenean",
+        ],
+        message: "{VALUE} is not supported",
+      },
+    },
     services: [{ type: String }],
     items: [
       {
