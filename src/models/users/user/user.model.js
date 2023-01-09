@@ -7,11 +7,17 @@ const UserSchema = new mongoose.Schema(
     lastname: { type: String },
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
+    phoneNumber: { type: Number },
     role: [{ type: String, require: true, default: "user" }], // one or more of "driver", "user", "merchant", "admin"
+    settings: {
+      allowPushNotifications: { type: Boolean },
+      orderUpdates: { type: Boolean },
+      promotions: { type: Boolean },
+    },
     favourites: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Item",
+        ref: "Restaurants",
         // references the _id field in the items collection
       },
     ],

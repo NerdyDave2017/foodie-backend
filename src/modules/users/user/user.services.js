@@ -50,7 +50,7 @@ class UserService {
     } catch (error) {}
   };
 
-  matchPassword = async (userData) => {
+  matchPassword = async (password) => {
     try {
       const validPassword = await this.users.matchPassword(password);
 
@@ -59,8 +59,17 @@ class UserService {
   };
 
   fetchAllUser = async () => {
-    const users = await this.users.find({}, { password: 0 });
-    return users;
+    try {
+      const users = await this.users.find({}, { password: 0 });
+      return users;
+    } catch (error) {}
+  };
+
+  deleteUser = async (email) => {
+    try {
+      const deleteUser = await this.users.deleteOne({ email: email });
+      return deleteUser;
+    } catch (error) {}
   };
 }
 
