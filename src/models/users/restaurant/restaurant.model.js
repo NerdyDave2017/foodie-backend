@@ -5,6 +5,7 @@ const RestaurantSchema = new mongoose.Schema(
     restaurantPhone: { type: String },
     Decription: { type: String },
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "Users" }, // references the _id field in the user collection
+    restaurantImage: { type: String },
     categories: {
       type: String,
       enum: {
@@ -43,6 +44,7 @@ const RestaurantSchema = new mongoose.Schema(
       state: { type: String },
       zipCode: { type: String },
     },
+    deliverySetting: { type: Boolean },
     delivery: {
       chargePerKm: { type: Number },
       minDeliveryCharge: { type: Number },
