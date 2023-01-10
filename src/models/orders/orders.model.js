@@ -2,20 +2,20 @@ const mongoose = require("monngoose");
 
 const OrderSchema = new mongoose.Schema(
   {
-    user_id: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     }, // references the _id field in the users collection
-    driver_id: {
+    driverId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Driver",
     }, // references the _id field in the drivers collection
-    tracking_id: { type: Number, required: true },
+    trackingId: { type: Number, required: true },
     items: [
       {
-        item_id: {
+        itemId: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "item",
+          ref: "Item",
         }, // references the _id field in the items collection
         quantity: { type: Number, require: true, default: 1 },
       },
