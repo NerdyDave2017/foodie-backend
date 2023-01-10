@@ -6,7 +6,7 @@ const ItemSchema = new mongoose.Schema(
     price: { type: Number },
     restaurant: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "restaurant",
+      ref: "Restaurants",
     }, // references the _id field in the users collection for the merchant who added this item
   },
   {

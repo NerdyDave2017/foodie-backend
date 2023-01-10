@@ -31,7 +31,7 @@ class RestaurantService {
     } catch (error) {}
   };
 
-  fetchAllRestaurant = async () => {
+  fetchAllRestaurants = async () => {
     const { restaurants } = await this.restaurants.find({});
     return restaurants;
   };

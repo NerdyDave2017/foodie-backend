@@ -41,7 +41,7 @@ const RestaurantSchema = new mongoose.Schema(
     restaurantAddress: {
       address: { type: String },
       city: { type: String },
-      apartmentSuite: { type: String },
+      apartmentSuite: { type: Number },
       state: { type: String },
       country: { type: String },
       zipCode: { type: String },

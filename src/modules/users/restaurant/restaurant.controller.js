@@ -32,9 +32,10 @@ class UserController {
     }
   }
 
-  async fetchAllUsers(req, res) {
+  async fetchAllRestaurants(req, res) {
     try {
-      const { restaurants } = await this.restaurantService.fetchAllUser();
+      const { restaurants } =
+        await this.restaurantService.fetchAllRestaurants();
       return res.status(200).json({ restaurants });
     } catch (error) {
       return res.status(400).json({ error });
