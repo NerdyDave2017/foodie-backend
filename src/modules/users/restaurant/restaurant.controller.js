@@ -10,7 +10,7 @@ class UserController {
     this.userService = new UserService();
   }
 
-  async create(req, res, next) {
+  create = async (req, res, next) => {
     const { userEmail, ...rest } = req.body;
     try {
       const user = await this.userService.findUserByEmail(userEmail);
@@ -28,15 +28,15 @@ class UserController {
     } catch (error) {
       return res.status(400).json({ error });
     }
-  }
+  };
 
-  async updateData(req, res) {
+  updateData = async (req, res, next) => {
     const { id } = req.body;
     try {
       const restaurant = await this.restaurantService.findRestaurantById(id);
 
       if (!restaurant) {
-        throw new HttpException(404, "Restaurant not found");
+        throw next(new HttpException(404, "Restaurant not found"));
       }
 
       const { updatedRestaurant } = await this.restaurantService.updateData(
@@ -46,9 +46,22 @@ class UserController {
     } catch (error) {
       return res.status(400).json({ error });
     }
-  }
+  };
 
-  async fetchAllRestaurants(req, res) {
+  getUserRestaurants = async (req, res, next) => {
+    const { id } = req.body;
+    try {
+      const user = await this.userService.findUserById(id);
+      if (!user) {
+        throw next(new UserNotFound());
+      }
+
+      const restaurants = await this.restaurantService.findUserRestaurants(id);
+      return res.status(200).json({ restaurants });
+    } catch (error) {}
+  };
+
+  fetchAllRestaurants = async (req, res) => {
     try {
       const { restaurants } =
         await this.restaurantService.fetchAllRestaurants();
@@ -56,7 +69,7 @@ class UserController {
     } catch (error) {
       return res.status(400).json({ error });
     }
-  }
+  };
 }
 
 module.exports = UserController;

@@ -1,18 +1,11 @@
 const mongoose = require("mongoose");
 const DriverSchema = new mongoose.Schema(
   {
-    fullname: { type: String, required: true },
-    email: { type: String, required: true, unique: true, lowercase: true },
-    password: { type: String, required: true },
     driverPhone: { type: String, required: true },
+    carImage: { type: String },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // references the _id field in the user collection
-    role: { type: String, require: true, default: "driver" }, // one of "driver", "user", "merchant", "admin"
-    driverAddress: {
-      street: { type: String },
-      city: { type: String },
-      state: { type: String },
-      zipCode: { type: String },
-    },
+    carModel: { type: String },
+    carPlateNo: { type: String },
     isActive: { type: Boolean },
     location: { type: String },
   },
@@ -22,17 +15,5 @@ const DriverSchema = new mongoose.Schema(
 );
 
 const Drivers = mongoose.model("Drivers", DriverSchema);
-
-class DriverModel {
-  Drivers = Drivers;
-
-  async create() {}
-
-  async signIn() {}
-
-  async findBy() {}
-
-  async getAll() {}
-}
 
 module.exports = DriverModel;

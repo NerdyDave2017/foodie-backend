@@ -28,6 +28,14 @@ class RestaurantService {
       const restaurant = await this.restaurants.findByIdAndUpdate(id, {
         restaurantData,
       });
+      return restaurant;
+    } catch (error) {}
+  };
+
+  findUserRestaurants = async (id) => {
+    try {
+      const restaurants = await this.restaurants.find({ owner: id });
+      return restaurants;
     } catch (error) {}
   };
 
