@@ -44,12 +44,13 @@ const RestaurantSchema = new mongoose.Schema(
       apartmentSuite: { type: Number },
       state: { type: String },
       country: { type: String },
-      zipCode: { type: String },
+      zipCode: { type: Number },
     },
     deliverySetting: { type: Boolean },
     delivery: {
       chargePerKm: { type: Number },
       minDeliveryCharge: { type: Number },
+      minDeliveryChargeWithinKm: { type: Number },
     },
   },
   {

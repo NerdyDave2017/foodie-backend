@@ -1,5 +1,8 @@
 const RestaurantService = require("./restaurant.services");
 const UserService = require("../user/user.services");
+const UserNotFound = require("../../../exceptions/UserNotFound");
+const InvalidCredentials = require("../../../exceptions/InvalidCredentials");
+const HttpException = require("../../../exceptions/HttpExceptions");
 
 class UserController {
   constructor() {
@@ -7,11 +10,18 @@ class UserController {
     this.userService = new UserService();
   }
 
-  async create(req, res) {
+  async create(req, res, next) {
+    const { userEmail, ...rest } = req.body;
     try {
-      const restaurant = await this.restaurantService.createRestaurant(
-        req.body
-      );
+      const user = await this.userService.findUserByEmail(userEmail);
+      if (!user) {
+        throw next(new UserNotFound());
+      }
+
+      const restaurant = await this.restaurantService.createRestaurant({
+        owner: user._id,
+        ...rest,
+      });
       return res
         .status(201)
         .json({ status: "success", message: "Restaurant created", restaurant });
@@ -23,6 +33,12 @@ class UserController {
   async updateData(req, res) {
     const { id } = req.body;
     try {
+      const restaurant = await this.restaurantService.findRestaurantById(id);
+
+      if (!restaurant) {
+        throw new HttpException(404, "Restaurant not found");
+      }
+
       const { updatedRestaurant } = await this.restaurantService.updateData(
         req.body
       );
