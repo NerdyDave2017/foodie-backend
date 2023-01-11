@@ -49,6 +49,20 @@ class UserService {
     } catch (error) {}
   };
 
+  updateRole = async (id, role) => {
+    try {
+      const updatedUser = await this.users.findOneAndUpdate(
+        { _id: id },
+        { $push: { roles: role } },
+        { password: 0 }, //Don't return password
+        {
+          new: true,
+        }
+      );
+      return updatedUser;
+    } catch (error) {}
+  };
+
   matchPassword = async (password) => {
     try {
       const validPassword = await this.users.matchPassword(password);

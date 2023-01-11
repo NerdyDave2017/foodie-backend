@@ -1,4 +1,4 @@
-const RestaurantService = require("./restaurant.services");
+const DriverService = require("./driver.services");
 const UserService = require("../user/user.services");
 const UserNotFound = require("../../../exceptions/UserNotFound");
 const InvalidCredentials = require("../../../exceptions/InvalidCredentials");
@@ -9,30 +9,6 @@ class UserController {
     this.restaurantService = new RestaurantService();
     this.userService = new UserService();
   }
-
-  create = async (req, res, next) => {
-    const { userEmail, ...rest } = req.body;
-    try {
-      const user = await this.userService.findUserByEmail(userEmail);
-      if (!user) {
-        throw next(new UserNotFound());
-      }
-
-      const restaurant = await this.restaurantService.createRestaurant({
-        owner: user._id,
-        ...rest,
-      });
-
-      // update user role
-      await this.userService.updateRole(user._id, "restaurant");
-
-      return res
-        .status(201)
-        .json({ status: "success", message: "Restaurant created", restaurant });
-    } catch (error) {
-      return res.status(400).json({ error });
-    }
-  };
 
   updateData = async (req, res, next) => {
     const { id } = req.body;

@@ -2,7 +2,6 @@ const Restaurants = require("../../../models/users/restaurant/restaurant.model")
 
 class RestaurantService {
   restaurants;
-  users;
   constructor() {
     this.restaurants = Restaurants;
   }
@@ -18,7 +17,7 @@ class RestaurantService {
 
   findRestaurantById = async (id) => {
     try {
-      const restaurant = await this.restaurants.findById(id, { password: 0 });
+      const restaurant = await this.restaurants.findById(id);
       return restaurant;
     } catch (error) {}
   };
