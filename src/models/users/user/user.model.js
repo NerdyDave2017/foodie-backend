@@ -33,12 +33,13 @@ const UserSchema = new mongoose.Schema(
     restaurants: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Restaurant",
+        ref: "Restaurants",
         // references the _id field in the restaurant collection
       },
     ],
     driver: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Drivers",
     },
   },
   {
@@ -58,6 +59,6 @@ UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const Users = mongoose.model("User", UserSchema);
+const Users = mongoose.model("Users", UserSchema);
 
 module.exports = Users;

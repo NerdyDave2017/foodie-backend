@@ -6,6 +6,15 @@ class DriverService {
     this.drivers = Drivers;
   }
 
+  createDriver = async (driverData) => {
+    try {
+      const newDriver = new this.drivers.create({
+        ...driverData,
+      });
+      return newDriver;
+    } catch (error) {}
+  };
+
   findDriverById = async (id) => {
     try {
       const driver = await this.drivers.findById(id);
@@ -23,8 +32,10 @@ class DriverService {
   };
 
   fetchAllDrivers = async () => {
-    const drivers = await this.drivers.find({});
-    return drivers;
+    try {
+      const drivers = await this.drivers.find({});
+      return drivers;
+    } catch (error) {}
   };
 }
 

@@ -27,7 +27,7 @@ class UserController {
     }
   };
 
-  signIn = async (req, res, next) => {
+  login = async (req, res, next) => {
     const { email } = req.body;
     try {
       const user = await this.userService.findUserByEmail(email);

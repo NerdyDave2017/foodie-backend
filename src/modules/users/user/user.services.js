@@ -19,7 +19,9 @@ class UserService {
 
   findUserById = async (id) => {
     try {
-      const user = await this.user.findById(id, { password: 0 });
+      const user = await this.user
+        .findById(id, { password: 0 })
+        .populate(["Drivers", "Restaurants"]);
 
       return user;
     } catch (error) {}
@@ -27,7 +29,9 @@ class UserService {
 
   findUserByEmail = async (email) => {
     try {
-      const user = await this.users.findOne({ email: email }, { password: 0 });
+      const user = await this.users
+        .findOne({ email: email }, { password: 0 })
+        .populate(["Drivers", "Restaurants"]);
 
       return user;
     } catch (error) {}
@@ -35,30 +39,34 @@ class UserService {
 
   updateData = async (email, userData) => {
     try {
-      const updatedUser = await this.users.findOneAndUpdate(
-        { email: email },
-        {
-          ...userData,
-        },
-        { password: 0 }, //Don't return password
-        {
-          new: true,
-        }
-      );
+      const updatedUser = await this.users
+        .findOneAndUpdate(
+          { email: email },
+          {
+            ...userData,
+          },
+          { password: 0 }, //Don't return password
+          {
+            new: true,
+          }
+        )
+        .populate(["Drivers", "Restaurants"]);
       return updatedUser;
     } catch (error) {}
   };
 
   updateRole = async (id, role) => {
     try {
-      const updatedUser = await this.users.findOneAndUpdate(
-        { _id: id },
-        { $push: { roles: role } },
-        { password: 0 }, //Don't return password
-        {
-          new: true,
-        }
-      );
+      const updatedUser = await this.users
+        .findOneAndUpdate(
+          { _id: id },
+          { $push: { roles: role } },
+          { password: 0 }, //Don't return password
+          {
+            new: true,
+          }
+        )
+        .populate(["Drivers", "Restaurants"]);
       return updatedUser;
     } catch (error) {}
   };
