@@ -31,6 +31,43 @@ const RestaurantSchema = new mongoose.Schema(
       },
     },
     services: [{ type: String }],
+    openingHours: {
+      monday: {
+        open: { type: Boolean },
+        startTime: { type: String },
+        endTime: { type: String },
+      },
+      tuesday: {
+        open: { type: Boolean },
+        startTime: { type: String },
+        endTime: { type: String },
+      },
+      wednesday: {
+        open: { type: Boolean },
+        startTime: { type: String },
+        endTime: { type: String },
+      },
+      thursday: {
+        open: { type: Boolean },
+        startTime: { type: String },
+        endTime: { type: String },
+      },
+      friday: {
+        open: { type: Boolean },
+        startTime: { type: String },
+        endTime: { type: String },
+      },
+      saturday: {
+        open: { type: Boolean },
+        startTime: { type: String },
+        endTime: { type: String },
+      },
+      sunday: {
+        open: { type: Boolean },
+        startTime: { type: String },
+        endTime: { type: String },
+      },
+    },
     items: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -41,7 +78,7 @@ const RestaurantSchema = new mongoose.Schema(
     restaurantAddress: {
       address: { type: String },
       city: { type: String },
-      apartmentSuite: { type: Number },
+      apartmentSuite: { type: String },
       state: { type: String },
       country: { type: String },
       zipCode: { type: Number },

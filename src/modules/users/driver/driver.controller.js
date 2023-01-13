@@ -20,26 +20,17 @@ class UserController {
       }
 
       const updatedDriver = await this.driverService.findOneAndUpdate(req.body);
-      return res.status(200).json({ updatedRestaurant });
+      return res.status(200).json({
+        status: "success",
+        message: "Driver updated",
+        updatedDriver,
+      });
     } catch (error) {
       return res.status(400).json({ error });
     }
   };
 
-  getUserRestaurants = async (req, res, next) => {
-    const { id } = req.body;
-    try {
-      const user = await this.userService.findUserById(id);
-      if (!user) {
-        throw next(new UserNotFound());
-      }
-
-      const restaurants = await this.driverService.findUserRestaurants(id);
-      return res.status(200).json({ restaurants });
-    } catch (error) {}
-  };
-
-  fetchAllRestaurants = async (req, res) => {
+  fetchAllDrivers = async (req, res) => {
     try {
       const { restaurants } = await this.driverService.fetchAllRestaurants();
       return res.status(200).json({ restaurants });
