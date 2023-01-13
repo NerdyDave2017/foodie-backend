@@ -6,22 +6,20 @@ const HttpException = require("../../../exceptions/HttpExceptions");
 
 class UserController {
   constructor() {
-    this.restaurantService = new RestaurantService();
+    this.driverService = new DriverService();
     this.userService = new UserService();
   }
 
   updateData = async (req, res, next) => {
     const { id } = req.body;
     try {
-      const restaurant = await this.restaurantService.findRestaurantById(id);
+      const restaurant = await this.driverService.findDriverById(id);
 
       if (!restaurant) {
-        throw next(new HttpException(404, "Restaurant not found"));
+        throw next(new HttpException(404, "Driver not found"));
       }
 
-      const { updatedRestaurant } = await this.restaurantService.updateData(
-        req.body
-      );
+      const updatedDriver = await this.driverService.findOneAndUpdate(req.body);
       return res.status(200).json({ updatedRestaurant });
     } catch (error) {
       return res.status(400).json({ error });
@@ -36,15 +34,14 @@ class UserController {
         throw next(new UserNotFound());
       }
 
-      const restaurants = await this.restaurantService.findUserRestaurants(id);
+      const restaurants = await this.driverService.findUserRestaurants(id);
       return res.status(200).json({ restaurants });
     } catch (error) {}
   };
 
   fetchAllRestaurants = async (req, res) => {
     try {
-      const { restaurants } =
-        await this.restaurantService.fetchAllRestaurants();
+      const { restaurants } = await this.driverService.fetchAllRestaurants();
       return res.status(200).json({ restaurants });
     } catch (error) {
       return res.status(400).json({ error });

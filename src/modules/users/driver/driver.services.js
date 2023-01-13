@@ -8,23 +8,23 @@ class DriverService {
 
   findDriverById = async (id) => {
     try {
-      const restaurant = await this.drivers.findById(id);
-      return restaurant;
+      const driver = await this.drivers.findById(id);
+      return driver;
     } catch (error) {}
   };
 
   findOneAndUpdate = async (id, driverData) => {
     try {
-      const restaurant = await this.drivers.findByIdAndUpdate(id, {
+      const driver = await this.drivers.findByIdAndUpdate(id, {
         driverData,
       });
-      return restaurant;
+      return driver;
     } catch (error) {}
   };
 
   fetchAllDrivers = async () => {
-    const { restaurants } = await this.drivers.find({});
-    return restaurants;
+    const drivers = await this.drivers.find({});
+    return drivers;
   };
 }
 

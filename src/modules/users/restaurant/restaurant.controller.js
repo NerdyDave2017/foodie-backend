@@ -35,7 +35,7 @@ class UserController {
   };
 
   updateData = async (req, res, next) => {
-    const { id } = req.body;
+    const { id, ...rest } = req.body;
     try {
       const restaurant = await this.restaurantService.findRestaurantById(id);
 
@@ -43,10 +43,15 @@ class UserController {
         throw next(new HttpException(404, "Restaurant not found"));
       }
 
-      const { updatedRestaurant } = await this.restaurantService.updateData(
-        req.body
+      const updatedRestaurant = await this.restaurantService.findOneAndUpdate(
+        id,
+        ...rest
       );
-      return res.status(200).json({ updatedRestaurant });
+      return res.status(200).json({
+        status: "success",
+        message: "Restaurant updated",
+        updatedRestaurant,
+      });
     } catch (error) {
       return res.status(400).json({ error });
     }
@@ -61,7 +66,11 @@ class UserController {
       }
 
       const restaurants = await this.restaurantService.findUserRestaurants(id);
-      return res.status(200).json({ restaurants });
+      return res.status(200).json({
+        status: "success",
+        message: "All user restaurants",
+        restaurants,
+      });
     } catch (error) {}
   };
 
@@ -69,7 +78,11 @@ class UserController {
     try {
       const { restaurants } =
         await this.restaurantService.fetchAllRestaurants();
-      return res.status(200).json({ restaurants });
+      return res.status(200).json({
+        status: "success",
+        message: "All restaurants",
+        restaurants,
+      });
     } catch (error) {
       return res.status(400).json({ error });
     }
