@@ -15,7 +15,7 @@ class ItemService {
 
   getItems = async () => {
     try {
-      const items = await this.items.find();
+      const items = await this.items.find({});
       return items;
     } catch (error) {}
   };

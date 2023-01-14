@@ -3,6 +3,8 @@ const mongoose = require("monngoose");
 const ItemSchema = new mongoose.Schema(
   {
     name: { type: String },
+    description: { type: String },
+    category: { type: String },
     price: { type: Number },
     restaurant: {
       type: mongoose.Schema.Types.ObjectId,
