@@ -13,7 +13,7 @@ class ItemService {
     } catch (err) {}
   };
 
-  getItems = async () => {
+  getAllItems = async () => {
     try {
       const items = await this.items.find({});
       return items;
