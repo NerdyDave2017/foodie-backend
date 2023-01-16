@@ -8,7 +8,7 @@ class UserService {
 
   create = async (userData) => {
     try {
-      const newUser = await this.Users.create({
+      const newUser = await this.users.create({
         ...userData,
       });
       return { user: newUser };

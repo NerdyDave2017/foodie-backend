@@ -1,11 +1,10 @@
+const Router = require("express").Router();
 const DriverController = require("../../modules/users/driver/driver.controller");
 
 const driverController = new DriverController();
 
-const userRoutes = (app) => {
-  app.post("/login", driverController.login);
-  app.patch("/update", driverController.updateData);
-  app.get("/", driverController.fetchAllDrivers);
-};
+Router.post("/login", driverController.login);
+Router.patch("/update", driverController.updateData);
+Router.get("/", driverController.fetchAllDrivers);
 
-module.exports = userRoutes;
+module.exports = Router;

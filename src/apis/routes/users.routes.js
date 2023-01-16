@@ -1,6 +1,6 @@
 const Router = require("express").Router();
 const UserController = require("../../modules/users/user/user.controller");
-const UserService = require("../../modules/users/user/user.services");
+
 const userController = new UserController();
 
 Router.post("/register", userController.register);
