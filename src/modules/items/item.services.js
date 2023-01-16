@@ -1,4 +1,4 @@
-import Items from "../../models/items/items.model";
+const Items = require("../../models/items/items.model");
 
 class ItemService {
   items;
@@ -16,6 +16,13 @@ class ItemService {
   getAllItems = async () => {
     try {
       const items = await this.items.find({});
+      return items;
+    } catch (error) {}
+  };
+
+  getRestaurantItems = async (restaurantId) => {
+    try {
+      const items = await this.items.find({ restaurant: restaurantId });
       return items;
     } catch (error) {}
   };

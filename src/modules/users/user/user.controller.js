@@ -18,9 +18,11 @@ class UserController {
         throw next(new UserNotFound());
       }
 
+      const newUser = await this.userService.create(req.body);
+
       return res
         .status(201)
-        .json({ status: "success", messsage: "User Created", user });
+        .json({ status: "success", messsage: "User Created", newUser });
     } catch (error) {
       console.log(error);
       return res.status(400).json({ error });
