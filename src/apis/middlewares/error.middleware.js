@@ -1,13 +1,18 @@
-const express = require("express");
 const HttpException = require("../../exceptions/HttpExceptions");
 
-function errorMiddleware(error, request, response, next) {
+const httpException = new HttpException();
+function errorMiddleware(error, req, res, next) {
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  console.log(error, "error HttpException");
   const status = error.status || 500;
   const message = error.message || "Something went wrong";
-  response.status(status).json({
+  res.status(status).json({
     status: "error",
     message,
   });
 }
 
-module.exports = errorMiddleware;
+module.exports = errorMiddleware();

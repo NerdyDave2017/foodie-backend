@@ -6,6 +6,7 @@ const bodyparser = require("body-parser");
 const connectDB = require("./database/connectDB");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const errorMiddleware = require("./apis/middlewares/error.middleware");
 
 dotenv.config();
 
@@ -31,5 +32,6 @@ connectDB();
 
 // Load Routers
 app.use("/api/v1", require("./apis/routes/index.routes"));
+app.use(errorMiddleware);
 
 module.exports = app;

@@ -14,8 +14,9 @@ class UserController {
     try {
       const user = this.userService.findUserByEmail(email);
 
-      if (!user) {
-        throw next(new UserNotFound());
+      if (user) {
+        // console.log("user already exists");
+        throw next(new HttpException(401, "User already exists"));
       }
 
       const newUser = await this.userService.create(req.body);
@@ -25,7 +26,6 @@ class UserController {
         .json({ status: "success", messsage: "User Created", newUser });
     } catch (error) {
       console.log(error);
-      return res.status(400).json({ error });
     }
   };
 
