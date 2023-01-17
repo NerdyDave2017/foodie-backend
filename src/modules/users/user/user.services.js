@@ -29,11 +29,8 @@ class UserService {
 
   findUserByEmail = async (email) => {
     try {
-      const user = await this.users
-        .findOne({ email: email }, { password: 0 })
-        .populate(["Drivers", "Restaurants"]);
-
-      console.log(user);
+      const user = await this.users.findOne({ email: email });
+      // .populate(["Drivers", "Restaurants"]);
 
       return user;
     } catch (error) {}
@@ -99,10 +96,18 @@ class UserService {
 
   matchPassword = async (password) => {
     try {
-      const validPassword = await this.users.matchPassword(password);
+      // const validPassword = await this.users.matchPassword(password);
+      console.log(await this.users.matchPassword(password), "log pass");
+      const validPassword = await this.users.schema.methods.matchPassword(
+        password
+      );
+
+      console.log(validPassword);
 
       return validPassword;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   fetchAllUser = async () => {

@@ -24,6 +24,7 @@ class UserController {
       });
 
       // update user role & add restaurant id to user
+      await this.userService.updateRestaurants(user._id, restaurant._id);
       await this.userService.updateRole(user._id, "restaurant");
 
       return res

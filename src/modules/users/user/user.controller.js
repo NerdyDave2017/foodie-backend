@@ -3,6 +3,7 @@ const UserService = require("./user.services");
 const UserNotFound = require("../../../exceptions/UserNotFound");
 const InvalidCredentials = require("../../../exceptions/InvalidCredentials");
 const HttpException = require("../../../exceptions/HttpExceptions");
+const matchPassword = require("../../../utils/matchPassword");
 
 class UserController {
   constructor() {
@@ -24,24 +25,24 @@ class UserController {
         .status(201)
         .json({ status: "success", messsage: "User Created", newUser });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   };
 
   login = async (req, res, next) => {
-    const { email } = req.body;
-    console.log(req.body);
+    const { email, password } = req.body;
+    console.log(email, password);
+
     try {
       const user = await this.userService.findUserByEmail(email);
-      console.log(user);
+
       if (!user) {
         throw next(new UserNotFound());
       }
 
-      const validPassword = await this.userService.matchPassword({
-        password,
-        newPassword,
-      });
+      const validPassword = await matchPassword(password, user.password);
+
+      // console.log(validPassword);
 
       if (!validPassword) {
         throw next(new InvalidCredentials());
@@ -78,10 +79,7 @@ class UserController {
       if (!user) {
         throw next(new UserNotFound());
       }
-      const validPassword = await this.userService.matchPassword({
-        password,
-        newPassword,
-      });
+      const validPassword = await matchPassword(password, user.password);
 
       if (!validPassword) {
         throw next(new InvalidCredentials());
@@ -145,7 +143,7 @@ class UserController {
         throw next(new UserNotFound());
       }
 
-      const validPassword = await this.userService.matchPassword(password);
+      const validPassword = await matchPassword(password, user.password);
 
       if (!validPassword) {
         throw next(new InvalidCredentials());
