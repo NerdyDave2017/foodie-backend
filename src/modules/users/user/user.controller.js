@@ -15,7 +15,6 @@ class UserController {
       const user = this.userService.findUserByEmail(email);
 
       if (user) {
-        // console.log("user already exists");
         throw next(new HttpException(401, "User already exists"));
       }
 
@@ -50,7 +49,7 @@ class UserController {
         .status(200)
         .json({ status: "success", message: "User signin", user });
     } catch (error) {
-      return res.status(400).json({ error });
+      next(error);
     }
   };
 
@@ -66,7 +65,7 @@ class UserController {
         .status(200)
         .json({ status: "success", message: "User updated", updatedUser });
     } catch (error) {
-      return res.status(400).json({ error });
+      next(error);
     }
   };
 
@@ -93,9 +92,35 @@ class UserController {
         .status(200)
         .json({ status: "success", message: "Password updated", updatedUser });
     } catch (error) {
-      return res.status(400).json({ error });
+      next(error);
     }
   };
+
+  /**
+   *
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   * @returns
+   * @dev This method is not finished yet
+   * @todo Fix this method
+   */
+
+  // forgotPassword = async (req, res, next) => {
+  //   const { email } = req.body;
+  //   try {
+  //     const { user } = await this.userService.findUserByEmail(email);
+  //     if (!user) {
+  //       throw next(new UserNotFound());
+  //     }
+  //     const updatedUser = await this.userService.forgotPassword(email);
+  //     return res
+  //       .status(200)
+  //       .json({ status: "success", message: "Password updated", updatedUser });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 
   fetchAllUsers = async (req, res, next) => {
     try {
@@ -104,7 +129,7 @@ class UserController {
         .status(200)
         .json({ status: "success", message: "All users", users });
     } catch (error) {
-      return res.status(400).json({ error });
+      next(error);
     }
   };
 
@@ -126,7 +151,9 @@ class UserController {
       return res
         .status(200)
         .json({ status: "success", message: "User deleted", deleteUser });
-    } catch (error) {}
+    } catch (error) {
+      next(error);
+    }
   };
 }
 

@@ -7,6 +7,7 @@ const connectDB = require("./database/connectDB");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const errorMiddleware = require("./apis/middlewares/error.middleware");
+const HttpException = require("./exceptions/HttpExceptions");
 
 dotenv.config();
 
