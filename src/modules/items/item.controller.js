@@ -14,7 +14,7 @@ class ItemController {
     const { restaurant } = req.body;
     try {
       // Check if the restaurant exists
-      const restaurantExists = await this.restaurantService.getRestaurantById(
+      const restaurantExists = await this.restaurantService.findRestaurantById(
         restaurant
       );
 
@@ -44,8 +44,11 @@ class ItemController {
   };
 
   getRestaurantItems = async (req, res, next) => {
+    console.log(req.params, "restaurant Items");
     try {
-      const items = await this.itemService.getRestaurantItems(req.params.id);
+      const items = await this.itemService.getRestaurantItems(
+        req.params.restaurantId
+      );
       return res
         .status(200)
         .json({ status: "success", message: "Restaurant items", items });
@@ -55,6 +58,7 @@ class ItemController {
   };
 
   getItemById = async (req, res, next) => {
+    console.log(req.params, "items");
     try {
       const item = await this.itemService.getItemById(req.params.id);
       return res.status(200).json({ status: "success", message: "Item", item });

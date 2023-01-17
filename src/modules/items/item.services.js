@@ -7,7 +7,6 @@ class ItemService {
   }
 
   createItem = async (item) => {
-    console.log(item, "item data");
     try {
       const newItem = await this.items.create(item);
 

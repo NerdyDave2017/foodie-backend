@@ -79,8 +79,7 @@ class UserController {
 
   fetchAllRestaurants = async (req, res, next) => {
     try {
-      const { restaurants } =
-        await this.restaurantService.fetchAllRestaurants();
+      const restaurants = await this.restaurantService.fetchAllRestaurants();
       return res.status(200).json({
         status: "success",
         message: "All restaurants",
