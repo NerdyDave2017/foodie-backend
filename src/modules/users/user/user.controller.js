@@ -12,7 +12,7 @@ class UserController {
   register = async (req, res, next) => {
     const { email } = req.body;
     try {
-      const user = this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserByEmail(email);
 
       if (user) {
         throw next(new HttpException(401, "User already exists"));
@@ -30,8 +30,10 @@ class UserController {
 
   login = async (req, res, next) => {
     const { email } = req.body;
+    console.log(req.body);
     try {
       const user = await this.userService.findUserByEmail(email);
+      console.log(user);
       if (!user) {
         throw next(new UserNotFound());
       }
@@ -106,21 +108,23 @@ class UserController {
    * @todo Fix this method
    */
 
-  // forgotPassword = async (req, res, next) => {
-  //   const { email } = req.body;
-  //   try {
-  //     const { user } = await this.userService.findUserByEmail(email);
-  //     if (!user) {
-  //       throw next(new UserNotFound());
-  //     }
-  //     const updatedUser = await this.userService.forgotPassword(email);
-  //     return res
-  //       .status(200)
-  //       .json({ status: "success", message: "Password updated", updatedUser });
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  forgotPassword = async (req, res, next) => {
+    const { email } = req.body;
+    try {
+      const { user } = await this.userService.findUserByEmail(email);
+      if (!user) {
+        throw next(new UserNotFound());
+      }
+      /**
+       * @todo generate new password for user
+       */
+      return res
+        .status(200)
+        .json({ status: "success", message: "Password updated", updatedUser });
+    } catch (error) {
+      next(error);
+    }
+  };
 
   fetchAllUsers = async (req, res, next) => {
     try {

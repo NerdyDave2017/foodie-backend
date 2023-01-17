@@ -4,7 +4,7 @@ const RestaurantSchema = new mongoose.Schema(
     restaurantName: { type: String },
     restaurantPhone: { type: String },
     Decription: { type: String },
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: "Users" }, // references the _id field in the user collection
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" }, // references the _id field in the user collection
     restaurantImage: { type: String },
     categories: {
       type: String,

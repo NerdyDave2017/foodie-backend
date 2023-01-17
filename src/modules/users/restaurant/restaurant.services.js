@@ -31,9 +31,9 @@ class RestaurantService {
     } catch (error) {}
   };
 
-  findUserRestaurants = async (id) => {
+  findUserRestaurants = async (userId) => {
     try {
-      const restaurants = await this.restaurants.find({ owner: id });
+      const restaurants = await this.restaurants.find({ user: userId });
       return restaurants;
     } catch (error) {}
   };

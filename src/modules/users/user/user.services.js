@@ -19,7 +19,7 @@ class UserService {
 
   findUserById = async (id) => {
     try {
-      const user = await this.user
+      const user = await this.users
         .findById(id, { password: 0 })
         .populate(["Drivers", "Restaurants"]);
 
@@ -32,6 +32,8 @@ class UserService {
       const user = await this.users
         .findOne({ email: email }, { password: 0 })
         .populate(["Drivers", "Restaurants"]);
+
+      console.log(user);
 
       return user;
     } catch (error) {}
@@ -55,18 +57,42 @@ class UserService {
     } catch (error) {}
   };
 
+  updateRestaurants = async (userId, restaurantId) => {
+    try {
+      const updatedUser = await this.users.findOneAndUpdate(
+        { _id: userId },
+        {
+          $push: { restaurants: restaurantId },
+        }
+      );
+
+      return updatedUser;
+    } catch (error) {}
+  };
+  updateDriver = async (userId, driverId) => {
+    try {
+      const updatedUser = await this.users.findOneAndUpdate(
+        { _id: userId },
+        {
+          $push: { driver: driverId },
+        }
+      );
+
+      return updatedUser;
+    } catch (error) {}
+  };
+
   updateRole = async (id, role) => {
     try {
-      const updatedUser = await this.users
-        .findOneAndUpdate(
-          { _id: id },
-          { $push: { roles: role } },
-          { password: 0 }, //Don't return password
-          {
-            new: true,
-          }
-        )
-        .populate(["Drivers", "Restaurants"]);
+      const updatedUser = await this.users.findOneAndUpdate(
+        { _id: id },
+        { $push: { roles: role } },
+        { password: 0 }, //Don't return password
+        {
+          new: true,
+        }
+      );
+
       return updatedUser;
     } catch (error) {}
   };
@@ -81,7 +107,9 @@ class UserService {
 
   fetchAllUser = async () => {
     try {
-      const users = await this.users.find({}, { password: 0 });
+      const users = await this.users
+        .find({}, { password: 0 })
+        .populate(["Drivers", "Restaurants"]);
       return users;
     } catch (error) {}
   };
