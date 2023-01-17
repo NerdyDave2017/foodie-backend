@@ -19,9 +19,9 @@ class UserService {
 
   findUserById = async (id) => {
     try {
-      const user = await this.users
-        .findById(id, { password: 0 })
-        .populate(["Drivers", "Restaurants"]);
+      const user = await this.users.findById(id, { password: 0 });
+      // .populate("Restaurants")
+      // .populate("Drivers");
 
       return user;
     } catch (error) {}
@@ -30,28 +30,33 @@ class UserService {
   findUserByEmail = async (email) => {
     try {
       const user = await this.users.findOne({ email: email });
-      // .populate(["Drivers", "Restaurants"]);
+      // .populate("restaurants")
+      // .populate("drivers");
 
       return user;
     } catch (error) {}
   };
 
   updateData = async (email, userData) => {
+    console.log(userData, "userData");
     try {
-      const updatedUser = await this.users
-        .findOneAndUpdate(
-          { email: email },
-          {
-            ...userData,
-          },
-          { password: 0 }, //Don't return password
-          {
-            new: true,
-          }
-        )
-        .populate(["Drivers", "Restaurants"]);
+      const updatedUser = await this.users.findOneAndUpdate(
+        { email: email },
+        {
+          ...userData,
+        },
+        {
+          new: true,
+        }
+      );
+
+      console.log(updatedUser, "updatedUser");
+      // .populate("Restaurants")
+      // .populate("Drivers");
       return updatedUser;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   updateRestaurants = async (userId, restaurantId) => {
@@ -60,18 +65,6 @@ class UserService {
         { _id: userId },
         {
           $push: { restaurants: restaurantId },
-        }
-      );
-
-      return updatedUser;
-    } catch (error) {}
-  };
-  updateDriver = async (userId, driverId) => {
-    try {
-      const updatedUser = await this.users.findOneAndUpdate(
-        { _id: userId },
-        {
-          $push: { driver: driverId },
         }
       );
 
@@ -112,9 +105,9 @@ class UserService {
 
   fetchAllUser = async () => {
     try {
-      const users = await this.users
-        .find({}, { password: 0 })
-        .populate(["Drivers", "Restaurants"]);
+      const users = await this.users.find({}, { password: 0 });
+      // .populate("Restaurants")
+      // .populate("Drivers");
       return users;
     } catch (error) {}
   };

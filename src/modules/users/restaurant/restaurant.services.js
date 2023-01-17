@@ -8,11 +8,13 @@ class RestaurantService {
 
   createRestaurant = async (restaurantData) => {
     try {
-      const newRestaurant = new this.restaurants.create({
+      const restaurant = await this.restaurants.create({
         ...restaurantData,
       });
-      return { restaurant: newRestaurant };
-    } catch (error) {}
+      return restaurant;
+    } catch (error) {
+      console.log(error, "error");
+    }
   };
 
   findRestaurantById = async (id) => {

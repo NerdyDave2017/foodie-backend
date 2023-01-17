@@ -31,7 +31,6 @@ class UserController {
 
   login = async (req, res, next) => {
     const { email, password } = req.body;
-    console.log(email, password);
 
     try {
       const user = await this.userService.findUserByEmail(email);
@@ -59,23 +58,25 @@ class UserController {
   updateData = async (req, res, next) => {
     const { email, ...rest } = req.body;
     try {
-      const { user } = await this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserByEmail(email);
       if (!user) {
         throw next(new UserNotFound());
       }
-      const updatedUser = await this.userService.updateData(email, ...rest);
+
+      const updatedUser = await this.userService.updateData(email, { ...rest });
       return res
         .status(200)
         .json({ status: "success", message: "User updated", updatedUser });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   };
 
   updatePassword = async (req, res, next) => {
-    const { email, password, newPassword } = req.user;
+    const { email, password, newPassword } = req.body;
     try {
-      const { user } = await this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserByEmail(email);
       if (!user) {
         throw next(new UserNotFound());
       }
@@ -109,7 +110,7 @@ class UserController {
   forgotPassword = async (req, res, next) => {
     const { email } = req.body;
     try {
-      const { user } = await this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserByEmail(email);
       if (!user) {
         throw next(new UserNotFound());
       }
@@ -126,7 +127,7 @@ class UserController {
 
   fetchAllUsers = async (req, res, next) => {
     try {
-      const { users } = await this.userService.fetchAllUser();
+      const users = await this.userService.fetchAllUser();
       return res
         .status(200)
         .json({ status: "success", message: "All users", users });
@@ -138,7 +139,7 @@ class UserController {
   deleteUser = async (req, res, next) => {
     const { email, password } = req.body;
     try {
-      const { user } = await this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserByEmail(email);
       if (!user) {
         throw next(new UserNotFound());
       }

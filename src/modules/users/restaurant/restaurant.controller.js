@@ -19,7 +19,7 @@ class UserController {
       }
 
       const restaurant = await this.restaurantService.createRestaurant({
-        owner: user._id,
+        user: user._id,
         ...rest,
       });
 
@@ -31,7 +31,7 @@ class UserController {
         .status(201)
         .json({ status: "success", message: "Restaurant created", restaurant });
     } catch (error) {
-      return res.status(400).json({ error });
+      next(error);
     }
   };
 
@@ -46,7 +46,7 @@ class UserController {
 
       const updatedRestaurant = await this.restaurantService.findOneAndUpdate(
         id,
-        ...rest
+        { ...rest }
       );
       return res.status(200).json({
         status: "success",
@@ -54,7 +54,7 @@ class UserController {
         updatedRestaurant,
       });
     } catch (error) {
-      return res.status(400).json({ error });
+      next(error);
     }
   };
 
@@ -72,10 +72,12 @@ class UserController {
         message: "All user restaurants",
         restaurants,
       });
-    } catch (error) {}
+    } catch (error) {
+      next(error);
+    }
   };
 
-  fetchAllRestaurants = async (req, res) => {
+  fetchAllRestaurants = async (req, res, next) => {
     try {
       const { restaurants } =
         await this.restaurantService.fetchAllRestaurants();
@@ -85,7 +87,7 @@ class UserController {
         restaurants,
       });
     } catch (error) {
-      return res.status(400).json({ error });
+      next(error);
     }
   };
 }

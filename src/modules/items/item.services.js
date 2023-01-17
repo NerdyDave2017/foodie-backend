@@ -7,8 +7,10 @@ class ItemService {
   }
 
   createItem = async (item) => {
+    console.log(item, "item data");
     try {
-      const newItem = await this.items.create({ ...item });
+      const newItem = await this.items.create(item);
+
       return newItem;
     } catch (err) {}
   };
@@ -30,6 +32,13 @@ class ItemService {
   getItemById = async (id) => {
     try {
       const item = await this.items.findById(id);
+      return item;
+    } catch (err) {}
+  };
+
+  deleteItem = async (id) => {
+    try {
+      const item = await this.items.findByIdAndDelete(id);
       return item;
     } catch (err) {}
   };
