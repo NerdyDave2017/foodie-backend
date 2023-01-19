@@ -5,34 +5,65 @@ class OrderController {
     this.orderService = new OrderService();
   }
 
-  async createOrder(req, res) {
+  async createOrder(req, res, next) {
     const order = req.body;
     const newOrder = await this.orderService.createOrder(order);
-    res.send(newOrder);
+    res.status(201).json({
+      status: "success",
+      message: "Order Created",
+      newOrder,
+    });
   }
 
-  async getOrders(req, res) {
+  async getOrders(req, res, next) {
     const orders = await this.orderService.getOrders();
-    res.send(orders);
+    res.status(200).json({
+      status: "success",
+      message: "All orders",
+      orders,
+    });
   }
 
-  async getOrderById(req, res) {
+  async getOrderById(req, res, next) {
     const id = req.params.id;
     const order = await this.orderService.getOrderById(id);
-    res.send(order);
+    res.status(200).json({
+      status: "success",
+      message: "Order found",
+      order,
+    });
   }
 
-  async updateOrderById(req, res) {
+  async updateOrderById(req, res, next) {
     const id = req.params.id;
     const order = req.body;
     const updatedOrder = await this.orderService.updateOrderById(id, order);
-    res.send(updatedOrder);
+    res.status(200).json({
+      status: "success",
+      message: "Order updated",
+      updatedOrder,
+    });
   }
 
-  async deleteOrderById(req, res) {
+  async getOrderByUserId(req, res, next) {
+    const { userId } = req.body;
+    const order = await this.orderService.getOrderByUserId(userId);
+
+    res.status(200).json({
+      status: "success",
+      message: "Order found",
+      order,
+    });
+  }
+
+  async deleteOrderById(req, res, next) {
     const id = req.params.id;
     const deletedOrder = await this.orderService.deleteOrderById(id);
-    res.send(deletedOrder);
+    res.status(200).json({
+      status: "success",
+      message: "Order deleted",
+      deletedOrder,
+    });
   }
 }
 
