@@ -7,35 +7,47 @@ class OrderService {
   }
 
   async createOrder(order) {
-    const newOrder = await this.orders.create(order);
-    return newOrder;
+    try {
+      const newOrder = await this.orders.create(order);
+      return newOrder;
+    } catch (error) {}
   }
 
   async getOrders() {
-    const orders = await this.orders.find();
-    return orders;
+    try {
+      const orders = await this.orders.find();
+      return orders;
+    } catch (error) {}
   }
 
   async getOrderById(id) {
-    const order = await this.orders.findById(id);
-    return order;
+    try {
+      const order = await this.orders.findById(id);
+      return order;
+    } catch (error) {}
   }
 
   async updateOrderById(id, order) {
-    const updatedOrder = await this.orders.findByIdAndUpdate(id, order, {
-      new: true,
-    });
-    return updatedOrder;
+    try {
+      const updatedOrder = await this.orders.findByIdAndUpdate(id, order, {
+        new: true,
+      });
+      return updatedOrder;
+    } catch (error) {}
   }
 
   async deleteOrderById(id) {
-    const deletedOrder = await this.orders.findByIdAndDelete(id);
-    return deletedOrder;
+    try {
+      const deletedOrder = await this.orders.findByIdAndDelete(id);
+      return deletedOrder;
+    } catch (error) {}
   }
 
   async getOrderByUserId(userId) {
-    const order = await this.orders.find({ userId: userId });
-    return order;
+    try {
+      const order = await this.orders.find({ userId: userId });
+      return order;
+    } catch (error) {}
   }
 }
 
