@@ -85,9 +85,7 @@ class OrderController {
         message: "Order deleted",
         deletedOrder,
       });
-    } catch (error) {
-      next(error);
-    }
+    } catch (error) {}
   }
 }
 
