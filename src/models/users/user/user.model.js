@@ -23,7 +23,21 @@ const UserSchema = new mongoose.Schema(
       state: { type: String },
       country: { type: String },
       postalCode: { type: Number },
+      location: {
+        latitude: { type: Number },
+        longitude: { type: Number },
+      },
+      line1: { type: Number },
+      line2: { type: Number },
+      email: { type: String },
     },
+    walletAmount: { type: Number, default: 0 },
+    authToken: { type: String },
+    fcmToken: { type: String },
+    active: { type: Boolean, default: true },
+    appIdentifier: { type: String },
+    stripeCustomer: { type: String },
+    lastOnlineTimestamp: { type: Date },
     favourites: [
       {
         type: mongoose.Schema.Types.ObjectId,
