@@ -8,12 +8,21 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     phoneNumber: { type: Number, required: true },
-    profileImage: { type: String },
-    role: [{ type: String, require: true, default: "user" }], // one or more of "driver", "user", "merchant", "admin"
+    profileProfileURL: { type: String },
+    role: [{ type: String, require: true, default: "customer" }], // one or more of "driver", "user", "merchant", "admin"
     settings: {
-      allowPushNotifications: { type: Boolean },
-      orderUpdates: { type: Boolean },
-      promotions: { type: Boolean },
+      newArrivals: { type: Boolean, default: false },
+      orderUpdates: { type: Boolean, default: false },
+      promotions: { type: Boolean, default: false },
+      pushNewMessages: { type: Boolean, default: false },
+    },
+    shippingAddress: {
+      address: { type: String },
+      city: { type: String },
+      apartmentSuite: { type: String },
+      state: { type: String },
+      country: { type: String },
+      postalCode: { type: Number },
     },
     favourites: [
       {
@@ -22,14 +31,7 @@ const UserSchema = new mongoose.Schema(
         // references the _id field in the items collection
       },
     ],
-    customerAddress: {
-      address: { type: String },
-      city: { type: String },
-      apartmentSuite: { type: String },
-      state: { type: String },
-      country: { type: String },
-      zipCode: { type: String },
-    },
+
     restaurants: [
       {
         type: mongoose.Schema.Types.ObjectId,
