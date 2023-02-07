@@ -4,6 +4,7 @@ const UserNotFound = require("../../../exceptions/UserNotFound");
 const InvalidCredentials = require("../../../exceptions/InvalidCredentials");
 const HttpException = require("../../../exceptions/HttpExceptions");
 const matchPassword = require("../../../utils/matchPassword");
+const generateToken = require("../../../utils/generateToken");
 
 class UserController {
   constructor() {
@@ -21,9 +22,14 @@ class UserController {
 
       const newUser = await this.userService.create(req.body);
 
-      return res
-        .status(201)
-        .json({ status: "success", messsage: "User Created", newUser });
+      const authToken = generateToken(newUser._id);
+
+      return res.status(201).json({
+        status: "success",
+        messsage: "User Created",
+        newUser,
+        authToken,
+      });
     } catch (error) {
       next(error);
     }
@@ -47,9 +53,11 @@ class UserController {
         throw next(new InvalidCredentials());
       }
 
+      const authToken = generateToken(user._id);
+
       return res
         .status(200)
-        .json({ status: "success", message: "User signin", user });
+        .json({ status: "success", message: "User signin", user, authToken });
     } catch (error) {
       next(error);
     }

@@ -32,7 +32,6 @@ const UserSchema = new mongoose.Schema(
       email: { type: String },
     },
     walletAmount: { type: Number, default: 0 },
-    authToken: { type: String },
     fcmToken: { type: String },
     active: { type: Boolean, default: true },
     appIdentifier: { type: String },
