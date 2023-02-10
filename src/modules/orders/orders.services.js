@@ -29,9 +29,13 @@ class OrderService {
 
   async updateOrderById(id, order) {
     try {
-      const updatedOrder = await this.orders.findByIdAndUpdate(id, order, {
-        new: true,
-      });
+      const updatedOrder = await this.orders.findByIdAndUpdate(
+        id,
+        { ...order },
+        {
+          new: true,
+        }
+      );
       return updatedOrder;
     } catch (error) {}
   }

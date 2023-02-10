@@ -1,4 +1,5 @@
 const OrderService = require("./orders.services");
+const HttpException = require("../../exceptions/HttpExceptions");
 
 class OrderController {
   constructor() {
@@ -8,7 +9,14 @@ class OrderController {
   async createOrder(req, res, next) {
     try {
       const order = req.body;
-      const newOrder = await this.orderService.createOrder(order);
+      const newOrder = await this.orderService
+        .createOrder(order)
+        .then(async (order) => {
+          await this.orderService.updateOrderById(order._id, {
+            status: "pending",
+          });
+        });
+
       res.status(201).json({
         status: "success",
         message: "Order Created",
@@ -50,6 +58,13 @@ class OrderController {
     try {
       const id = req.params.id;
       const order = req.body;
+
+      const orderExist = await this.orderService.getOrderById(id);
+
+      if (!orderExist) {
+        throw next(new HttpException(404, "Order does not exist"));
+      }
+
       const updatedOrder = await this.orderService.updateOrderById(id, order);
       res.status(200).json({
         status: "success",
@@ -76,9 +91,53 @@ class OrderController {
     }
   }
 
+  async acceptOrder(req, res, next) {
+    try {
+      const { orderId: id } = req.params.id;
+
+      const orderExist = await this.orderService.getOrderById(id);
+
+      if (!orderExist) {
+        throw next(new HttpException(404, "Order does not exist"));
+      }
+
+      const updatedOrder = await this.orderService.updateOrderById(id, {
+        status: "accepted",
+      });
+      res.status(200).json({
+        status: "success",
+        message: "Order updated",
+        updatedOrder,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async rejectOrder(req, res, next) {
+    try {
+      const { orderId: id } = req.params.id;
+
+      const orderExist = await this.orderService.getOrderById(id);
+
+      if (!orderExist) {
+        throw next(new HttpException(404, "Order does not exist"));
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async deleteOrderById(req, res, next) {
     try {
       const id = req.params.id;
+
+      const orderExist = await this.orderService.getOrderById(id);
+
+      if (!orderExist) {
+        throw next(new HttpException(404, "Order does not exist"));
+      }
+
       const deletedOrder = await this.orderService.deleteOrderById(id);
       res.status(200).json({
         status: "success",

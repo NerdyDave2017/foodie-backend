@@ -5,11 +5,15 @@ const OrderSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
-    }, // references the _id field in the users collection
+    }, // references the _id field in the users collection (customer)
+    restaurantId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Restaurants",
+    }, // references the _id field in the restaurants collection (merchant)
     driverId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Drivers",
-    }, // references the _id field in the drivers collection
+    }, // references the _id field in the drivers collection (driver)
     trackingId: { type: Number, required: true },
     items: [
       {
@@ -22,7 +26,7 @@ const OrderSchema = new mongoose.Schema(
     ],
     orderType: { type: String, required: true }, // delivery or takeout
     totalPrice: { type: Number, required: true },
-    status: { type: String, required: true }, // one of "pending", "in_progress", "delivered"
+    status: { type: String, required: true }, // one of "pending", "accepted", "rejected", "in_progress", "delivered"
     deliveryStartTime: { type: Date },
     deliveryEndTime: { type: Date },
   },
