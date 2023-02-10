@@ -45,7 +45,17 @@ class ItemController {
 
   getRestaurantItems = async (req, res, next) => {
     console.log(req.params, "restaurant Items");
+    const restaurantId = req.params.restaurantId;
     try {
+      // Check if the restaurant exists
+      const restaurantExists = await this.restaurantService.findRestaurantById(
+        restaurantId
+      );
+
+      if (!restaurantExists) {
+        throw next(new HttpException(404, "Restaurant not found"));
+      }
+
       const items = await this.itemService.getRestaurantItems(
         req.params.restaurantId
       );
@@ -59,8 +69,15 @@ class ItemController {
 
   getItemById = async (req, res, next) => {
     console.log(req.params, "items");
+    const id = req.params.id;
     try {
-      const item = await this.itemService.getItemById(req.params.id);
+      const itemExist = await this.itemService.getItemById(id);
+
+      if (!itemExist) {
+        throw next(new HttpException(404, "Item not found"));
+      }
+
+      const item = await this.itemService.getItemById(id);
       return res.status(200).json({ status: "success", message: "Item", item });
     } catch (err) {
       next(err);
@@ -77,6 +94,12 @@ class ItemController {
 
       if (!restaurantExists) {
         throw next(new HttpException(404, "Restaurant not found"));
+      }
+
+      const itemExist = await this.itemService.getItemById(id);
+
+      if (!itemExist) {
+        throw next(new HttpException(404, "Item not found"));
       }
 
       const item = await this.itemService.deleteItem(itemId);

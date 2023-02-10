@@ -1,9 +1,11 @@
 const OrderService = require("./orders.services");
+const userService = require("../users/user/user.services");
 const HttpException = require("../../exceptions/HttpExceptions");
 
 class OrderController {
   constructor() {
     this.orderService = new OrderService();
+    this.userService = new userService();
   }
 
   async createOrder(req, res, next) {
@@ -43,6 +45,13 @@ class OrderController {
   async getOrderById(req, res, next) {
     try {
       const id = req.params.id;
+
+      const orderExist = await this.orderService.getOrderById(id);
+
+      if (!orderExist) {
+        throw next(new HttpException(404, "Order does not exist"));
+      }
+
       const order = await this.orderService.getOrderById(id);
       res.status(200).json({
         status: "success",
@@ -79,6 +88,13 @@ class OrderController {
   async getOrderByUserId(req, res, next) {
     try {
       const { userId } = req.body;
+
+      const user = await this.userService.find;
+
+      if (user) {
+        throw next(new HttpException(401, "User already exists"));
+      }
+
       const order = await this.orderService.getOrderByUserId(userId);
 
       res.status(200).json({
