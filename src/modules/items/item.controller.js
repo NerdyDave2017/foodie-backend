@@ -11,11 +11,11 @@ class ItemController {
   }
 
   createItem = async (req, res, next) => {
-    const { restaurant } = req.body;
+    const { restaurantId } = req.body;
     try {
       // Check if the restaurant exists
       const restaurantExists = await this.restaurantService.findRestaurantById(
-        restaurant
+        restaurantId
       );
 
       if (!restaurantExists) {
@@ -79,6 +79,34 @@ class ItemController {
 
       const item = await this.itemService.getItemById(id);
       return res.status(200).json({ status: "success", message: "Item", item });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  updateItem = async (req, res, next) => {
+    const { restaurantId, itemId } = req.body;
+
+    try {
+      // Check if the restaurant exists
+      const restaurantExists = await this.restaurantService.getRestaurantById(
+        restaurantId
+      );
+
+      if (!restaurantExists) {
+        throw next(new HttpException(404, "Restaurant not found"));
+      }
+
+      const itemExist = await this.itemService.getItemById(itemId);
+
+      if (!itemExist) {
+        throw next(new HttpException(404, "Item not found"));
+      }
+
+      const item = await this.itemService.updateItem(itemId, req.body);
+      return res
+        .status(200)
+        .json({ status: "success", message: "Item updated", item });
     } catch (err) {
       next(err);
     }
