@@ -1,10 +1,11 @@
 const RestaurantService = require("./restaurant.services");
 const UserService = require("../user/user.services");
+const SpecialDiscountService = require("../../discounts/discounts.services");
 const UserNotFound = require("../../../exceptions/UserNotFound");
 const InvalidCredentials = require("../../../exceptions/InvalidCredentials");
 const HttpException = require("../../../exceptions/HttpExceptions");
 
-class UserController {
+class RestaurantController {
   constructor() {
     this.restaurantService = new RestaurantService();
     this.userService = new UserService();
@@ -91,4 +92,4 @@ class UserController {
   };
 }
 
-module.exports = UserController;
+module.exports = RestaurantController;

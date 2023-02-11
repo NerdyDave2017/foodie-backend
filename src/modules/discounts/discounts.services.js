@@ -45,3 +45,5 @@ class SpecialDiscountService {
     } catch (err) {}
   };
 }
+
+module.exports = SpecialDiscountService;
