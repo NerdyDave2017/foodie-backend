@@ -7,6 +7,7 @@ const SpecialDiscountSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Restaurants",
     },
+    active: { type: Boolean },
     discount: { type: Number },
     minOrder: { type: Number },
     startDate: { type: Date },

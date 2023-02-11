@@ -23,7 +23,7 @@ class ItemService {
 
   getRestaurantItems = async (restaurantId) => {
     try {
-      const items = await this.items.find({ restaurant: restaurantId });
+      const items = await this.items.find({ restaurantId: restaurantId });
       return items;
     } catch (error) {}
   };
