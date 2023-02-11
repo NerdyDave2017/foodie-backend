@@ -26,7 +26,7 @@ class SpecialDiscountController {
       const newDiscount = await this.specialDiscountService.createDiscount(
         discount
       );
-      res.status(201).json({
+      return res.status(201).json({
         status: "success",
         message: "Discount created",
         newDiscount,
@@ -36,9 +36,26 @@ class SpecialDiscountController {
     }
   }
 
-  async getDiscounts(req, res, next) {}
+  async getAllDiscounts(req, res, next) {
+    try {
+      const discounts = await this.specialDiscountService.getAllDiscounts();
+      return res.status(200).json({
+        status: "success",
+        message: "All discounts",
+        discounts,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 
-  async getDiscountById(req, res, next) {}
+  async getDiscountById(req, res, next) {
+    try {
+      const { id } = req.body;
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async getRestaurantDiscounts(req, res, next) {}
 

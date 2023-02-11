@@ -58,15 +58,31 @@ class RestaurantController {
     }
   };
 
-  getUserRestaurants = async (req, res, next) => {
-    const { id } = req.body;
+  getRestaurantById = async (req, res, next) => {
     try {
-      const user = await this.userService.findUserById(id);
+      const { id } = req.body;
+      const restaurant = await this.restaurantService.findRestaurantById(id);
+      return res.status(200).json({
+        status: "success",
+        message: "restaurant found",
+        restaurant,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getUserRestaurants = async (req, res, next) => {
+    const { userId } = req.body;
+    try {
+      const user = await this.userService.findUserById(userId);
       if (!user) {
         throw next(new UserNotFound());
       }
 
-      const restaurants = await this.restaurantService.findUserRestaurants(id);
+      const restaurants = await this.restaurantService.findUserRestaurants(
+        userId
+      );
       return res.status(200).json({
         status: "success",
         message: "All user restaurants",
@@ -77,7 +93,7 @@ class RestaurantController {
     }
   };
 
-  fetchAllRestaurants = async (req, res, next) => {
+  getAllRestaurants = async (req, res, next) => {
     try {
       const restaurants = await this.restaurantService.fetchAllRestaurants();
       return res.status(200).json({
