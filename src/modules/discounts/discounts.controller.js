@@ -8,7 +8,33 @@ class SpecialDiscountController {
     this.restaurantService = new RestaurantService();
   }
 
-  async createDiscount(req, res, next) {}
+  async createDiscount(req, res, next) {
+    try {
+      const { restaurantId } = req.body;
+      const discount = req.body;
+
+      const restaurantExist = await this.restaurantService.findRestaurantById(
+        restaurantId
+      );
+
+      if (!restaurantExist) {
+        throw next(new HttpException(404, "Restaurant not found"));
+      }
+
+      //Generate discount code
+
+      const newDiscount = await this.specialDiscountService.createDiscount(
+        discount
+      );
+      res.status(201).json({
+        status: "success",
+        message: "Discount created",
+        newDiscount,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async getDiscounts(req, res, next) {}
 

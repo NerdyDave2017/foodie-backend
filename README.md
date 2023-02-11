@@ -1,5 +1,7 @@
 Use SOLID principles
 
+Create validation middleware with validation rules for req.body, req.params, req.query
+
 Controller Layer
 Service Layer
 Data Access Layer
