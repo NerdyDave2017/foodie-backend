@@ -12,6 +12,7 @@ const SpecialDiscountSchema = new mongoose.Schema(
     minOrder: { type: Number },
     startDate: { type: Date },
     endDate: { type: Date },
+    expired: { type: Boolean },
     usabilityLimit: { type: Number },
   },
   {
