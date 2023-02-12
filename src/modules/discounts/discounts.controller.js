@@ -9,7 +9,7 @@ class SpecialDiscountController {
     this.restaurantService = new RestaurantService();
   }
 
-  async createDiscount(req, res, next) {
+  createDiscount = async (req, res, next) => {
     try {
       const { restaurantId } = req.body;
       const discount = req.body;
@@ -39,9 +39,9 @@ class SpecialDiscountController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async getAllDiscounts(req, res, next) {
+  getAllDiscounts = async (req, res, next) => {
     try {
       const discounts = await this.specialDiscountService.getAllDiscounts();
       return res.status(200).json({
@@ -52,9 +52,9 @@ class SpecialDiscountController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async getDiscountById(req, res, next) {
+  getDiscountById = async (req, res, next) => {
     try {
       const { id } = req.params;
 
@@ -75,9 +75,9 @@ class SpecialDiscountController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async getRestaurantDiscounts(req, res, next) {
+  getRestaurantDiscounts = async (req, res, next) => {
     try {
       const { restaurantId } = req.params;
 
@@ -99,9 +99,9 @@ class SpecialDiscountController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async activateDiscount(req, res, next) {
+  activateDiscount = async (req, res, next) => {
     try {
       const { id, restaurantId } = req.body;
 
@@ -135,9 +135,9 @@ class SpecialDiscountController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async deactivateDiscount(req, res, next) {
+  deactivateDiscount = async (req, res, next) => {
     try {
       const { id, restaurantId } = req.body;
 
@@ -171,9 +171,9 @@ class SpecialDiscountController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async deleteDiscount(req, res, next) {
+  deleteDiscount = async (req, res, next) => {
     try {
       const { id, restaurantId } = req.body;
 
@@ -202,7 +202,7 @@ class SpecialDiscountController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 }
 
 module.exports = SpecialDiscountController;

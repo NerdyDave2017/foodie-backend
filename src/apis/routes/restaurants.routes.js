@@ -9,6 +9,4 @@ Router.get("/", restaurantController.getAllRestaurants);
 Router.get("/user/:userId", restaurantController.getUserRestaurants);
 Router.get("/:id", restaurantController.getRestaurantById);
 
-// Special discounts routes
-
 module.exports = Router;
