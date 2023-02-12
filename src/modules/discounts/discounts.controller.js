@@ -75,7 +75,29 @@ class SpecialDiscountController {
     }
   }
 
-  async getRestaurantDiscounts(req, res, next) {}
+  async getRestaurantDiscounts(req, res, next) {
+    try {
+      const { restaurantId } = req.body;
+
+      const restaurantExist = await this.restaurantService.findRestaurantById(
+        restaurantId
+      );
+
+      if (!restaurantExist) {
+        throw next(new HttpException(404, "Restaurant not found"));
+      }
+
+      const discounts =
+        await this.specialDiscountService.getRestaurantDiscounts(restaurantId);
+      return res.status(200).json({
+        status: "success",
+        message: "All Restaurant discounts",
+        discounts,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async activateDiscount(req, res, next) {}
 
