@@ -1,13 +1,13 @@
-import express from "express";
+const express = require("express");
 
 const app = express();
-import dotenv from "dotenv";
-import bodyparser from "body-parser";
-import connectDB from "./database/connectDB";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import errorMiddleware from "./apis/middlewares/error.middleware";
-import HttpException from "./exceptions/HttpExceptions";
+const dotenv = require("dotenv");
+const bodyparser = require("body-parser");
+const connectDB = require("./database/connectDB");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const errorMiddleware = require("./apis/middlewares/error.middleware");
+const HttpException = require("./exceptions/HttpExceptions");
 
 dotenv.config();
 
