@@ -1,11 +1,6 @@
-import { customAlphabet } from "nanoid";
-
-const nanoid = customAlphabet(
-  "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYD",
-  11
-);
+const { generateShortUuid } = require("custom-uuid");
 const generateShortCode = () => {
-  return nanoid();
+  return generateShortUuid();
 };
 
 module.exports = generateShortCode;
