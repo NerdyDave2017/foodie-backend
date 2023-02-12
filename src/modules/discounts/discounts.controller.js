@@ -54,7 +54,7 @@ class SpecialDiscountController {
 
   async getDiscountById(req, res, next) {
     try {
-      const { id } = req.body;
+      const { id } = req.params;
 
       const discountExist = await this.specialDiscountService.getDiscountById(
         id
@@ -77,7 +77,7 @@ class SpecialDiscountController {
 
   async getRestaurantDiscounts(req, res, next) {
     try {
-      const { restaurantId } = req.body;
+      const { restaurantId } = req.params;
 
       const restaurantExist = await this.restaurantService.findRestaurantById(
         restaurantId
@@ -173,7 +173,15 @@ class SpecialDiscountController {
 
   async deleteDiscount(req, res, next) {
     try {
-      const { id } = req.body;
+      const { id, restaurantId } = req.body;
+
+      const restaurantExist = await this.restaurantService.findRestaurantById(
+        restaurantId
+      );
+
+      if (!restaurantExist) {
+        throw next(new HttpException(404, "Restaurant not found"));
+      }
 
       const discountExist = await this.specialDiscountService.getDiscountById(
         id
