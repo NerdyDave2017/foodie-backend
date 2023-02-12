@@ -8,7 +8,7 @@ const SpecialDiscountSchema = new mongoose.Schema(
       ref: "Restaurants",
       required: true,
     },
-    active: { type: Boolean },
+    active: { type: Boolean, default: true },
     discount: { type: Number },
     startDate: { type: Date },
     endDate: { type: Date },

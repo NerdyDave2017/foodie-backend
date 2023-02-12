@@ -44,6 +44,13 @@ class SpecialDiscountService {
       return updatedDiscount;
     } catch (err) {}
   };
+
+  deleteDiscountById = async (id) => {
+    try {
+      const deletedDiscount = await this.specialDiscount.findByIdAndDelete(id);
+      return deletedDiscount;
+    } catch (err) {}
+  };
 }
 
 module.exports = SpecialDiscountService;

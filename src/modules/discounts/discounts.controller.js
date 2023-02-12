@@ -29,6 +29,7 @@ class SpecialDiscountController {
         ...discount,
         code: discountCode,
       });
+
       return res.status(201).json({
         status: "success",
         message: "Discount created",

@@ -5,13 +5,13 @@ const specialDiscountController = new SpecialDiscountController();
 
 Router.post("/create", specialDiscountController.createDiscount);
 Router.get("/", specialDiscountController.getAllDiscounts);
-Router.get("/:id", specialDiscountController.getDiscountById);
 Router.get(
-  "/discounts/:restaurantId",
+  "/restaurant/:restaurantId",
   specialDiscountController.getRestaurantDiscounts
 );
 Router.patch("/activate", specialDiscountController.activateDiscount);
 Router.patch("/deactivate", specialDiscountController.deactivateDiscount);
 Router.delete("/delete", specialDiscountController.deleteDiscount);
+Router.get("/:id", specialDiscountController.getDiscountById);
 
 module.exports = Router;
