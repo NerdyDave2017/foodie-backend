@@ -61,7 +61,13 @@ class RestaurantController {
   getRestaurantById = async (req, res, next) => {
     try {
       const { id } = req.body;
+
       const restaurant = await this.restaurantService.findRestaurantById(id);
+
+      if (!restaurant) {
+        throw next(new HttpException(404, "Restaurant not found"));
+      }
+
       return res.status(200).json({
         status: "success",
         message: "restaurant found",
@@ -73,7 +79,8 @@ class RestaurantController {
   };
 
   getUserRestaurants = async (req, res, next) => {
-    const { userId } = req.body;
+    const { userId } = req.params;
+
     try {
       const user = await this.userService.findUserById(userId);
       if (!user) {
