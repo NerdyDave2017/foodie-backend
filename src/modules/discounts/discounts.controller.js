@@ -14,8 +14,6 @@ class SpecialDiscountController {
       const { restaurantId } = req.body;
       const discount = req.body;
 
-      console.log(req.body);
-
       const restaurantExist = await this.restaurantService.findRestaurantById(
         restaurantId
       );
