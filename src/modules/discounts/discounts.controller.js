@@ -99,7 +99,33 @@ class SpecialDiscountController {
     }
   }
 
-  async activateDiscount(req, res, next) {}
+  async activateDiscount(req, res, next) {
+    try {
+      const { id } = req.body;
+
+      const discountExist = await this.specialDiscountService.getDiscountById(
+        id
+      );
+
+      if (!discountExist) {
+        throw next(new HttpException(404, "Discount not found"));
+      }
+
+      const discount = await this.specialDiscountService.updateDiscountById(
+        id,
+        {
+          active: true,
+        }
+      );
+      return res.status(200).json({
+        status: "success",
+        message: "Discount activated",
+        discount,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async deactivateDiscount(req, res, next) {}
 
