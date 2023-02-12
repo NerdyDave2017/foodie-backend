@@ -101,7 +101,15 @@ class SpecialDiscountController {
 
   async activateDiscount(req, res, next) {
     try {
-      const { id } = req.body;
+      const { id, restaurantId } = req.body;
+
+      const restaurantExist = await this.restaurantService.findRestaurantById(
+        restaurantId
+      );
+
+      if (!restaurantExist) {
+        throw next(new HttpException(404, "Restaurant not found"));
+      }
 
       const discountExist = await this.specialDiscountService.getDiscountById(
         id
@@ -127,9 +135,64 @@ class SpecialDiscountController {
     }
   }
 
-  async deactivateDiscount(req, res, next) {}
+  async deactivateDiscount(req, res, next) {
+    try {
+      const { id, restaurantId } = req.body;
 
-  async deleteDiscount(req, res, next) {}
+      const restaurantExist = await this.restaurantService.findRestaurantById(
+        restaurantId
+      );
+
+      if (!restaurantExist) {
+        throw next(new HttpException(404, "Restaurant not found"));
+      }
+
+      const discountExist = await this.specialDiscountService.getDiscountById(
+        id
+      );
+
+      if (!discountExist) {
+        throw next(new HttpException(404, "Discount not found"));
+      }
+
+      const discount = await this.specialDiscountService.updateDiscountById(
+        id,
+        {
+          active: false,
+        }
+      );
+      return res.status(200).json({
+        status: "success",
+        message: "Discount deactivated",
+        discount,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteDiscount(req, res, next) {
+    try {
+      const { id } = req.body;
+
+      const discountExist = await this.specialDiscountService.getDiscountById(
+        id
+      );
+
+      if (!discountExist) {
+        throw next(new HttpException(404, "Discount not found"));
+      }
+
+      const discount = await this.specialDiscountService.deleteDiscountById(id);
+      return res.status(200).json({
+        status: "success",
+        message: "Discount deleted",
+        discount,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = SpecialDiscountController;
