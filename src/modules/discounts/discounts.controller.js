@@ -1,6 +1,7 @@
 const SpecialDiscountService = require("./discounts.services");
 const RestaurantService = require("../users/restaurant/restaurant.services");
 const HttpException = require("../../exceptions/HttpExceptions");
+const generateDiscountCode = require("../../utils/generateShortCode");
 
 class SpecialDiscountController {
   constructor() {
@@ -22,10 +23,12 @@ class SpecialDiscountController {
       }
 
       //Generate discount code
+      const discountCode = generateDiscountCode();
 
-      const newDiscount = await this.specialDiscountService.createDiscount(
-        discount
-      );
+      const newDiscount = await this.specialDiscountService.createDiscount({
+        ...discount,
+        code: discountCode,
+      });
       return res.status(201).json({
         status: "success",
         message: "Discount created",
@@ -63,3 +66,5 @@ class SpecialDiscountController {
 
   async updateDiscount(req, res, next) {}
 }
+
+module.exports = SpecialDiscountController;
