@@ -5,6 +5,6 @@ const restaurantController = new RestaurantController();
 
 Router.post("/create", restaurantController.create);
 Router.patch("/update", restaurantController.updateData);
-Router.get("/", restaurantController.fetchAllRestaurants);
+Router.get("/", restaurantController.getAllRestaurants);
 
 module.exports = Router;
