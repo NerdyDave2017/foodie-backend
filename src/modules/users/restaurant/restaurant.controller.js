@@ -60,7 +60,7 @@ class RestaurantController {
 
   getRestaurantById = async (req, res, next) => {
     try {
-      const { id } = req.body;
+      const { id } = req.params;
 
       const restaurant = await this.restaurantService.findRestaurantById(id);
 
