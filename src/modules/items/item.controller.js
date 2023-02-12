@@ -44,7 +44,6 @@ class ItemController {
   };
 
   getRestaurantItems = async (req, res, next) => {
-    console.log(req.params, "restaurant Items");
     const restaurantId = req.params.restaurantId;
     try {
       // Check if the restaurant exists
@@ -68,7 +67,6 @@ class ItemController {
   };
 
   getItemById = async (req, res, next) => {
-    console.log(req.params, "items");
     const id = req.params.id;
     try {
       const itemExist = await this.itemService.getItemById(id);
