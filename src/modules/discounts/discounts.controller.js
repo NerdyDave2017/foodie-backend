@@ -55,6 +55,21 @@ class SpecialDiscountController {
   async getDiscountById(req, res, next) {
     try {
       const { id } = req.body;
+
+      const discountExist = await this.specialDiscountService.getDiscountById(
+        id
+      );
+
+      if (!discountExist) {
+        throw next(new HttpException(404, "Discount not found"));
+      }
+
+      const discount = await this.specialDiscountService.getDiscountById(id);
+      return res.status(200).json({
+        status: "success",
+        message: "Discount found",
+        discount,
+      });
     } catch (error) {
       next(error);
     }
@@ -62,9 +77,11 @@ class SpecialDiscountController {
 
   async getRestaurantDiscounts(req, res, next) {}
 
-  async deleteDiscount(req, res, next) {}
+  async activateDiscount(req, res, next) {}
 
-  async updateDiscount(req, res, next) {}
+  async deactivateDiscount(req, res, next) {}
+
+  async deleteDiscount(req, res, next) {}
 }
 
 module.exports = SpecialDiscountController;
