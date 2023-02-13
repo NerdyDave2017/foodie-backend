@@ -8,7 +8,7 @@ class OrderController {
     this.userService = new userService();
   }
 
-  async createOrder(req, res, next) {
+  createOrder = async (req, res, next) => {
     try {
       const order = req.body;
       const newOrder = await this.orderService
@@ -27,9 +27,9 @@ class OrderController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async getOrders(req, res, next) {
+  getOrders = async (req, res, next) => {
     try {
       const orders = await this.orderService.getOrders();
       res.status(200).json({
@@ -40,9 +40,9 @@ class OrderController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async getOrderById(req, res, next) {
+  getOrderById = async (req, res, next) => {
     try {
       const id = req.params.id;
 
@@ -61,9 +61,9 @@ class OrderController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async updateOrderById(req, res, next) {
+  updateOrderById = async (req, res, next) => {
     try {
       const id = req.params.id;
       const order = req.body;
@@ -83,9 +83,9 @@ class OrderController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async getOrderByUserId(req, res, next) {
+  getOrderByUserId = async (req, res, next) => {
     try {
       const { userId } = req.body;
 
@@ -105,9 +105,9 @@ class OrderController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async acceptOrder(req, res, next) {
+  acceptOrder = async (req, res, next) => {
     try {
       const { orderId: id } = req.params.id;
 
@@ -128,9 +128,9 @@ class OrderController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async rejectOrder(req, res, next) {
+  rejectOrder = async (req, res, next) => {
     try {
       const { orderId: id } = req.params.id;
 
@@ -142,9 +142,9 @@ class OrderController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  async deleteOrderById(req, res, next) {
+  deleteOrderById = async (req, res, next) => {
     try {
       const id = req.params.id;
 
@@ -163,7 +163,7 @@ class OrderController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 }
 
 module.exports = OrderController;
