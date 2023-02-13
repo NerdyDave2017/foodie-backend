@@ -87,7 +87,7 @@ class ItemController {
 
     try {
       // Check if the restaurant exists
-      const restaurantExists = await this.restaurantService.getRestaurantById(
+      const restaurantExists = await this.restaurantService.findRestaurantById(
         restaurantId
       );
 
@@ -114,7 +114,7 @@ class ItemController {
     const { restaurant, itemId } = req.body;
     try {
       // Check if the restaurant exists
-      const restaurantExists = await this.restaurantService.getRestaurantById(
+      const restaurantExists = await this.restaurantService.findRestaurantById(
         restaurant
       );
 
