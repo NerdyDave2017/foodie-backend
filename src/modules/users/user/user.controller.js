@@ -143,7 +143,7 @@ class UserController {
     }
   };
 
-  addBankDetails = async (req, res, next) => {
+  updateBankDetails = async (req, res, next) => {
     const { email, id, ...rest } = req.body;
     try {
       const user = await this.userService.findUserById(id);
@@ -153,10 +153,51 @@ class UserController {
       const updatedUser = await this.userService.updateData(id, {
         ...rest,
       });
+
+      const bankDetails = ({
+        accountName,
+        accountNumber,
+        bankName,
+        branchName,
+        otherInformation,
+      } = updatedUser.bankDetails);
+      return res.status(200).json({
+        status: "success",
+        message: "Bank details updated",
+        bankDetails,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getBankDetails = async (req, res, next) => {
+    const { email, id, ...rest } = req.body;
+    try {
+      const user = await this.userService.findUserById(id);
+      if (!user) {
+        throw next(new UserNotFound());
+      }
+      const {
+        accountName,
+        accountNumber,
+        bankName,
+        branchName,
+        otherInformation,
+      } = user.bankDetails;
+
+      const bankDetails = {
+        accountName,
+        accountNumber,
+        bankName,
+        branchName,
+        otherInformation,
+      };
+
       return res.status(200).json({
         status: "success",
         message: "Bank details added",
-        updatedUser,
+        bankDetails,
       });
     } catch (error) {
       next(error);
