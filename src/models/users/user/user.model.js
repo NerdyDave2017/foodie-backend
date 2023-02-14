@@ -32,6 +32,13 @@ const UserSchema = new mongoose.Schema(
       email: { type: String },
     },
     walletAmount: { type: Number, default: 0 },
+    bankDetails: {
+      accountName: { type: String },
+      accountNumber: { type: Number },
+      bankName: { type: String },
+      branchName: { type: String },
+      otherInformation: { type: String },
+    },
     fcmToken: { type: String },
     active: { type: Boolean, default: true },
     appIdentifier: { type: String },
