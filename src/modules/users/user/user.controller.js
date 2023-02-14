@@ -71,7 +71,7 @@ class UserController {
         throw next(new UserNotFound());
       }
 
-      const updatedUser = await this.userService.updateData(email, { ...rest });
+      const updatedUser = await this.userService.updateData(id, { ...rest });
       return res
         .status(200)
         .json({ status: "success", message: "User updated", updatedUser });
@@ -82,9 +82,9 @@ class UserController {
   };
 
   updatePassword = async (req, res, next) => {
-    const { email, password, newPassword } = req.body;
+    const { email, id, password, newPassword } = req.body;
     try {
-      const user = await this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserById(id);
       if (!user) {
         throw next(new UserNotFound());
       }
@@ -93,9 +93,8 @@ class UserController {
       if (!validPassword) {
         throw next(new InvalidCredentials());
       }
-      const updatedUser = await this.userService.updatePassword(email, {
-        password,
-        newPassword,
+      const updatedUser = await this.userService.updateData(id, {
+        password: newPassword,
       });
       return res
         .status(200)
@@ -116,9 +115,9 @@ class UserController {
    */
 
   forgotPassword = async (req, res, next) => {
-    const { email } = req.body;
+    const { id } = req.body;
     try {
-      const user = await this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserById(id);
       if (!user) {
         throw next(new UserNotFound());
       }
@@ -145,13 +144,13 @@ class UserController {
   };
 
   addBankDetails = async (req, res, next) => {
-    const { email, ...rest } = req.body;
+    const { email, id, ...rest } = req.body;
     try {
       const user = await this.userService.findUserById(id);
       if (!user) {
         throw next(new UserNotFound());
       }
-      const updatedUser = await this.userService.updateData(email, {
+      const updatedUser = await this.userService.updateData(id, {
         ...rest,
       });
       return res.status(200).json({
@@ -167,7 +166,7 @@ class UserController {
   deleteUser = async (req, res, next) => {
     const { email, password } = req.body;
     try {
-      const user = await this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserById(id);
       if (!user) {
         throw next(new UserNotFound());
       }
