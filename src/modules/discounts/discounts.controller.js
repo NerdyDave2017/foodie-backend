@@ -1,4 +1,4 @@
-const SpecialDiscountService = require("./discount.services");
+const SpecialDiscountService = require("./discounts.services");
 const RestaurantService = require("../users/restaurant/restaurant.services");
 const HttpException = require("../../exceptions/HttpExceptions");
 
