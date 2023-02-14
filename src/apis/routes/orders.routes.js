@@ -6,8 +6,8 @@ const orderController = new OrderController();
 Router.get("/", orderController.getOrders);
 Router.post("/create", orderController.createOrder);
 Router.get("/user/:userId", orderController.getOrderByUserId);
+Router.patch("/update/:id/:userId", orderController.updateOrderById);
 Router.delete("/delete/:id", orderController.deleteOrderById);
 Router.get("/:id", orderController.getOrderById);
-Router.patch("/:id", orderController.updateOrderById);
 
 module.exports = Router;

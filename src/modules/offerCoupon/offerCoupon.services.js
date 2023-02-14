@@ -1,4 +1,4 @@
-const SpecialDiscount = require("../../models/discounts/discounts.model");
+const SpecialDiscount = require("../../models/offerCoupon/offerCoupon.model");
 
 class SpecialDiscountService {
   specialDiscount;

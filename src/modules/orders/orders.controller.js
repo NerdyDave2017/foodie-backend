@@ -65,13 +65,28 @@ class OrderController {
 
   updateOrderById = async (req, res, next) => {
     try {
+      //Check if user exist
+      //Check if order exist
+      // Check if user is the one trying to update order
+
       const id = req.params.id;
+      const userId = req.params.userId;
       const order = req.body;
+
+      const user = await this.userService.findUserById(userId);
+
+      if (!user) {
+        throw next(new HttpException(404, "User does not exist"));
+      }
 
       const orderExist = await this.orderService.getOrderById(id);
 
       if (!orderExist) {
         throw next(new HttpException(404, "Order does not exist"));
+      }
+
+      if (orderExist.userId !== userId) {
+        throw next(new HttpException(401, "Unauthorized"));
       }
 
       const updatedOrder = await this.orderService.updateOrderById(id, order);
