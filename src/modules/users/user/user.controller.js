@@ -144,7 +144,7 @@ class UserController {
   };
 
   updateBankDetails = async (req, res, next) => {
-    const { email, id, ...rest } = req.body;
+    const { id, ...rest } = req.body;
     try {
       const user = await this.userService.findUserById(id);
       if (!user) {
@@ -161,6 +161,7 @@ class UserController {
         branchName,
         otherInformation,
       } = updatedUser.bankDetails);
+
       return res.status(200).json({
         status: "success",
         message: "Bank details updated",
@@ -172,7 +173,7 @@ class UserController {
   };
 
   getBankDetails = async (req, res, next) => {
-    const { email, id, ...rest } = req.body;
+    const { id } = req.body;
     try {
       const user = await this.userService.findUserById(id);
       if (!user) {
