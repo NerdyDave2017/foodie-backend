@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const SpecialDiscountSchema = new mongoose.Schema(
+const SpecialOfferSchema = new mongoose.Schema(
   {
     name: { type: String },
     code: { type: String },
@@ -9,7 +9,7 @@ const SpecialDiscountSchema = new mongoose.Schema(
       required: true,
     },
     active: { type: Boolean, default: true },
-    discount: { type: Number },
+    offer: { type: Number },
     startDate: { type: Date },
     endDate: { type: Date },
     expired: { type: Boolean, default: false },
@@ -21,8 +21,5 @@ const SpecialDiscountSchema = new mongoose.Schema(
   }
 );
 
-const SpecialDiscount = mongoose.model(
-  "SpecialDiscount",
-  SpecialDiscountSchema
-);
-module.exports = SpecialDiscount;
+const SpecialOffer = mongoose.model("SpecialOffer", SpecialOfferSchema);
+module.exports = SpecialOffer;

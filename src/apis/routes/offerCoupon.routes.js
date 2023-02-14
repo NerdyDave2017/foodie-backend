@@ -3,15 +3,15 @@ const OfferCouponController = require("../../modules/offerCoupon/offerCoupon.con
 
 const offerCouponController = new OfferCouponController();
 
-Router.post("/create", offerCouponController.createDiscount);
-Router.get("/", offerCouponController.getAllDiscounts);
+Router.post("/create", offerCouponController.createOffer);
+Router.get("/", offerCouponController.getAllOffers);
 Router.get(
   "/restaurant/:restaurantId",
-  offerCouponController.getRestaurantDiscounts
+  offerCouponController.getRestaurantOffers
 );
-Router.patch("/activate", offerCouponController.activateDiscount);
-Router.patch("/deactivate", offerCouponController.deactivateDiscount);
-Router.delete("/delete", offerCouponController.deleteDiscount);
-Router.get("/:id", offerCouponController.getDiscountById);
+Router.patch("/activate", offerCouponController.activateOffer);
+Router.patch("/deactivate", offerCouponController.deactivateOffer);
+Router.delete("/delete", offerCouponController.deleteOffer);
+Router.get("/:id", offerCouponController.getOfferById);
 
 module.exports = Router;

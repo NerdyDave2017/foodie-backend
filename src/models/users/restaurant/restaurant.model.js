@@ -75,11 +75,11 @@ const RestaurantSchema = new mongoose.Schema(
         // references the _id field in the items collection
       },
     ],
-    specialDiscount: [
+    specialOffer: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "SpecialDiscount",
-        // references the _id field in the specialDiscount collection
+        ref: "SpecialOffer",
+        // references the _id field in the specialOffer collection
       },
     ],
     restaurantAddress: {

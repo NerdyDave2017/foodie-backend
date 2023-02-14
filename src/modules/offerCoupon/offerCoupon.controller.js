@@ -1,18 +1,18 @@
-const SpecialDiscountService = require("./offerCoupon.services");
+const SpecialOfferService = require("./offerCoupon.services");
 const RestaurantService = require("../users/restaurant/restaurant.services");
 const HttpException = require("../../exceptions/HttpExceptions");
-const generateDiscountCode = require("../../utils/generateShortCode");
+const generateOfferCode = require("../../utils/generateShortCode");
 
-class SpecialDiscountController {
+class SpecialOfferController {
   constructor() {
-    this.specialDiscountService = new SpecialDiscountService();
+    this.specialOfferService = new SpecialOfferService();
     this.restaurantService = new RestaurantService();
   }
 
-  createDiscount = async (req, res, next) => {
+  createOffer = async (req, res, next) => {
     try {
       const { restaurantId } = req.body;
-      const discount = req.body;
+      const offer = req.body;
 
       const restaurantExist = await this.restaurantService.findRestaurantById(
         restaurantId
@@ -22,61 +22,59 @@ class SpecialDiscountController {
         throw next(new HttpException(404, "Restaurant not found"));
       }
 
-      //Generate discount code
-      const discountCode = generateDiscountCode();
+      //Generate offer code
+      const offerCode = generateOfferCode();
 
-      const newDiscount = await this.specialDiscountService.createDiscount({
-        ...discount,
-        code: discountCode,
+      const newOffer = await this.specialOfferService.createOffer({
+        ...offer,
+        code: offerCode,
       });
 
       return res.status(201).json({
         status: "success",
-        message: "Discount created",
-        newDiscount,
+        message: "Offer created",
+        newOffer,
       });
     } catch (error) {
       next(error);
     }
   };
 
-  getAllDiscounts = async (req, res, next) => {
+  getAllOffers = async (req, res, next) => {
     try {
-      const discounts = await this.specialDiscountService.getAllDiscounts();
+      const offers = await this.specialOfferService.getAllOffers();
       return res.status(200).json({
         status: "success",
-        message: "All discounts",
-        discounts,
+        message: "All offers",
+        offers,
       });
     } catch (error) {
       next(error);
     }
   };
 
-  getDiscountById = async (req, res, next) => {
+  getOfferById = async (req, res, next) => {
     try {
       const { id } = req.params;
 
-      const discountExist = await this.specialDiscountService.getDiscountById(
-        id
-      );
+      const offerExist = await this.specialOfferService.getOfferById(id);
 
-      if (!discountExist) {
-        throw next(new HttpException(404, "Discount not found"));
+      if (!offerExist) {
+        throw next(new HttpException(404, "Offer not found"));
       }
 
-      const discount = await this.specialDiscountService.getDiscountById(id);
+      const offer = await this.specialOfferService.getOfferById(id);
       return res.status(200).json({
         status: "success",
-        message: "Discount found",
-        discount,
+        message: "Offer found",
+        offer,
       });
     } catch (error) {
       next(error);
     }
   };
 
-  getRestaurantDiscounts = async (req, res, next) => {
+  getRestaurantOffers = async (req, res, next) => {
     try {
       const { restaurantId } = req.params;
 
@@ -88,19 +86,20 @@ class SpecialDiscountController {
         throw next(new HttpException(404, "Restaurant not found"));
       }
 
-      const discounts =
-        await this.specialDiscountService.getRestaurantDiscounts(restaurantId);
+      const offers = await this.specialOfferService.getRestaurantOffers(
+        restaurantId
+      );
       return res.status(200).json({
         status: "success",
-        message: "All Restaurant discounts",
-        discounts,
+        message: "All Restaurant offers",
+        offers,
       });
     } catch (error) {
       next(error);
     }
   };
 
-  activateDiscount = async (req, res, next) => {
+  activateOffer = async (req, res, next) => {
     try {
       const { id, restaurantId } = req.body;
 
@@ -112,31 +111,26 @@ class SpecialDiscountController {
         throw next(new HttpException(404, "Restaurant not found"));
       }
 
-      const discountExist = await this.specialDiscountService.getDiscountById(
-        id
-      );
+      const offerExist = await this.specialOfferService.getOfferById(id);
 
-      if (!discountExist) {
-        throw next(new HttpException(404, "Discount not found"));
+      if (!offerExist) {
+        throw next(new HttpException(404, "Offer not found"));
       }
 
-      const discount = await this.specialDiscountService.updateDiscountById(
-        id,
-        {
-          active: true,
-        }
-      );
+      const offer = await this.specialOfferService.updateOfferById(id, {
+        active: true,
+      });
       return res.status(200).json({
         status: "success",
-        message: "Discount activated",
-        discount,
+        message: "Offer activated",
+        offer,
       });
     } catch (error) {
       next(error);
     }
   };
 
-  deactivateDiscount = async (req, res, next) => {
+  deactivateOffer = async (req, res, next) => {
     try {
       const { id, restaurantId } = req.body;
 
@@ -148,31 +142,26 @@ class SpecialDiscountController {
         throw next(new HttpException(404, "Restaurant not found"));
       }
 
-      const discountExist = await this.specialDiscountService.getDiscountById(
-        id
-      );
+      const offerExist = await this.specialOfferService.getOfferById(id);
 
-      if (!discountExist) {
-        throw next(new HttpException(404, "Discount not found"));
+      if (!offerExist) {
+        throw next(new HttpException(404, "Offer not found"));
       }
 
-      const discount = await this.specialDiscountService.updateDiscountById(
-        id,
-        {
-          active: false,
-        }
-      );
+      const offer = await this.specialOfferService.updateOfferById(id, {
+        active: false,
+      });
       return res.status(200).json({
         status: "success",
-        message: "Discount deactivated",
-        discount,
+        message: "Offer deactivated",
+        offer,
       });
     } catch (error) {
       next(error);
     }
   };
 
-  deleteDiscount = async (req, res, next) => {
+  deleteOffer = async (req, res, next) => {
     try {
       const { id, restaurantId } = req.body;
 
@@ -184,19 +173,17 @@ class SpecialDiscountController {
         throw next(new HttpException(404, "Restaurant not found"));
       }
 
-      const discountExist = await this.specialDiscountService.getDiscountById(
-        id
-      );
+      const offerExist = await this.specialOfferService.getOfferById(id);
 
-      if (!discountExist) {
-        throw next(new HttpException(404, "Discount not found"));
+      if (!offerExist) {
+        throw next(new HttpException(404, "Offer not found"));
       }
 
-      const discount = await this.specialDiscountService.deleteDiscountById(id);
+      const offer = await this.specialOfferService.deleteOfferById(id);
       return res.status(200).json({
         status: "success",
-        message: "Discount deleted",
-        discount,
+        message: "Offer deleted",
+        offer,
       });
     } catch (error) {
       next(error);
@@ -204,4 +191,4 @@ class SpecialDiscountController {
   };
 }
 
-module.exports = SpecialDiscountController;
+module.exports = SpecialOfferController;
