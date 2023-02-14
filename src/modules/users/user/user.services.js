@@ -37,11 +37,11 @@ class UserService {
     } catch (error) {}
   };
 
-  updateData = async (email, userData) => {
+  updateData = async (id, userData) => {
     console.log(userData, "userData");
     try {
-      const updatedUser = await this.users.findOneAndUpdate(
-        { email: email },
+      const updatedUser = await this.users.findByIdAndUpdate(
+        id,
         {
           ...userData,
         },
@@ -61,12 +61,9 @@ class UserService {
 
   updateRestaurants = async (userId, restaurantId) => {
     try {
-      const updatedUser = await this.users.findOneAndUpdate(
-        { _id: userId },
-        {
-          $push: { restaurants: restaurantId },
-        }
-      );
+      const updatedUser = await this.users.findByIdAndUpdate(userId, {
+        $push: { restaurants: restaurantId },
+      });
 
       return updatedUser;
     } catch (error) {}
@@ -74,8 +71,8 @@ class UserService {
 
   updateRole = async (id, role) => {
     try {
-      const updatedUser = await this.users.findOneAndUpdate(
-        { _id: id },
+      const updatedUser = await this.users.findByIdAndUpdate(
+        id,
         { $push: { roles: role } },
         { password: 0 }, //Don't return password
         {

@@ -64,9 +64,9 @@ class UserController {
   };
 
   updateData = async (req, res, next) => {
-    const { email, ...rest } = req.body;
+    const { id, ...rest } = req.body;
     try {
-      const user = await this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserById(id);
       if (!user) {
         throw next(new UserNotFound());
       }
@@ -139,6 +139,26 @@ class UserController {
       return res
         .status(200)
         .json({ status: "success", message: "All users", users });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  addBankDetails = async (req, res, next) => {
+    const { email, ...rest } = req.body;
+    try {
+      const user = await this.userService.findUserById(id);
+      if (!user) {
+        throw next(new UserNotFound());
+      }
+      const updatedUser = await this.userService.updateData(email, {
+        ...rest,
+      });
+      return res.status(200).json({
+        status: "success",
+        message: "Bank details added",
+        updatedUser,
+      });
     } catch (error) {
       next(error);
     }
