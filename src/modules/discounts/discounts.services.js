@@ -1,56 +1,56 @@
-const SpecialOffer = require("../../models/offerCoupon/offerCoupon.model");
+const SpecialDiscount = require("../../models/discountCoupon/discountCoupon.model");
 
-class SpecialOfferService {
-  specialOffer;
+class SpecialDiscountService {
+  specialDiscount;
   constructor() {
-    this.specialOffer = SpecialOffer;
+    this.specialDiscount = SpecialDiscount;
   }
 
-  createOffer = async (offer) => {
+  createDiscount = async (discount) => {
     try {
-      const newOffer = await this.specialOffer.create(offer);
-      return newOffer;
+      const newDiscount = await this.specialDiscount.create(discount);
+      return newDiscount;
     } catch (err) {}
   };
 
-  getAllOffers = async () => {
+  getAllDiscounts = async () => {
     try {
-      const offers = await this.specialOffer.find({});
-      return offers;
+      const discounts = await this.specialDiscount.find({});
+      return discounts;
     } catch (error) {}
   };
 
-  getOfferById = async (id) => {
+  getDiscountById = async (id) => {
     try {
-      const offer = await this.specialOffer.findById(id);
-      return offer;
+      const discount = await this.specialDiscount.findById(id);
+      return discount;
     } catch (err) {}
   };
 
-  getRestaurantOffers = async (id) => {
+  getRestaurantDiscounts = async (id) => {
     try {
-      const offers = await this.specialOffer.find({ restaurantId: id });
-      return offers;
+      const discounts = await this.specialDiscount.find({ restaurantId: id });
+      return discounts;
     } catch (err) {}
   };
 
-  updateOfferById = async (id, offer) => {
+  updateDiscountById = async (id, discount) => {
     try {
-      const updatedOffer = await this.specialOffer.findByIdAndUpdate(
+      const updatedDiscount = await this.specialDiscount.findByIdAndUpdate(
         id,
-        offer,
+        discount,
         { new: true }
       );
-      return updatedOffer;
+      return updatedDiscount;
     } catch (err) {}
   };
 
-  deleteOfferById = async (id) => {
+  deleteDiscountById = async (id) => {
     try {
-      const deletedOffer = await this.specialOffer.findByIdAndDelete(id);
-      return deletedOffer;
+      const deletedDiscount = await this.specialDiscount.findByIdAndDelete(id);
+      return deletedDiscount;
     } catch (err) {}
   };
 }
 
-module.exports = SpecialOfferService;
+module.exports = SpecialDiscountService;
