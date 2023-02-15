@@ -3,6 +3,8 @@ const RestaurantService = require("../users/restaurant/restaurant.services");
 const HttpException = require("../../exceptions/HttpExceptions");
 const generateOfferCode = require("../../utils/generateShortCode");
 
+/**@todo Coupon validation prevent user from updating usage count in validation check*/
+
 class SpecialOfferController {
   constructor() {
     this.specialOfferService = new SpecialOfferService();
