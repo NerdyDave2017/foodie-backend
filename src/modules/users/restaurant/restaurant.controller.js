@@ -36,7 +36,8 @@ class RestaurantController {
   };
 
   updateData = async (req, res, next) => {
-    const { id, ...rest } = req.body;
+    const { id } = req.params;
+    const restaurantData = req.body;
     try {
       const restaurant = await this.restaurantService.findRestaurantById(id);
 
@@ -46,7 +47,7 @@ class RestaurantController {
 
       const updatedRestaurant = await this.restaurantService.findOneAndUpdate(
         id,
-        { ...rest }
+        restaurantData
       );
       return res.status(200).json({
         status: "success",

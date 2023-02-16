@@ -4,7 +4,7 @@ const RestaurantController = require("../../modules/users/restaurant/restaurant.
 const restaurantController = new RestaurantController();
 
 Router.post("/create", restaurantController.create);
-Router.patch("/update", restaurantController.updateData);
+Router.patch("/update/:id", restaurantController.updateData);
 Router.get("/", restaurantController.getAllRestaurants);
 Router.get("/user/:userId", restaurantController.getUserRestaurants);
 Router.get("/:id", restaurantController.getRestaurantById);
