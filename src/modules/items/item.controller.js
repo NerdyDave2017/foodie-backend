@@ -122,7 +122,7 @@ class ItemController {
         throw next(new HttpException(404, "Restaurant not found"));
       }
 
-      const itemExist = await this.itemService.getItemById(id);
+      const itemExist = await this.itemService.getItemById(itemId);
 
       if (!itemExist) {
         throw next(new HttpException(404, "Item not found"));
