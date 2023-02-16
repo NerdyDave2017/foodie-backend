@@ -111,11 +111,11 @@ class ItemController {
   };
 
   deleteItem = async (req, res, next) => {
-    const { restaurant, itemId } = req.body;
+    const { restaurantId, itemId } = req.body;
     try {
       // Check if the restaurant exists
       const restaurantExists = await this.restaurantService.findRestaurantById(
-        restaurant
+        restaurantId
       );
 
       if (!restaurantExists) {
