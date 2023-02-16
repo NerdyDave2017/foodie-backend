@@ -83,7 +83,7 @@ class ItemController {
   };
 
   updateItem = async (req, res, next) => {
-    const { restaurantId, itemId } = req.body;
+    const { restaurantId, itemId, ...rest } = req.body;
 
     try {
       // Check if the restaurant exists
@@ -101,7 +101,11 @@ class ItemController {
         throw next(new HttpException(404, "Item not found"));
       }
 
-      const item = await this.itemService.updateItem(itemId, req.body);
+      if (itemExist.restaurantId !== restaurantId) {
+        throw next(new HttpException(403, "Forbidden"));
+      }
+
+      const item = await this.itemService.updateItem(itemId, ...rest);
       return res
         .status(200)
         .json({ status: "success", message: "Item updated", item });
@@ -126,6 +130,10 @@ class ItemController {
 
       if (!itemExist) {
         throw next(new HttpException(404, "Item not found"));
+      }
+
+      if (itemExist.restaurantId !== restaurantId) {
+        throw next(new HttpException(403, "Forbidden"));
       }
 
       const item = await this.itemService.deleteItem(itemId);
