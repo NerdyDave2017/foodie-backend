@@ -76,6 +76,26 @@ class DineInController {
     }
   };
 
+  getUserDineIn = async (req, res, next) => {
+    const userId = req.params.userId;
+    try {
+      // Check if the user exists
+      const userExists = await this.userService.findUserById(userId);
+
+      if (!userExists) {
+        throw next(new HttpException(404, "User not found"));
+      }
+
+      const dineIn = await this.dineInService.getUserDineIn(userId);
+      return res
+
+        .status(200)
+        .json({ status: "success", message: "User dineIn", dineIn });
+    } catch (err) {
+      next(err);
+    }
+  };
+
   getDineInById = async (req, res, next) => {
     const id = req.params.id;
     try {

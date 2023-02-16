@@ -28,6 +28,13 @@ class DineInService {
     } catch (error) {}
   };
 
+  getUserDineIn = async (userId) => {
+    try {
+      const dineIn = await this.dineIn.find({ userId: userId });
+      return dineIn;
+    } catch (error) {}
+  };
+
   getDineInById = async (id) => {
     try {
       const item = await this.dineIn.findById(id);
