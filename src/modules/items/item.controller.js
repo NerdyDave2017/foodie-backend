@@ -83,7 +83,8 @@ class ItemController {
   };
 
   updateItem = async (req, res, next) => {
-    const { restaurantId, itemId, ...rest } = req.body;
+    const { restaurantId, itemId } = req.params;
+    const itemData = req.body;
 
     try {
       // Check if the restaurant exists
@@ -105,7 +106,7 @@ class ItemController {
         throw next(new HttpException(403, "Forbidden"));
       }
 
-      const item = await this.itemService.updateItem(itemId, ...rest);
+      const item = await this.itemService.updateItem(itemId, itemData);
       return res
         .status(200)
         .json({ status: "success", message: "Item updated", item });
