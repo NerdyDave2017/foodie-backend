@@ -143,21 +143,23 @@ class DineInController {
   };
 
   deleteDineIn = async (req, res, next) => {
-    const { restaurantId, dineInId } = req.body;
+    const { userId, dineInId } = req.body;
     try {
-      // Check if the restaurant exists
-      const restaurantExists = await this.restaurantService.findRestaurantById(
-        restaurantId
-      );
+      // Check if the user exists
+      const userExists = await this.userService.findUserById(userId);
 
-      if (!restaurantExists) {
-        throw next(new HttpException(404, "Restaurant not found"));
+      if (!userExists) {
+        throw next(new HttpException(404, "User not found"));
       }
 
       const dineInExist = await this.dineInService.getDineInById(dineInId);
 
       if (!dineInExist) {
         throw next(new HttpException(404, "DineIn not found"));
+      }
+
+      if (dineInExist.userId !== userId) {
+        throw next(new HttpException(401, "Unauthorized"));
       }
 
       const dineIn = await this.dineInService.deleteDineIn(dineInId);

@@ -4,9 +4,9 @@ const DineInSchema = new mongoose.Schema(
   {
     restaurantCost: { type: Number, required: true },
     isDineActive: { type: Boolean, required: true },
-    openDineTime: { type: String, required: true },
-    closeDineTime: { type: String, required: true },
-    isDineFulfiilled: { type: Boolean, required: true },
+    openDineTime: { type: String },
+    closeDineTime: { type: String },
+    isDineFulfiilled: { type: Boolean, required: true, default: false },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
