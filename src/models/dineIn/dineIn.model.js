@@ -6,6 +6,7 @@ const DineInSchema = new mongoose.Schema(
     isDineActive: { type: Boolean, required: true },
     openDineTime: { type: String, required: true },
     closeDineTime: { type: String, required: true },
+    isDineFulfiilled: { type: Boolean, required: true },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
