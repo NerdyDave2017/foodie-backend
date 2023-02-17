@@ -134,7 +134,7 @@ class ItemController {
       }
 
       if (itemExist.restaurantId !== restaurantId) {
-        throw next(new HttpException(403, "Forbidden"));
+        throw next(new HttpException(403, "Restaurant Unauthorized"));
       }
 
       const item = await this.itemService.deleteItem(itemId);
