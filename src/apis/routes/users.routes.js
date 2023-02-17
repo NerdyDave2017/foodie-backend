@@ -8,7 +8,7 @@ Router.post("/login", userController.login);
 Router.patch("/update", userController.updateData);
 Router.patch("/updatePassword", userController.updatePassword);
 Router.patch("/bankDetails", userController.updateBankDetails);
-Router.get("/bankDetails", userController.getBankDetails);
+Router.get("/bankDetails/:id", userController.getBankDetails);
 Router.get("/", userController.fetchAllUsers);
 Router.delete("/delete", userController.deleteUser);
 
