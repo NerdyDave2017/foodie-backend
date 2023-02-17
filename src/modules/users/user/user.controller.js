@@ -144,7 +144,8 @@ class UserController {
   };
 
   updateBankDetails = async (req, res, next) => {
-    const { id, ...rest } = req.body;
+    const { id } = req.params;
+    const bankDetails = req.body;
     try {
       const user = await this.userService.findUserById(id);
       if (!user) {

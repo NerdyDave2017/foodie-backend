@@ -7,7 +7,7 @@ Router.post("/register", userController.register);
 Router.post("/login", userController.login);
 Router.patch("/update", userController.updateData);
 Router.patch("/updatePassword", userController.updatePassword);
-Router.patch("/bankDetails", userController.updateBankDetails);
+Router.patch("/bankDetails/:id", userController.updateBankDetails);
 Router.get("/bankDetails/:id", userController.getBankDetails);
 Router.get("/", userController.fetchAllUsers);
 Router.delete("/delete", userController.deleteUser);
