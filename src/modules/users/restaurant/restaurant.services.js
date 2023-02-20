@@ -33,6 +33,15 @@ class RestaurantService {
     } catch (error) {}
   };
 
+  updateItem = async (itemId, restaurantId) => {
+    try {
+      const restaurant = await this.restaurants.findOneAndUpdate(restaurantId, {
+        $push: { items: itemId },
+      });
+      return restaurant;
+    } catch (error) {}
+  };
+
   findUserRestaurants = async (userId) => {
     try {
       const restaurants = await this.restaurants.find({ user: userId });
