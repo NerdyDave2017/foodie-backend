@@ -24,6 +24,9 @@ class ItemController {
 
       const item = await this.itemService.createItem(req.body);
 
+      //Add itemId to restaurant model
+      await this.restaurantService.updateItem(item._id, restaurantId);
+
       return res
         .status(201)
         .json({ status: "success", message: "Item created", item });
