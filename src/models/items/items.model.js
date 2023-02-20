@@ -26,7 +26,7 @@ const ItemSchema = new mongoose.Schema(
     sizes: { type: Array },
     sizePrices: { type: Array },
     addOnsTitles: { type: Array },
-    addOnsPrice: { type: Array },
+    addOnsPrices: { type: Array },
   },
   {
     timestamps: true,
