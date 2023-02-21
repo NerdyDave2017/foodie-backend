@@ -75,9 +75,29 @@ class UserController {
 
       const authToken = generateToken(user._id);
 
+      data = {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        profileImageURL: user.profileImageURL,
+        settings: user.settings,
+        shippingAddress: user.shippingAddress,
+        walletAmount: user.walletAmount,
+        bankDetails: user.bankDetails,
+        fcmToken: user.fcmToken,
+        active: user.active,
+        appIdentifier: user.appIdentifier,
+        stripeCustomer: user.stripeCustomer,
+        lastOnlineTimestampz: user.lastOnlineTimestampz,
+        favourites: user.favourites,
+        restaurants: user.restaurants,
+        driver: user.driver,
+      };
+
       return res
         .status(200)
-        .json({ status: "success", message: "User signin", user, authToken });
+        .json({ status: "success", message: "User signin", data, authToken });
     } catch (error) {
       next(error);
     }
@@ -92,9 +112,30 @@ class UserController {
       }
 
       const updatedUser = await this.userService.updateData(id, { ...rest });
+
+      data = {
+        firstname: updatedUser.firstname,
+        lastname: updatedUser.lastname,
+        email: updatedUser.email,
+        phoneNumber: updatedUser.phoneNumber,
+        profileImageURL: updatedUser.profileImageURL,
+        settings: updatedUser.settings,
+        shippingAddress: updatedUser.shippingAddress,
+        walletAmount: updatedUser.walletAmount,
+        bankDetails: updatedUser.bankDetails,
+        fcmToken: updatedUser.fcmToken,
+        active: updatedUser.active,
+        appIdentifier: updatedUser.appIdentifier,
+        stripeCustomer: updatedUser.stripeCustomer,
+        lastOnlineTimestampz: updatedUser.lastOnlineTimestampz,
+        favourites: updatedUser.favourites,
+        restaurants: updatedUser.restaurants,
+        driver: updatedUser.driver,
+      };
+
       return res
         .status(200)
-        .json({ status: "success", message: "User updated", updatedUser });
+        .json({ status: "success", message: "User updated", data });
     } catch (error) {
       console.log(error);
       next(error);
@@ -116,9 +157,30 @@ class UserController {
       const updatedUser = await this.userService.updateData(id, {
         password: newPassword,
       });
+
+      data = {
+        firstname: updatedUser.firstname,
+        lastname: updatedUser.lastname,
+        email: updatedUser.email,
+        phoneNumber: updatedUser.phoneNumber,
+        profileImageURL: updatedUser.profileImageURL,
+        settings: updatedUser.settings,
+        shippingAddress: updatedUser.shippingAddress,
+        walletAmount: updatedUser.walletAmount,
+        bankDetails: updatedUser.bankDetails,
+        fcmToken: updatedUser.fcmToken,
+        active: updatedUser.active,
+        appIdentifier: updatedUser.appIdentifier,
+        stripeCustomer: updatedUser.stripeCustomer,
+        lastOnlineTimestampz: updatedUser.lastOnlineTimestampz,
+        favourites: updatedUser.favourites,
+        restaurants: updatedUser.restaurants,
+        driver: updatedUser.driver,
+      };
+
       return res
         .status(200)
-        .json({ status: "success", message: "Password updated", updatedUser });
+        .json({ status: "success", message: "Password updated", data });
     } catch (error) {
       next(error);
     }
@@ -155,9 +217,30 @@ class UserController {
   fetchAllUsers = async (req, res, next) => {
     try {
       const users = await this.userService.fetchAllUser();
+
+      data = {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        profileImageURL: user.profileImageURL,
+        settings: user.settings,
+        shippingAddress: user.shippingAddress,
+        walletAmount: user.walletAmount,
+        bankDetails: user.bankDetails,
+        fcmToken: user.fcmToken,
+        active: user.active,
+        appIdentifier: user.appIdentifier,
+        stripeCustomer: user.stripeCustomer,
+        lastOnlineTimestampz: user.lastOnlineTimestampz,
+        favourites: user.favourites,
+        restaurants: user.restaurants,
+        driver: user.driver,
+      };
+
       return res
         .status(200)
-        .json({ status: "success", message: "All users", users });
+        .json({ status: "success", message: "All users", data });
     } catch (error) {
       next(error);
     }
@@ -240,10 +323,10 @@ class UserController {
         throw next(new InvalidCredentials());
       }
 
-      const deleteUser = await this.userService.deleteUser(email);
+      await this.userService.deleteUser(email);
       return res
         .status(200)
-        .json({ status: "success", message: "User deleted", deleteUser });
+        .json({ status: "success", message: "User deleted" });
     } catch (error) {
       next(error);
     }
