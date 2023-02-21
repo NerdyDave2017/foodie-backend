@@ -75,16 +75,18 @@ class UserController {
 
       const authToken = generateToken(user._id);
 
+      console.log(validPassword);
+
       const data = {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
         phoneNumber: user.phoneNumber,
         profileImageURL: user.profileImageURL,
-        settings: user.settings,
-        shippingAddress: user.shippingAddress,
+        settings: { ...user.settings },
+        shippingAddress: { ...user.shippingAddress },
         walletAmount: user.walletAmount,
-        bankDetails: user.bankDetails,
+        bankDetails: { ...user.bankDetails },
         fcmToken: user.fcmToken,
         active: user.active,
         appIdentifier: user.appIdentifier,
