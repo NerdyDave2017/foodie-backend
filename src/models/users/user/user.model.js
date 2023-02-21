@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     phoneNumber: { type: Number, required: true },
-    profileProfileURL: { type: String },
+    profileImageURL: { type: String },
     role: [{ type: String, require: true, default: "customer" }], // one or more of "driver", "user", "merchant", "admin"
     settings: {
       newArrivals: { type: Boolean, default: false },

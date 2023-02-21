@@ -24,6 +24,68 @@ class UserController {
 
       const authToken = generateToken(newUser._id);
 
+      data = {
+        firstname: newUser.firstname,
+        lastname: newUser.lastname,
+        email: newUser.email,
+        phoneNumber: newUser.phoneNumber,
+        profileProfileURL: { type: String },
+        role: [{ type: String, require: true, default: "customer" }], // one or more of "driver", "user", "merchant", "admin"
+        settings: {
+          newArrivals: { type: Boolean, default: false },
+          orderUpdates: { type: Boolean, default: false },
+          promotions: { type: Boolean, default: false },
+          pushNewMessages: { type: Boolean, default: false },
+        },
+        shippingAddress: {
+          address: { type: String },
+          city: { type: String },
+          apartmentSuite: { type: String },
+          state: { type: String },
+          country: { type: String },
+          postalCode: { type: Number },
+          location: {
+            latitude: { type: Number },
+            longitude: { type: Number },
+          },
+          line1: { type: Number },
+          line2: { type: Number },
+          email: { type: String },
+        },
+        walletAmount: { type: Number, default: 0 },
+        bankDetails: {
+          accountName: { type: String },
+          accountNumber: { type: Number },
+          bankName: { type: String },
+          branchName: { type: String },
+          otherInformation: { type: String },
+        },
+        fcmToken: { type: String },
+        active: { type: Boolean, default: true },
+        appIdentifier: { type: String },
+        stripeCustomer: { type: String },
+        lastOnlineTimestamp: { type: Date },
+        favourites: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Restaurants",
+            // references the _id field in the items collection
+          },
+        ],
+
+        restaurants: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Restaurants",
+            // references the _id field in the restaurant collection
+          },
+        ],
+        driver: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Drivers",
+        },
+      };
+
       return res.status(201).json({
         status: "success",
         messsage: "User Created",
