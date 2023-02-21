@@ -24,7 +24,7 @@ class UserController {
 
       const authToken = generateToken(newUser._id);
 
-      data = {
+      const data = {
         firstname: newUser.firstname,
         lastname: newUser.lastname,
         email: newUser.email,
@@ -75,7 +75,7 @@ class UserController {
 
       const authToken = generateToken(user._id);
 
-      data = {
+      const data = {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
@@ -113,7 +113,7 @@ class UserController {
 
       const updatedUser = await this.userService.updateData(id, { ...rest });
 
-      data = {
+      const data = {
         firstname: updatedUser.firstname,
         lastname: updatedUser.lastname,
         email: updatedUser.email,
@@ -158,7 +158,7 @@ class UserController {
         password: newPassword,
       });
 
-      data = {
+      const data = {
         firstname: updatedUser.firstname,
         lastname: updatedUser.lastname,
         email: updatedUser.email,
@@ -218,7 +218,7 @@ class UserController {
     try {
       const users = await this.userService.fetchAllUser();
 
-      data = {
+      const data = {
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
