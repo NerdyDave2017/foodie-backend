@@ -257,25 +257,16 @@ class UserController {
   };
 
   updateBankDetails = async (req, res, next) => {
-    const { id } = req.params;
-    const bankDetails = req.body;
+    const { userId } = req.params;
+    const bankData = req.body;
     try {
-      const user = await this.userService.findUserById(id);
+      const user = await this.userService.findUserById(userId);
       if (!user) {
         throw next(new UserNotFound());
       }
-      const updatedUser = await this.userService.updateData(id, {
-        bankDetails,
-      });
+      const updatedUser = await this.userService.updateData(userId, bankData);
 
-      const bankDetails = ({
-        _id,
-        accountName,
-        accountNumber,
-        bankName,
-        branchName,
-        otherInformation,
-      } = updatedUser.bankDetails);
+      const bankDetails = updatedUser.bankDetails;
 
       return res.status(200).json({
         status: "success",
@@ -288,22 +279,14 @@ class UserController {
   };
 
   getBankDetails = async (req, res, next) => {
-    const { id } = req.params;
+    const { userId } = req.params;
     try {
-      console.log(id);
-
-      const user = await this.userService.findUserById(id);
+      const user = await this.userService.findUserById(userId);
       if (!user) {
         throw next(new UserNotFound());
       }
-      const bankDetails = ({
-        _id,
-        accountName,
-        accountNumber,
-        bankName,
-        branchName,
-        otherInformation,
-      } = user.bankDetails);
+
+      const bankDetails = user.bankDetails;
 
       return res.status(200).json({
         status: "success",
