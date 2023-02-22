@@ -25,6 +25,7 @@ class UserController {
       const authToken = generateToken(newUser._id);
 
       const data = {
+        id: user._id,
         firstname: newUser.firstname,
         lastname: newUser.lastname,
         email: newUser.email,
@@ -67,7 +68,7 @@ class UserController {
 
       const validPassword = await matchPassword(password, user.password);
 
-      // console.log(validPassword);
+      // (validPassword);
 
       if (!validPassword) {
         throw next(new InvalidCredentials());
@@ -75,9 +76,8 @@ class UserController {
 
       const authToken = generateToken(user._id);
 
-      console.log(validPassword);
-
       const data = {
+        id: user._id,
         firstname: user.firstname,
         lastname: user.lastname,
         email: user.email,
@@ -116,6 +116,7 @@ class UserController {
       const updatedUser = await this.userService.updateData(id, { ...rest });
 
       const data = {
+        id: user._id,
         firstname: updatedUser.firstname,
         lastname: updatedUser.lastname,
         email: updatedUser.email,
@@ -129,7 +130,7 @@ class UserController {
         active: updatedUser.active,
         appIdentifier: updatedUser.appIdentifier,
         stripeCustomer: updatedUser.stripeCustomer,
-        lastOnlineTimestampz: updatedUser.lastOnlineTimestampz,
+        lastOnlineTimestamp: updatedUser.lastOnlineTimestamp,
         favourites: updatedUser.favourites,
         restaurants: updatedUser.restaurants,
         driver: updatedUser.driver,
@@ -139,7 +140,7 @@ class UserController {
         .status(200)
         .json({ status: "success", message: "User updated", data });
     } catch (error) {
-      console.log(error);
+      error;
       next(error);
     }
   };
@@ -161,6 +162,7 @@ class UserController {
       });
 
       const data = {
+        id: user._id,
         firstname: updatedUser.firstname,
         lastname: updatedUser.lastname,
         email: updatedUser.email,
@@ -220,29 +222,35 @@ class UserController {
     try {
       const users = await this.userService.fetchAllUser();
 
-      const data = {
-        firstname: user.firstname,
-        lastname: user.lastname,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        profileImageURL: user.profileImageURL,
-        settings: user.settings,
-        shippingAddress: user.shippingAddress,
-        walletAmount: user.walletAmount,
-        bankDetails: user.bankDetails,
-        fcmToken: user.fcmToken,
-        active: user.active,
-        appIdentifier: user.appIdentifier,
-        stripeCustomer: user.stripeCustomer,
-        lastOnlineTimestampz: user.lastOnlineTimestampz,
-        favourites: user.favourites,
-        restaurants: user.restaurants,
-        driver: user.driver,
-      };
+      const datas = new Array();
+
+      users.filter((user) => {
+        const data = {
+          id: user._id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          profileImageURL: user.profileImageURL,
+          settings: user.settings,
+          shippingAddress: user.shippingAddress,
+          walletAmount: user.walletAmount,
+          bankDetails: user.bankDetails,
+          fcmToken: user.fcmToken,
+          active: user.active,
+          appIdentifier: user.appIdentifier,
+          stripeCustomer: user.stripeCustomer,
+          lastOnlineTimestampz: user.lastOnlineTimestampz,
+          favourites: user.favourites,
+          restaurants: user.restaurants,
+          driver: user.driver,
+        };
+        datas.push(data);
+      });
 
       return res
         .status(200)
-        .json({ status: "success", message: "All users", data });
+        .json({ status: "success", message: "All users", datas });
     } catch (error) {
       next(error);
     }
@@ -257,10 +265,11 @@ class UserController {
         throw next(new UserNotFound());
       }
       const updatedUser = await this.userService.updateData(id, {
-        ...rest,
+        bankDetails,
       });
 
       const bankDetails = ({
+        _id,
         accountName,
         accountNumber,
         bankName,
@@ -281,25 +290,20 @@ class UserController {
   getBankDetails = async (req, res, next) => {
     const { id } = req.params;
     try {
+      console.log(id);
+
       const user = await this.userService.findUserById(id);
       if (!user) {
         throw next(new UserNotFound());
       }
-      const {
+      const bankDetails = ({
+        _id,
         accountName,
         accountNumber,
         bankName,
         branchName,
         otherInformation,
-      } = user.bankDetails;
-
-      const bankDetails = {
-        accountName,
-        accountNumber,
-        bankName,
-        branchName,
-        otherInformation,
-      };
+      } = user.bankDetails);
 
       return res.status(200).json({
         status: "success",
