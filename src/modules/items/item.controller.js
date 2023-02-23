@@ -27,9 +27,34 @@ class ItemController {
       //Add itemId to restaurant model
       await this.restaurantService.updateItem(item._id, restaurantId);
 
+      const data = {
+        id: item._id,
+        description: item.description,
+        category: item.category,
+        price: item.price,
+        restaurantId: restaurantId,
+        photo: item.photo,
+        photos: item.photos,
+        status: item.status,
+        quantity: item.quantity,
+        publish: item.publish,
+        calories: item.calories,
+        grams: item.grams,
+        proteins: item.proteins,
+        fats: item.fats,
+        veg: item.veg,
+        nonVeg: item.nonVeg,
+        discountPrice: item.discountPrice,
+        takeaway: item.takeaway,
+        sizes: item.sizes,
+        sizePrices: item.sizePrices,
+        addOnsTitles: item.addOnsTitles,
+        addOnsPrices: item.addOnsPrices,
+      };
+
       return res
         .status(201)
-        .json({ status: "success", message: "Item created", item });
+        .json({ status: "success", message: "Item created", data });
     } catch (err) {
       next(err);
     }
@@ -38,9 +63,37 @@ class ItemController {
   getAllItems = async (req, res, next) => {
     try {
       const items = await this.itemService.getAllItems();
+
+      const datas = items.map((item) => {
+        return {
+          id: item._id,
+          description: item.description,
+          category: item.category,
+          price: item.price,
+          restaurantId: restaurantId,
+          photo: item.photo,
+          photos: item.photos,
+          status: item.status,
+          quantity: item.quantity,
+          publish: item.publish,
+          calories: item.calories,
+          grams: item.grams,
+          proteins: item.proteins,
+          fats: item.fats,
+          veg: item.veg,
+          nonVeg: item.nonVeg,
+          discountPrice: item.discountPrice,
+          takeaway: item.takeaway,
+          sizes: item.sizes,
+          sizePrices: item.sizePrices,
+          addOnsTitles: item.addOnsTitles,
+          addOnsPrices: item.addOnsPrices,
+        };
+      });
+
       return res
         .status(200)
-        .json({ status: "success", message: "All items", items });
+        .json({ status: "success", message: "All items", datas });
     } catch (err) {
       next(err);
     }
@@ -61,9 +114,37 @@ class ItemController {
       const items = await this.itemService.getRestaurantItems(
         req.params.restaurantId
       );
+
+      const datas = items.map((item) => {
+        return {
+          id: item._id,
+          description: item.description,
+          category: item.category,
+          price: item.price,
+          restaurantId: restaurantId,
+          photo: item.photo,
+          photos: item.photos,
+          status: item.status,
+          quantity: item.quantity,
+          publish: item.publish,
+          calories: item.calories,
+          grams: item.grams,
+          proteins: item.proteins,
+          fats: item.fats,
+          veg: item.veg,
+          nonVeg: item.nonVeg,
+          discountPrice: item.discountPrice,
+          takeaway: item.takeaway,
+          sizes: item.sizes,
+          sizePrices: item.sizePrices,
+          addOnsTitles: item.addOnsTitles,
+          addOnsPrices: item.addOnsPrices,
+        };
+      });
+
       return res
         .status(200)
-        .json({ status: "success", message: "Restaurant items", items });
+        .json({ status: "success", message: "Restaurant items", datas });
     } catch (err) {
       next(err);
     }
@@ -79,7 +160,33 @@ class ItemController {
       }
 
       const item = await this.itemService.getItemById(id);
-      return res.status(200).json({ status: "success", message: "Item", item });
+
+      const data = {
+        id: item._id,
+        description: item.description,
+        category: item.category,
+        price: item.price,
+        restaurantId: restaurantId,
+        photo: item.photo,
+        photos: item.photos,
+        status: item.status,
+        quantity: item.quantity,
+        publish: item.publish,
+        calories: item.calories,
+        grams: item.grams,
+        proteins: item.proteins,
+        fats: item.fats,
+        veg: item.veg,
+        nonVeg: item.nonVeg,
+        discountPrice: item.discountPrice,
+        takeaway: item.takeaway,
+        sizes: item.sizes,
+        sizePrices: item.sizePrices,
+        addOnsTitles: item.addOnsTitles,
+        addOnsPrices: item.addOnsPrices,
+      };
+
+      return res.status(200).json({ status: "success", message: "Item", data });
     } catch (err) {
       next(err);
     }
@@ -110,9 +217,35 @@ class ItemController {
       }
 
       const item = await this.itemService.updateItem(itemId, itemData);
+
+      const data = {
+        id: item._id,
+        description: item.description,
+        category: item.category,
+        price: item.price,
+        restaurantId: restaurantId,
+        photo: item.photo,
+        photos: item.photos,
+        status: item.status,
+        quantity: item.quantity,
+        publish: item.publish,
+        calories: item.calories,
+        grams: item.grams,
+        proteins: item.proteins,
+        fats: item.fats,
+        veg: item.veg,
+        nonVeg: item.nonVeg,
+        discountPrice: item.discountPrice,
+        takeaway: item.takeaway,
+        sizes: item.sizes,
+        sizePrices: item.sizePrices,
+        addOnsTitles: item.addOnsTitles,
+        addOnsPrices: item.addOnsPrices,
+      };
+
       return res
         .status(200)
-        .json({ status: "success", message: "Item updated", item });
+        .json({ status: "success", message: "Item updated", data });
     } catch (err) {
       next(err);
     }
