@@ -55,9 +55,9 @@ class DineInController {
 
   getAllDineIn = async (req, res, next) => {
     try {
-      const dineIn = await this.dineInService.getAllDineIn();
+      const dineIns = await this.dineInService.getAllDineIn();
 
-      const datas = dineIn.map((dineIn) => {
+      const datas = dineIns.map((dineIn) => {
         return {
           id: dineIn._id,
           restaurantCost: dineIn.restaurantCost,
@@ -90,12 +90,26 @@ class DineInController {
         throw next(new HttpException(404, "Restaurant not found"));
       }
 
-      const dineIn = await this.dineInService.getRestaurantDineIn(
+      const dineIns = await this.dineInService.getRestaurantDineIn(
         req.params.restaurantId
       );
+
+      const datas = dineIns.map((dineIn) => {
+        return {
+          id: dineIn._id,
+          restaurantCost: dineIn.restaurantCost,
+          isDineActive: dineIn.isDineActive,
+          openDineTime: dineIn.openDineTime,
+          closeDineTime: dineIn.closeDineTime,
+          isDineFulfiilled: dineIn.isDineFulfiilled,
+          userId: dineIn.userId,
+          restaurantId: dineIn.restaurantId,
+        };
+      });
+
       return res
         .status(200)
-        .json({ status: "success", message: "Restaurant dineIn", dineIn });
+        .json({ status: "success", message: "Restaurant dineIns", datas });
     } catch (err) {
       next(err);
     }
