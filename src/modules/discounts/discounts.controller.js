@@ -25,10 +25,25 @@ class SpecialDiscountController {
         ...discount,
       });
 
+      data = {
+        id: newDiscount._id,
+        name: newDiscount.name,
+        restaurantId: newDiscount.restaurantId,
+        details: newDiscount.details,
+        discountType: newDiscount.discountType,
+        active: newDiscount.active,
+        discountValue: newDiscount.discountValue,
+        startDate: newDiscount.startDate,
+        endDate: newDiscount.endDate,
+        expired: newDiscount.expired,
+        usabilityLimit: newDiscount.usabilityLimit,
+        usageCount: newDiscount.usageCount,
+      };
+
       return res.status(201).json({
         status: "success",
         message: "Discount created",
-        newDiscount,
+        data,
       });
     } catch (error) {
       next(error);
@@ -38,10 +53,28 @@ class SpecialDiscountController {
   getAllDiscounts = async (req, res, next) => {
     try {
       const discounts = await this.specialDiscountService.getAllDiscounts();
+
+      datas = discounts.map((discount) => {
+        return {
+          id: discount._id,
+          name: discount.name,
+          restaurantId: discount.restaurantId,
+          details: discount.details,
+          discountType: discount.discountType,
+          active: discount.active,
+          discountValue: discount.discountValue,
+          startDate: discount.startDate,
+          endDate: discount.endDate,
+          expired: discount.expired,
+          usabilityLimit: discount.usabilityLimit,
+          usageCount: discount.usageCount,
+        };
+      });
+
       return res.status(200).json({
         status: "success",
         message: "All discounts",
-        discounts,
+        datas,
       });
     } catch (error) {
       next(error);
@@ -61,10 +94,26 @@ class SpecialDiscountController {
       }
 
       const discount = await this.specialDiscountService.getDiscountById(id);
+
+      data = {
+        id: discount._id,
+        name: discount.name,
+        restaurantId: discount.restaurantId,
+        details: discount.details,
+        discountType: discount.discountType,
+        active: discount.active,
+        discountValue: discount.discountValue,
+        startDate: discount.startDate,
+        endDate: discount.endDate,
+        expired: discount.expired,
+        usabilityLimit: discount.usabilityLimit,
+        usageCount: discount.usageCount,
+      };
+
       return res.status(200).json({
         status: "success",
         message: "Discount found",
-        discount,
+        data,
       });
     } catch (error) {
       next(error);
@@ -85,6 +134,23 @@ class SpecialDiscountController {
 
       const discounts =
         await this.specialDiscountService.getRestaurantDiscounts(restaurantId);
+
+      datas = discounts.map((discount) => {
+        return {
+          id: discount._id,
+          name: discount.name,
+          restaurantId: discount.restaurantId,
+          details: discount.details,
+          discountType: discount.discountType,
+          active: discount.active,
+          discountValue: discount.discountValue,
+          startDate: discount.startDate,
+          endDate: discount.endDate,
+          expired: discount.expired,
+          usabilityLimit: discount.usabilityLimit,
+          usageCount: discount.usageCount,
+        };
+      });
       return res.status(200).json({
         status: "success",
         message: "All Restaurant discounts",
@@ -121,10 +187,26 @@ class SpecialDiscountController {
           active: true,
         }
       );
+
+      data = {
+        id: discount._id,
+        name: discount.name,
+        restaurantId: discount.restaurantId,
+        details: discount.details,
+        discountType: discount.discountType,
+        active: discount.active,
+        discountValue: discount.discountValue,
+        startDate: discount.startDate,
+        endDate: discount.endDate,
+        expired: discount.expired,
+        usabilityLimit: discount.usabilityLimit,
+        usageCount: discount.usageCount,
+      };
+
       return res.status(200).json({
         status: "success",
         message: "Discount activated",
-        discount,
+        data,
       });
     } catch (error) {
       next(error);
@@ -157,10 +239,26 @@ class SpecialDiscountController {
           active: false,
         }
       );
+
+      data = {
+        id: discount._id,
+        name: discount.name,
+        restaurantId: discount.restaurantId,
+        details: discount.details,
+        discountType: discount.discountType,
+        active: discount.active,
+        discountValue: discount.discountValue,
+        startDate: discount.startDate,
+        endDate: discount.endDate,
+        expired: discount.expired,
+        usabilityLimit: discount.usabilityLimit,
+        usageCount: discount.usageCount,
+      };
+
       return res.status(200).json({
         status: "success",
         message: "Discount deactivated",
-        discount,
+        data,
       });
     } catch (error) {
       next(error);
@@ -187,11 +285,11 @@ class SpecialDiscountController {
         throw next(new HttpException(404, "Discount not found"));
       }
 
-      const discount = await this.specialDiscountService.deleteDiscountById(id);
+      await this.specialDiscountService.deleteDiscountById(id);
+
       return res.status(200).json({
         status: "success",
         message: "Discount deleted",
-        discount,
       });
     } catch (error) {
       next(error);
