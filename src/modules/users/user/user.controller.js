@@ -222,10 +222,8 @@ class UserController {
     try {
       const users = await this.userService.fetchAllUser();
 
-      const datas = new Array();
-
-      users.filter((user) => {
-        const data = {
+      const datas = users.map((user) => {
+        return {
           id: user._id,
           firstname: user.firstname,
           lastname: user.lastname,
@@ -245,7 +243,6 @@ class UserController {
           restaurants: user.restaurants,
           driver: user.driver,
         };
-        datas.push(data);
       });
 
       return res

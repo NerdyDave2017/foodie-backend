@@ -34,9 +34,20 @@ class DineInController {
 
       const dineIn = await this.dineInService.createDineIn(req.body);
 
+      data = {
+        id: dineIn._id,
+        restaurantCost: dineIn.restaurantCost,
+        isDineActive: dineIn.isDineActive,
+        openDineTime: dineIn.openDineTime,
+        closeDineTime: dineIn.closeDineTime,
+        isDineFulfiilled: dineIn.isDineFulfiilled,
+        userId: dineIn.userId,
+        restaurantId: dineIn.restaurantId,
+      };
+
       return res
         .status(201)
-        .json({ status: "success", message: "DineIn created", dineIn });
+        .json({ status: "success", message: "DineIn created", data });
     } catch (err) {
       next(err);
     }
@@ -45,9 +56,23 @@ class DineInController {
   getAllDineIn = async (req, res, next) => {
     try {
       const dineIn = await this.dineInService.getAllDineIn();
+
+      const datas = dineIn.map((dineIn) => {
+        return {
+          id: dineIn._id,
+          restaurantCost: dineIn.restaurantCost,
+          isDineActive: dineIn.isDineActive,
+          openDineTime: dineIn.openDineTime,
+          closeDineTime: dineIn.closeDineTime,
+          isDineFulfiilled: dineIn.isDineFulfiilled,
+          userId: dineIn.userId,
+          restaurantId: dineIn.restaurantId,
+        };
+      });
+
       return res
         .status(200)
-        .json({ status: "success", message: "All dineIn", dineIn });
+        .json({ status: "success", message: "All dineIn", datas });
     } catch (err) {
       next(err);
     }
