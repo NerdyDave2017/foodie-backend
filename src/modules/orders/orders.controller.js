@@ -11,13 +11,36 @@ class OrderController {
   createOrder = async (req, res, next) => {
     try {
       const order = req.body;
-      const newOrder = await this.orderService
-        .createOrder(order)
-        .then(async (order) => {
-          await this.orderService.updateOrderById(order._id, {
-            status: "pending",
-          });
-        });
+
+      //Generate trackingId
+
+      const newOrder = await this.orderService.createOrder({
+        ...order,
+        status: "pending",
+      });
+
+      const data = {
+        id: newOrder._id,
+        userId: newOrder.userId,
+        restaurantId: newOrder.restaurantId,
+        driverId: newOrder.driverId,
+        trackingId: newOrder.trackingId,
+        items: newOrder.items,
+        orderType: newOrder.orderType,
+        totalPrice: newOrder.totalPrice,
+        status: newOrder.status,
+        offerCoupon: newOrder.offerCoupon,
+        discount: newOrder.discount,
+        tipValue: newOrder.tipValue,
+        adminCommission: newOrder.adminCommission,
+        adminCommissionType: newOrder.adminCommissionType,
+        takeAway: newOrder.takeAway,
+        deliveryAddress: newOrder.deliveryAddress,
+        deliveryCharge: newOrder.deliveryCharge,
+        specialDiscount: newOrder.specialDiscount,
+        deliveryStartTime: newOrder.deliveryStartTime,
+        deliveryEndTime: newOrder.deliveryEndTime,
+      };
 
       res.status(201).json({
         status: "success",
