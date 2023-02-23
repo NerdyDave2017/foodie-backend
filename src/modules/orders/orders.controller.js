@@ -379,11 +379,10 @@ class OrderController {
         throw next(new HttpException(404, "Order does not exist"));
       }
 
-      const deletedOrder = await this.orderService.deleteOrderById(id);
+      await this.orderService.deleteOrderById(id);
       res.status(200).json({
         status: "success",
         message: "Order deleted",
-        deletedOrder,
       });
     } catch (error) {
       next(error);
