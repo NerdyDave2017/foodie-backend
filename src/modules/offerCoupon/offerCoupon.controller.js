@@ -32,10 +32,26 @@ class SpecialOfferController {
         code: offerCode,
       });
 
+      const data = {
+        id: newOffer._id,
+        code: newOffer.code,
+        restaurantId: newOffer.restaurantId,
+        name: newOffer.name,
+        imageUrl: newOffer.imageUrl,
+        couponType: newOffer.couponType,
+        active: newOffer.active,
+        couponValue: newOffer.couponValue,
+        startDate: newOffer.startDate,
+        endDate: newOffer.endDate,
+        expired: newOffer.expired,
+        usabilityLimit: newOffer.usabilityLimit,
+        usageCount: newOffer.usageCount,
+      };
+
       return res.status(201).json({
         status: "success",
         message: "Offer created",
-        newOffer,
+        data,
       });
     } catch (error) {
       next(error);
@@ -45,10 +61,29 @@ class SpecialOfferController {
   getAllOffers = async (req, res, next) => {
     try {
       const offers = await this.specialOfferService.getAllOffers();
+
+      const datas = offers.map((offer) => {
+        return {
+          id: offer._id,
+          code: offer.code,
+          restaurantId: offer.restaurantId,
+          name: offer.name,
+          imageUrl: offer.imageUrl,
+          couponType: offer.couponType,
+          active: offer.active,
+          couponValue: offer.couponValue,
+          startDate: offer.startDate,
+          endDate: offer.endDate,
+          expired: offer.expired,
+          usabilityLimit: offer.usabilityLimit,
+          usageCount: offer.usageCount,
+        };
+      });
+
       return res.status(200).json({
         status: "success",
         message: "All offers",
-        offers,
+        datas,
       });
     } catch (error) {
       next(error);
@@ -66,10 +101,27 @@ class SpecialOfferController {
       }
 
       const offer = await this.specialOfferService.getOfferById(id);
+
+      const data = {
+        id: newOffer._id,
+        code: newOffer.code,
+        restaurantId: newOffer.restaurantId,
+        name: newOffer.name,
+        imageUrl: newOffer.imageUrl,
+        couponType: newOffer.couponType,
+        active: newOffer.active,
+        couponValue: newOffer.couponValue,
+        startDate: newOffer.startDate,
+        endDate: newOffer.endDate,
+        expired: newOffer.expired,
+        usabilityLimit: newOffer.usabilityLimit,
+        usageCount: newOffer.usageCount,
+      };
+
       return res.status(200).json({
         status: "success",
         message: "Offer found",
-        offer,
+        data,
       });
     } catch (error) {
       next(error);
@@ -91,10 +143,29 @@ class SpecialOfferController {
       const offers = await this.specialOfferService.getRestaurantOffers(
         restaurantId
       );
+
+      const datas = offers.map((offer) => {
+        return {
+          id: offer._id,
+          code: offer.code,
+          restaurantId: offer.restaurantId,
+          name: offer.name,
+          imageUrl: offer.imageUrl,
+          couponType: offer.couponType,
+          active: offer.active,
+          couponValue: offer.couponValue,
+          startDate: offer.startDate,
+          endDate: offer.endDate,
+          expired: offer.expired,
+          usabilityLimit: offer.usabilityLimit,
+          usageCount: offer.usageCount,
+        };
+      });
+
       return res.status(200).json({
         status: "success",
         message: "All Restaurant offers",
-        offers,
+        datas,
       });
     } catch (error) {
       next(error);
@@ -122,10 +193,27 @@ class SpecialOfferController {
       const offer = await this.specialOfferService.updateOfferById(id, {
         active: true,
       });
+
+      const data = {
+        id: newOffer._id,
+        code: newOffer.code,
+        restaurantId: newOffer.restaurantId,
+        name: newOffer.name,
+        imageUrl: newOffer.imageUrl,
+        couponType: newOffer.couponType,
+        active: newOffer.active,
+        couponValue: newOffer.couponValue,
+        startDate: newOffer.startDate,
+        endDate: newOffer.endDate,
+        expired: newOffer.expired,
+        usabilityLimit: newOffer.usabilityLimit,
+        usageCount: newOffer.usageCount,
+      };
+
       return res.status(200).json({
         status: "success",
         message: "Offer activated",
-        offer,
+        data,
       });
     } catch (error) {
       next(error);

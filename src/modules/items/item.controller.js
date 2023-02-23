@@ -70,7 +70,7 @@ class ItemController {
           description: item.description,
           category: item.category,
           price: item.price,
-          restaurantId: restaurantId,
+          restaurantId: item.restaurantId,
           photo: item.photo,
           photos: item.photos,
           status: item.status,
