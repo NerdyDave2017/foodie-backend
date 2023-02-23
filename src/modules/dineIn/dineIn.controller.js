@@ -125,11 +125,24 @@ class DineInController {
         throw next(new HttpException(404, "User not found"));
       }
 
-      const dineIn = await this.dineInService.getUserDineIn(userId);
-      return res
+      const dineIns = await this.dineInService.getUserDineIn(userId);
 
+      const datas = dineIns.map((dineIn) => {
+        return {
+          id: dineIn._id,
+          restaurantCost: dineIn.restaurantCost,
+          isDineActive: dineIn.isDineActive,
+          openDineTime: dineIn.openDineTime,
+          closeDineTime: dineIn.closeDineTime,
+          isDineFulfiilled: dineIn.isDineFulfiilled,
+          userId: dineIn.userId,
+          restaurantId: dineIn.restaurantId,
+        };
+      });
+
+      return res
         .status(200)
-        .json({ status: "success", message: "User dineIn", dineIn });
+        .json({ status: "success", message: "User dineIn", datas });
     } catch (err) {
       next(err);
     }
@@ -145,9 +158,21 @@ class DineInController {
       }
 
       const dineIn = await this.dineInService.getDineInById(id);
+
+      data = {
+        id: dineIn._id,
+        restaurantCost: dineIn.restaurantCost,
+        isDineActive: dineIn.isDineActive,
+        openDineTime: dineIn.openDineTime,
+        closeDineTime: dineIn.closeDineTime,
+        isDineFulfiilled: dineIn.isDineFulfiilled,
+        userId: dineIn.userId,
+        restaurantId: dineIn.restaurantId,
+      };
+
       return res
         .status(200)
-        .json({ status: "success", message: "DineIn", dineIn });
+        .json({ status: "success", message: "DineIn", data });
     } catch (err) {
       next(err);
     }
@@ -173,9 +198,21 @@ class DineInController {
       }
 
       const dineIn = await this.dineInService.updateDineIn(dineInId, req.body);
+
+      data = {
+        id: dineIn._id,
+        restaurantCost: dineIn.restaurantCost,
+        isDineActive: dineIn.isDineActive,
+        openDineTime: dineIn.openDineTime,
+        closeDineTime: dineIn.closeDineTime,
+        isDineFulfiilled: dineIn.isDineFulfiilled,
+        userId: dineIn.userId,
+        restaurantId: dineIn.restaurantId,
+      };
+
       return res
         .status(200)
-        .json({ status: "success", message: "DineIn updated", dineIn });
+        .json({ status: "success", message: "DineIn updated", data });
     } catch (err) {
       next(err);
     }
@@ -201,10 +238,11 @@ class DineInController {
         throw next(new HttpException(401, "Unauthorized"));
       }
 
-      const dineIn = await this.dineInService.deleteDineIn(dineInId);
+      await this.dineInService.deleteDineIn(dineInId);
+
       return res
         .status(200)
-        .json({ status: "success", message: "DineIn deleted", dineIn });
+        .json({ status: "success", message: "DineIn deleted" });
     } catch (err) {
       next(err);
     }
