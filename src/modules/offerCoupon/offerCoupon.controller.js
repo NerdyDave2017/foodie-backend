@@ -241,10 +241,27 @@ class SpecialOfferController {
       const offer = await this.specialOfferService.updateOfferById(id, {
         active: false,
       });
+
+      const data = {
+        id: newOffer._id,
+        code: newOffer.code,
+        restaurantId: newOffer.restaurantId,
+        name: newOffer.name,
+        imageUrl: newOffer.imageUrl,
+        couponType: newOffer.couponType,
+        active: newOffer.active,
+        couponValue: newOffer.couponValue,
+        startDate: newOffer.startDate,
+        endDate: newOffer.endDate,
+        expired: newOffer.expired,
+        usabilityLimit: newOffer.usabilityLimit,
+        usageCount: newOffer.usageCount,
+      };
+
       return res.status(200).json({
         status: "success",
         message: "Offer deactivated",
-        offer,
+        data,
       });
     } catch (error) {
       next(error);
@@ -269,11 +286,10 @@ class SpecialOfferController {
         throw next(new HttpException(404, "Offer not found"));
       }
 
-      const offer = await this.specialOfferService.deleteOfferById(id);
+      await this.specialOfferService.deleteOfferById(id);
       return res.status(200).json({
         status: "success",
         message: "Offer deleted",
-        offer,
       });
     } catch (error) {
       next(error);
