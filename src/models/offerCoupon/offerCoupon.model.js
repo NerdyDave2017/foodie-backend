@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 const SpecialOfferSchema = new mongoose.Schema(
   {
-    name: { type: String },
-    code: { type: String },
+    name: { type: String, required: true },
+    code: { type: String, required: true },
     restaurantId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Restaurants",
       required: true,
     },
-    imageUrl: { type: String },
+    imageUrl: { type: String, default: "" },
     couponType: {
       type: String,
       enum: {
@@ -17,11 +17,11 @@ const SpecialOfferSchema = new mongoose.Schema(
       },
     },
     active: { type: Boolean, default: true },
-    couponValue: { type: Number },
-    startDate: { type: Date },
-    endDate: { type: Date },
+    couponValue: { type: Number, required: true },
+    startDate: { type: String, required: true },
+    endDate: { type: String, required: true },
     expired: { type: Boolean, default: false },
-    usabilityLimit: { type: Number },
+    usabilityLimit: { type: Number, default: 0 },
     usageCount: { type: Number, default: 0 },
   },
   {
