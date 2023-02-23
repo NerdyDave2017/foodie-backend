@@ -2,6 +2,8 @@ const OrderService = require("./orders.services");
 const userService = require("../users/user/user.services");
 const HttpException = require("../../exceptions/HttpExceptions");
 
+const generateTrackingCode = require("../../utils/generateTrackingCode");
+
 class OrderController {
   constructor() {
     this.orderService = new OrderService();
@@ -13,10 +15,12 @@ class OrderController {
       const order = req.body;
 
       //Generate trackingId
+      const trackingCode = generateTrackingCode();
 
       const newOrder = await this.orderService.createOrder({
         ...order,
         status: "pending",
+        trackingId: trackingCode,
       });
 
       const data = {
