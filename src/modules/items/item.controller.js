@@ -29,6 +29,7 @@ class ItemController {
 
       const data = {
         id: item._id,
+        name: item.name,
         description: item.description,
         category: item.category,
         price: item.price,
@@ -67,6 +68,7 @@ class ItemController {
       const datas = items.map((item) => {
         return {
           id: item._id,
+          name: item.name,
           description: item.description,
           category: item.category,
           price: item.price,
@@ -118,6 +120,7 @@ class ItemController {
       const datas = items.map((item) => {
         return {
           id: item._id,
+          name: item.name,
           description: item.description,
           category: item.category,
           price: item.price,
@@ -163,6 +166,7 @@ class ItemController {
 
       const data = {
         id: item._id,
+        name: item.name,
         description: item.description,
         category: item.category,
         price: item.price,
@@ -220,6 +224,7 @@ class ItemController {
 
       const data = {
         id: item._id,
+        name: item.name,
         description: item.description,
         category: item.category,
         price: item.price,
