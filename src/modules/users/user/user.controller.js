@@ -25,7 +25,7 @@ class UserController {
       const authToken = generateToken(newUser._id);
 
       const data = {
-        id: user._id,
+        id: newUser._id,
         firstname: newUser.firstname,
         lastname: newUser.lastname,
         email: newUser.email,
