@@ -11,7 +11,7 @@ const ItemSchema = new mongoose.Schema(
       ref: "Restaurants",
     }, // references the _id field in the users collection for the merchant who added this item
     photo: { type: String, default: "" },
-    photos: { type: Array, default: [] },
+    photos: { type: Array, default: [{ type: String }] },
     status: { type: String, default: "active", enum: ["active", "inactive"] },
     quantity: { type: Number, required: true },
     publish: { type: Boolean, default: false },

@@ -27,9 +27,26 @@ class RestaurantController {
       await this.userService.updateRestaurants(user._id, restaurant._id);
       await this.userService.updateRole(user._id, "restaurant");
 
+      const data = {
+        id: restaurant._id,
+        restaurantName: restaurant.restaurantName,
+        restaurantPhone: restaurant.restaurantPhone,
+        Decription: restaurant.Decription,
+        user: restaurant.user,
+        restaurantImage: restaurant.restaurantImage,
+        categories: restaurant.categories,
+        services: restaurant.services,
+        openingHours: restaurant.openingHours,
+        items: restaurant.items,
+        specialOffer: restaurant.specialOffer,
+        restaurantAddress: restaurant.restaurantAddress,
+        deliverySetting: restaurant.deliverySetting,
+        delivery: restaurant.delivery,
+      };
+
       return res
         .status(201)
-        .json({ status: "success", message: "Restaurant created", restaurant });
+        .json({ status: "success", message: "Restaurant created", data });
     } catch (error) {
       next(error);
     }
@@ -49,10 +66,28 @@ class RestaurantController {
         id,
         restaurantData
       );
+
+      const data = {
+        id: updatedRestaurant._id,
+        updatedRestaurantName: updatedRestaurant.updatedRestaurantName,
+        updatedRestaurantPhone: updatedRestaurant.updatedRestaurantPhone,
+        Decription: updatedRestaurant.Decription,
+        user: updatedRestaurant.user,
+        updatedRestaurantImage: updatedRestaurant.updatedRestaurantImage,
+        categories: updatedRestaurant.categories,
+        services: updatedRestaurant.services,
+        openingHours: updatedRestaurant.openingHours,
+        items: updatedRestaurant.items,
+        specialOffer: updatedRestaurant.specialOffer,
+        updatedRestaurantAddress: updatedRestaurant.updatedRestaurantAddress,
+        deliverySetting: updatedRestaurant.deliverySetting,
+        delivery: updatedRestaurant.delivery,
+      };
+
       return res.status(200).json({
         status: "success",
         message: "Restaurant updated",
-        updatedRestaurant,
+        data,
       });
     } catch (error) {
       next(error);
@@ -69,10 +104,27 @@ class RestaurantController {
         throw next(new HttpException(404, "Restaurant not found"));
       }
 
+      const data = {
+        id: restaurant._id,
+        restaurantName: restaurant.restaurantName,
+        restaurantPhone: restaurant.restaurantPhone,
+        Decription: restaurant.Decription,
+        user: restaurant.user,
+        restaurantImage: restaurant.restaurantImage,
+        categories: restaurant.categories,
+        services: restaurant.services,
+        openingHours: restaurant.openingHours,
+        items: restaurant.items,
+        specialOffer: restaurant.specialOffer,
+        restaurantAddress: restaurant.restaurantAddress,
+        deliverySetting: restaurant.deliverySetting,
+        delivery: restaurant.delivery,
+      };
+
       return res.status(200).json({
         status: "success",
         message: "restaurant found",
-        restaurant,
+        data,
       });
     } catch (error) {
       next(error);
@@ -91,10 +143,30 @@ class RestaurantController {
       const restaurants = await this.restaurantService.findUserRestaurants(
         userId
       );
+
+      const datas = restaurants.map((restaurant) => {
+        return {
+          id: restaurant._id,
+          restaurantName: restaurant.restaurantName,
+          restaurantPhone: restaurant.restaurantPhone,
+          Decription: restaurant.Decription,
+          user: restaurant.user,
+          restaurantImage: restaurant.restaurantImage,
+          categories: restaurant.categories,
+          services: restaurant.services,
+          openingHours: restaurant.openingHours,
+          items: restaurant.items,
+          specialOffer: restaurant.specialOffer,
+          restaurantAddress: restaurant.restaurantAddress,
+          deliverySetting: restaurant.deliverySetting,
+          delivery: restaurant.delivery,
+        };
+      });
+
       return res.status(200).json({
         status: "success",
         message: "All user restaurants",
-        restaurants,
+        datas,
       });
     } catch (error) {
       next(error);

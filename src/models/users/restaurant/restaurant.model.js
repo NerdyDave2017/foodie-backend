@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const RestaurantSchema = new mongoose.Schema(
   {
-    restaurantName: { type: String },
-    restaurantPhone: { type: String },
-    Decription: { type: String },
+    restaurantName: { type: String, required: true, default: "" },
+    restaurantPhone: { type: String, required: true, default: "" },
+    Decription: { type: String, default: "" },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" }, // references the _id field in the user collection
-    restaurantImage: { type: String },
+    restaurantImage: { type: String, default: "" },
     categories: {
       type: String,
       enum: {
@@ -29,6 +29,7 @@ const RestaurantSchema = new mongoose.Schema(
         ],
         message: "{VALUE} is not supported",
       },
+      default: "",
     },
     services: [{ type: String }],
     openingHours: {
@@ -67,6 +68,7 @@ const RestaurantSchema = new mongoose.Schema(
         startTime: { type: String },
         endTime: { type: String },
       },
+      default: {},
     },
     items: [
       {
@@ -83,18 +85,18 @@ const RestaurantSchema = new mongoose.Schema(
       },
     ],
     restaurantAddress: {
-      address: { type: String },
-      city: { type: String },
-      apartmentSuite: { type: String },
-      state: { type: String },
-      country: { type: String },
-      zipCode: { type: Number },
+      address: { type: String, default: "" },
+      city: { type: String, default: "" },
+      apartmentSuite: { type: String, default: "" },
+      state: { type: String, default: "" },
+      country: { type: String, default: "" },
+      zipCode: { type: Number, default: null },
     },
-    deliverySetting: { type: Boolean },
+    deliverySetting: { type: Boolean, default: false },
     delivery: {
-      chargePerKm: { type: Number },
-      minDeliveryCharge: { type: Number },
-      minDeliveryChargeWithinKm: { type: Number },
+      chargePerKm: { type: Number, default: null },
+      minDeliveryCharge: { type: Number, default: null },
+      minDeliveryChargeWithinKm: { type: Number, default: null },
     },
   },
   {

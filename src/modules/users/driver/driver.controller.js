@@ -10,41 +10,41 @@ class UserController {
     this.userService = new UserService();
   }
 
-  login = async (req, res, next) => {
-    const { userEmail, password } = req.body;
-    try {
-      const user = await this.userService.findUserByEmail(userEmail);
-      if (!user) {
-        throw next(new UserNotFound());
-      }
+  // login = async (req, res, next) => {
+  //   const { userEmail, password } = req.body;
+  //   try {
+  //     const user = await this.userService.findUserByEmail(userEmail);
+  //     if (!user) {
+  //       throw next(new UserNotFound());
+  //     }
 
-      const isPasswordValid = await this.userService.comparePassword(password);
-      if (!isPasswordValid) {
-        throw next(new InvalidCredentials());
-      }
+  //     const isPasswordValid = await this.userService.comparePassword(password);
+  //     if (!isPasswordValid) {
+  //       throw next(new InvalidCredentials());
+  //     }
 
-      if (!user.driver) {
-        const driver = await this.driverService.createDriver({
-          owner: user._id,
-        });
-        /* Updating the role of the user to driver. */
-        await this.userService.updateRole(user._id, "driver");
-        /* Updating the user data with the driver id. */
-        const user = await this.userService.updateData({
-          driver: driver._id,
-        });
-        return res
-          .status(200)
-          .json({ status: "success", message: "New driver created", user });
-      }
+  //     if (!user.driver) {
+  //       const driver = await this.driverService.createDriver({
+  //         owner: user._id,
+  //       });
+  //       /* Updating the role of the user to driver. */
+  //       await this.userService.updateRole(user._id, "driver");
+  //       /* Updating the user data with the driver id. */
+  //       const user = await this.userService.updateData({
+  //         driver: driver._id,
+  //       });
+  //       return res
+  //         .status(200)
+  //         .json({ status: "success", message: "New driver created", user });
+  //     }
 
-      return res
-        .status(200)
-        .json({ status: "success", message: "Driver login", user });
-    } catch (error) {
-      return res.status(400).json({ error });
-    }
-  };
+  //     return res
+  //       .status(200)
+  //       .json({ status: "success", message: "Driver login", user });
+  //   } catch (error) {
+  //     return res.status(400).json({ error });
+  //   }
+  // };
 
   updateData = async (req, res, next) => {
     const { id } = req.body;
