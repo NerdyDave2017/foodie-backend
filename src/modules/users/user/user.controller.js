@@ -22,6 +22,8 @@ class UserController {
 
       const newUser = await this.userService.create(req.body);
 
+      console.log(newUser);
+
       const authToken = generateToken(newUser._id);
 
       const data = {

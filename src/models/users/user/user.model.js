@@ -9,7 +9,7 @@ const UserSchema = new mongoose.Schema(
     password: { type: String, required: true },
     phoneNumber: { type: Number, required: true },
     profileImageURL: { type: String },
-    role: [{ type: String, require: true, default: "customer" }], // one or more of "driver", "user", "merchant", "admin"
+    role: [{ type: String, required: true, default: "customer" }], // one or more of "driver", "user", "merchant", "admin"
     settings: {
       newArrivals: { type: Boolean, default: false },
       orderUpdates: { type: Boolean, default: false },
@@ -33,9 +33,9 @@ const UserSchema = new mongoose.Schema(
     },
     walletAmount: { type: Number, default: 0 },
     bankDetails: {
-      accountName: { type: String, required: true, default: "" },
-      accountNumber: { type: Number, required: true, default: null },
-      bankName: { type: String, required: true, default: "" },
+      accountName: { type: String, default: "" },
+      accountNumber: { type: Number, default: null },
+      bankName: { type: String, default: "" },
       branchName: { type: String, default: "" },
       otherInformation: { type: String, default: "" },
     },
