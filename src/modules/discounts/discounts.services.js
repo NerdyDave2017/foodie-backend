@@ -10,9 +10,7 @@ class SpecialDiscountService {
     try {
       const newDiscount = await this.specialDiscount.create(discount);
       return newDiscount;
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   getAllDiscounts = async () => {
