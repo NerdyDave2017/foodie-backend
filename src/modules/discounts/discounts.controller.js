@@ -54,7 +54,7 @@ class SpecialDiscountController {
     try {
       const discounts = await this.specialDiscountService.getAllDiscounts();
 
-      datas = discounts.map((discount) => {
+      const datas = discounts.map((discount) => {
         return {
           id: discount._id,
           name: discount.name,
