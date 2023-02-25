@@ -97,7 +97,7 @@ class SpecialDiscountController {
 
       const discount = await this.specialDiscountService.getDiscountById(id);
 
-      data = {
+      const data = {
         id: discount._id,
         name: discount.name,
         restaurantId: discount.restaurantId,
@@ -137,7 +137,7 @@ class SpecialDiscountController {
       const discounts =
         await this.specialDiscountService.getRestaurantDiscounts(restaurantId);
 
-      datas = discounts.map((discount) => {
+      const datas = discounts.map((discount) => {
         return {
           id: discount._id,
           name: discount.name,
@@ -190,7 +190,7 @@ class SpecialDiscountController {
         }
       );
 
-      data = {
+      const data = {
         id: discount._id,
         name: discount.name,
         restaurantId: discount.restaurantId,
@@ -242,7 +242,7 @@ class SpecialDiscountController {
         }
       );
 
-      data = {
+      const data = {
         id: discount._id,
         name: discount.name,
         restaurantId: discount.restaurantId,
