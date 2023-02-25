@@ -1,6 +1,7 @@
 const OrderService = require("./orders.services");
-const userService = require("../users/user/user.services");
-const restaurantService = require("../users/restaurant/restaurant.services");
+const UserService = require("../users/user/user.services");
+const RestaurantService = require("../users/restaurant/restaurant.services");
+const ItemService = require("../items/item.services");
 const HttpException = require("../../exceptions/HttpExceptions");
 
 const generateTrackingCode = require("../../utils/generateTrackingCode");
@@ -8,7 +9,9 @@ const generateTrackingCode = require("../../utils/generateTrackingCode");
 class OrderController {
   constructor() {
     this.orderService = new OrderService();
-    this.userService = new userService();
+    this.userService = new UserService();
+    this.restaurantService = new RestaurantService();
+    this.itemService = new ItemService();
   }
 
   createOrder = async (req, res, next) => {
@@ -17,6 +20,26 @@ class OrderController {
 
       //Generate trackingId
       const trackingCode = generateTrackingCode();
+
+      //Check if user exist
+      const userExist = await this.userService.findUserById(order.userId);
+      if (!userExist) {
+        throw new HttpException(404, "User not found");
+      }
+
+      //Check if restaurant exist
+      const restaurantExist = await restaurantService.getRestaurantById(
+        order.restaurantId
+      );
+      if (!restaurantExist) {
+        throw new HttpException(404, "Restaurant not found");
+      }
+
+      // Calculate total price
+      let totalPrice = 0;
+      order.items.forEach((item) => {
+        this.itemService.getItemById();
+      });
 
       const newOrder = await this.orderService.createOrder({
         ...order,

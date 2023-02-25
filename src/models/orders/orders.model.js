@@ -18,21 +18,24 @@ const OrderSchema = new mongoose.Schema(
       default: null,
     }, // references the _id field in the drivers collection (driver)
     trackingId: { type: Number, required: true },
-    items: [
-      {
+    items: {
+      type: Array,
+      default: [],
+      item: {
         itemId: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Items",
         }, // references the _id field in the items collection
         quantity: { type: Number, require: true, default: 1 },
       },
-    ],
+      required: true,
+    },
     orderType: { type: String, required: true, default: "delivery" }, // delivery or takeout
     totalPrice: { type: Number, required: true, default: null },
     status: { type: String, required: true, default: "pending" }, // one of "pending", "accepted", "rejected", "in_progress", "delivered"
     offerCoupon: { type: String, default: "" },
-    discount: { type: Number, default: null },
-    tipValue: { type: Number, default: null },
+    discount: { type: Number, default: 0 },
+    tipValue: { type: Number, default: 0 },
     adminCommission: { type: Number, default: null },
     adminCommissionType: { type: String, default: null },
     takeAway: { type: Boolean, default: false },
@@ -53,7 +56,7 @@ const OrderSchema = new mongoose.Schema(
     },
     deliveryCharge: { type: Number, default: null },
     specialDiscount: { type: Array, default: [] },
-    deliveryStartTime: { type: String, default: "" },
+    deliveryStartTime: { type: String, default: "", required: true },
     deliveryEndTime: { type: String, default: "" },
   },
   {
