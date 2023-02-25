@@ -11,7 +11,7 @@ class UserService {
       const newUser = await this.users.create({
         ...userData,
       });
-      return { user: newUser };
+      return newUser;
     } catch (error) {
       console.log(error);
     }

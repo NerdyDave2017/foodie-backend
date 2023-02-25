@@ -26,6 +26,8 @@ class UserController {
 
       const authToken = generateToken(newUser._id);
 
+      console.log(authToken);
+
       const data = {
         id: newUser._id,
         firstname: newUser.firstname,
