@@ -28,7 +28,7 @@ class OrderController {
       }
 
       //Check if restaurant exist
-      const restaurantExist = await restaurantService.getRestaurantById(
+      const restaurantExist = await this.restaurantService.findRestaurantById(
         order.restaurantId
       );
       if (!restaurantExist) {
@@ -36,16 +36,18 @@ class OrderController {
       }
 
       // Calculate total price
-      let totalPrice = 0;
-      order.items.forEach((item) => {
-        this.itemService.getItemById();
-      });
+      // let totalPrice = 0;
+      // order.items.forEach((item) => {
+      //   this.itemService.getItemById();
+      // });
 
       const newOrder = await this.orderService.createOrder({
         ...order,
         status: "pending",
         trackingId: trackingCode,
       });
+
+      console.log(newOrder, "newOrder");
 
       const data = {
         id: newOrder._id,

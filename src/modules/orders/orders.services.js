@@ -10,7 +10,9 @@ class OrderService {
     try {
       const newOrder = await this.orders.create(order);
       return newOrder;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getOrders() {

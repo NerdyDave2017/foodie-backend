@@ -17,7 +17,7 @@ const OrderSchema = new mongoose.Schema(
       ref: "Drivers",
       default: null,
     }, // references the _id field in the drivers collection (driver)
-    trackingId: { type: Number, required: true },
+    trackingId: { type: toString, required: true },
     items: {
       type: Array,
       default: [],
