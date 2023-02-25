@@ -41,11 +41,13 @@ class UserController {
         active: newUser.active,
         appIdentifier: newUser.appIdentifier,
         stripeCustomer: newUser.stripeCustomer,
-        lastOnlineTimestampz: newUser.lastOnlineTimestampz,
+        lastOnlineTimestamp: newUser.lastOnlineTimestamp,
         favourites: newUser.favourites,
         restaurants: newUser.restaurants,
         driver: newUser.driver,
       };
+
+      console.log(data);
 
       return res.status(201).json({
         status: "success",
@@ -93,15 +95,18 @@ class UserController {
         active: user.active,
         appIdentifier: user.appIdentifier,
         stripeCustomer: user.stripeCustomer,
-        lastOnlineTimestampz: user.lastOnlineTimestampz,
+        lastOnlineTimestamp: user.lastOnlineTimestamp,
         favourites: user.favourites,
         restaurants: user.restaurants,
         driver: user.driver,
       };
 
-      return res
-        .status(200)
-        .json({ status: "success", message: "User signin", data, authToken });
+      return res.status(200).json({
+        status: "success",
+        message: "User login successful",
+        data,
+        authToken,
+      });
     } catch (error) {
       next(error);
     }
@@ -178,7 +183,7 @@ class UserController {
         active: updatedUser.active,
         appIdentifier: updatedUser.appIdentifier,
         stripeCustomer: updatedUser.stripeCustomer,
-        lastOnlineTimestampz: updatedUser.lastOnlineTimestampz,
+        lastOnlineTimestamp: updatedUser.lastOnlineTimestamp,
         favourites: updatedUser.favourites,
         restaurants: updatedUser.restaurants,
         driver: updatedUser.driver,
@@ -240,7 +245,7 @@ class UserController {
           active: user.active,
           appIdentifier: user.appIdentifier,
           stripeCustomer: user.stripeCustomer,
-          lastOnlineTimestampz: user.lastOnlineTimestampz,
+          lastOnlineTimestamp: user.lastOnlineTimestamp,
           favourites: user.favourites,
           restaurants: user.restaurants,
           driver: user.driver,
