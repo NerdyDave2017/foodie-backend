@@ -47,8 +47,6 @@ class OrderController {
         trackingId: trackingCode,
       });
 
-      console.log(newOrder, "newOrder");
-
       const data = {
         id: newOrder._id,
         userId: newOrder.userId,

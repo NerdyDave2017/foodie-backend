@@ -15,21 +15,18 @@ const OrderSchema = new mongoose.Schema(
     driverId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Drivers",
-      default: null,
     }, // references the _id field in the drivers collection (driver)
-    trackingId: { type: toString, required: true },
-    items: {
-      type: Array,
-      default: [],
-      item: {
+    trackingId: { type: String, required: true },
+    items: [
+      {
         itemId: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Items",
         }, // references the _id field in the items collection
         quantity: { type: Number, require: true, default: 1 },
       },
-      required: true,
-    },
+    ],
+
     orderType: { type: String, required: true, default: "delivery" }, // delivery or takeout
     totalPrice: { type: Number, required: true, default: null },
     status: { type: String, required: true, default: "pending" }, // one of "pending", "accepted", "rejected", "in_progress", "delivered"
