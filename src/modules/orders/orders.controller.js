@@ -272,6 +272,51 @@ class OrderController {
     }
   };
 
+  getOrderByTrackingId = async (req, res, next) => {
+    try {
+      const { trackingId } = req.params;
+
+      const order = await this.orderService.getOrderByTrackingId(trackingId);
+
+      if (!order) {
+        throw next(new HttpException(404, "Order does not exist"));
+      }
+
+      console.log(order);
+
+      const data = {
+        id: order._id,
+        userId: order.userId,
+        restaurantId: order.restaurantId,
+        driverId: order.driverId,
+        trackingId: order.trackingId,
+        items: order.items,
+        orderType: order.orderType,
+        totalPrice: order.totalPrice,
+        status: order.status,
+        offerCoupon: order.offerCoupon,
+        discount: order.discount,
+        tipValue: order.tipValue,
+        adminCommission: order.adminCommission,
+        adminCommissionType: order.adminCommissionType,
+        takeAway: order.takeAway,
+        deliveryAddress: order.deliveryAddress,
+        deliveryCharge: order.deliveryCharge,
+        specialDiscount: order.specialDiscount,
+        deliveryStartTime: order.deliveryStartTime,
+        deliveryEndTime: order.deliveryEndTime,
+      };
+
+      res.status(200).json({
+        status: "success",
+        message: "Order found",
+        data,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   restaurantAcceptOrder = async (req, res, next) => {
     try {
       const { orderId: id } = req.params.id;
