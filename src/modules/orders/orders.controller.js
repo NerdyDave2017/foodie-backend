@@ -35,11 +35,17 @@ class OrderController {
         throw new HttpException(404, "Restaurant not found");
       }
 
+      // Check for discounts
+
+      // Check for special offers
+
       // Calculate total price
-      // let totalPrice = 0;
-      // order.items.forEach((item) => {
-      //   this.itemService.getItemById();
-      // });
+      let totalPrice = 0;
+      order.items.forEach(async (item) => {
+        await this.itemService.getItemById(item.itemId).then((res) => {
+          totalPrice += res.price;
+        });
+      });
 
       const newOrder = await this.orderService.createOrder({
         ...order,
