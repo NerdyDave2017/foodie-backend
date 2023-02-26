@@ -51,18 +51,16 @@ class OrderService {
 
   async getOrderByUserId(userId) {
     try {
-      const order = await this.orders.findOne({ userId: userId });
+      const order = await this.orders.find({ userId: userId });
       return order;
     } catch (error) {}
   }
 
   async getOrderByTrackingId(trackingId) {
     try {
-      const order = await this.orders.find({
+      const order = await this.orders.findOne({
         trackingId: trackingId,
       });
-
-      console.log(order);
 
       return order;
     } catch (err) {}

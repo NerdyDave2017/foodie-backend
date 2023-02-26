@@ -227,7 +227,7 @@ class OrderController {
 
   getOrderByUserId = async (req, res, next) => {
     try {
-      const { userId } = req.body;
+      const { userId } = req.params;
 
       const user = await this.userService.find;
 
@@ -236,6 +236,8 @@ class OrderController {
       }
 
       const orders = await this.orderService.getOrderByUserId(userId);
+
+      console.log(orders);
 
       const datas = orders.map((order) => {
         return {
