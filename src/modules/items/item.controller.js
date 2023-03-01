@@ -154,15 +154,13 @@ class ItemController {
   };
 
   getItemById = async (req, res, next) => {
-    const id = req.params.id;
+    const { itemId } = req.params;
     try {
-      const itemExist = await this.itemService.getItemById(id);
+      const item = await this.itemService.getItemById(itemId);
 
-      if (!itemExist) {
+      if (!item) {
         throw next(new HttpException(404, "Item not found"));
       }
-
-      const item = await this.itemService.getItemById(id);
 
       const data = {
         id: item._id,
@@ -257,7 +255,7 @@ class ItemController {
   };
 
   deleteItem = async (req, res, next) => {
-    const { restaurantId, itemId } = req.body;
+    const { restaurantId, itemId } = req.params;
     try {
       // Check if the restaurant exists
       const restaurantExists = await this.restaurantService.findRestaurantById(
@@ -278,7 +276,7 @@ class ItemController {
         throw next(new HttpException(403, "Restaurant Unauthorized"));
       }
 
-      const item = await this.itemService.deleteItem(itemId);
+      await this.itemService.deleteItem(itemId);
       return res
         .status(200)
         .json({ status: "success", message: "Item deleted", item });

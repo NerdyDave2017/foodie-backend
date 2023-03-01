@@ -35,6 +35,19 @@ class ItemService {
     } catch (err) {}
   };
 
+  updateItem = async (id, data) => {
+    try {
+      const item = await this.items.findByIdAndUpdate(
+        id,
+        { ...data },
+        {
+          new: true,
+        }
+      );
+      return item;
+    } catch (err) {}
+  };
+
   deleteItem = async (id) => {
     try {
       const item = await this.items.findByIdAndDelete(id);
