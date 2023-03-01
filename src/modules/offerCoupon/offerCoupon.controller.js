@@ -270,23 +270,15 @@ class SpecialOfferController {
 
   deleteOffer = async (req, res, next) => {
     try {
-      const { id, restaurantId } = req.body;
+      const { offerId } = req.params;
 
-      const restaurantExist = await this.restaurantService.findRestaurantById(
-        restaurantId
-      );
-
-      if (!restaurantExist) {
-        throw next(new HttpException(404, "Restaurant not found"));
-      }
-
-      const offerExist = await this.specialOfferService.getOfferById(id);
+      const offerExist = await this.specialOfferService.getOfferById(offerId);
 
       if (!offerExist) {
         throw next(new HttpException(404, "Offer not found"));
       }
 
-      await this.specialOfferService.deleteOfferById(id);
+      await this.specialOfferService.deleteOfferById(offerId);
       return res.status(200).json({
         status: "success",
         message: "Offer deleted",
