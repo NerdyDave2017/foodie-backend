@@ -269,25 +269,17 @@ class SpecialDiscountController {
 
   deleteDiscount = async (req, res, next) => {
     try {
-      const { id, restaurantId } = req.body;
-
-      const restaurantExist = await this.restaurantService.findRestaurantById(
-        restaurantId
-      );
-
-      if (!restaurantExist) {
-        throw next(new HttpException(404, "Restaurant not found"));
-      }
+      const discountId = req.params;
 
       const discountExist = await this.specialDiscountService.getDiscountById(
-        id
+        discountId
       );
 
       if (!discountExist) {
         throw next(new HttpException(404, "Discount not found"));
       }
 
-      await this.specialDiscountService.deleteDiscountById(id);
+      await this.specialDiscountService.deleteDiscountById(discountId);
 
       return res.status(200).json({
         status: "success",
