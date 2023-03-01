@@ -497,7 +497,13 @@ class OrderController {
 
   deleteOrderById = async (req, res, next) => {
     try {
-      const orderId = req.params.id;
+      const { orderId, userId } = req.params;
+
+      const userExist = await this.userService.getUserById(userId);
+
+      if (!userExist) {
+        throw next(new HttpException(404, "User does not exist"));
+      }
 
       const orderExist = await this.orderService.getOrderById(orderId);
 

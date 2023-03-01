@@ -17,7 +17,7 @@ Router.patch(
   "/restaurant/reject/:orderId/:restaurantId",
   orderController.restaurantRejectOrder
 );
-Router.delete("/delete/:orderId", orderController.deleteOrderById);
+Router.delete("/delete/:orderId/:userId", orderController.deleteOrderById);
 Router.get("/:orderId", orderController.getOrderById);
 
 module.exports = Router;
