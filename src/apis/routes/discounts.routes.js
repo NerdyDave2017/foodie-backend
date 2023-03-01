@@ -9,9 +9,9 @@ Router.get(
   "/restaurant/:restaurantId",
   discountController.getRestaurantDiscounts
 );
-Router.patch("/activate", discountController.activateDiscount);
-Router.patch("/deactivate", discountController.deactivateDiscount);
-Router.delete("/delete/discountId", discountController.deleteDiscount);
-Router.get("/:id", discountController.getDiscountById);
+Router.patch("/activate/:discountId", discountController.activateDiscount);
+Router.patch("/deactivate/:discountId", discountController.deactivateDiscount);
+Router.delete("/delete/:discountId", discountController.deleteDiscount);
+Router.get("/:discountd", discountController.getDiscountById);
 
 module.exports = Router;
