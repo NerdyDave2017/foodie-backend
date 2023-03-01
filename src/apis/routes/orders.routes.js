@@ -7,7 +7,7 @@ Router.get("/", orderController.getOrders);
 Router.post("/create", orderController.createOrder);
 Router.get("/user/:userId", orderController.getOrderByUserId);
 Router.get("/tracking/:trackingId", orderController.getOrderByTrackingId);
-Router.patch("/update/:id/:userId", orderController.updateOrderById);
+Router.patch("/update/:orderId/:userId", orderController.updateOrderById);
 Router.patch(
   "/restaurant/accept/:orderId/:restaurantId",
   orderController.restaurantAcceptOrder
@@ -17,6 +17,6 @@ Router.patch(
   orderController.restaurantRejectOrder
 );
 Router.delete("/delete/:orderId", orderController.deleteOrderById);
-Router.get("/:id", orderController.getOrderById);
+Router.get("/:orderId", orderController.getOrderById);
 
 module.exports = Router;

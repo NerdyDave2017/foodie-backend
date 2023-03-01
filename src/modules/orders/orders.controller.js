@@ -176,8 +176,8 @@ class OrderController {
       //Check if order exist
       // Check if user is the one trying to update order
 
-      const id = req.params.id;
-      const userId = req.params.userId;
+      const { orderId, userId } = req.params;
+
       const order = req.body;
 
       const user = await this.userService.findUserById(userId);
@@ -186,7 +186,7 @@ class OrderController {
         throw next(new HttpException(404, "User does not exist"));
       }
 
-      const orderExist = await this.orderService.getOrderById(id);
+      const orderExist = await this.orderService.getOrderById(orderId);
 
       if (!orderExist) {
         throw next(new HttpException(404, "Order does not exist"));
@@ -196,7 +196,10 @@ class OrderController {
         throw next(new HttpException(401, "Unauthorized"));
       }
 
-      const updatedOrder = await this.orderService.updateOrderById(id, order);
+      const updatedOrder = await this.orderService.updateOrderById(
+        orderId,
+        order
+      );
 
       const data = {
         id: updatedOrder._id,
@@ -290,8 +293,6 @@ class OrderController {
         throw next(new HttpException(404, "Order does not exist"));
       }
 
-      console.log(order);
-
       const data = {
         id: order._id,
         userId: order.userId,
@@ -327,7 +328,7 @@ class OrderController {
 
   restaurantAcceptOrder = async (req, res, next) => {
     try {
-      const { orderId: id } = req.params.id;
+      const { orderId } = req.params;
       const { restaurantId } = req.params.restaurantId;
 
       const restaurantExist = await this.restaurantService.getRestaurantById(
@@ -338,17 +339,17 @@ class OrderController {
         throw next(new HttpException(404, "Restaurant does not exist"));
       }
 
-      if (restaurantExist._id !== restaurantId) {
-        throw next(new HttpException(401, "Unauthorized"));
-      }
-
-      const orderExist = await this.orderService.getOrderById(id);
+      const orderExist = await this.orderService.getOrderById(orderId);
 
       if (!orderExist) {
         throw next(new HttpException(404, "Order does not exist"));
       }
 
-      const updatedOrder = await this.orderService.updateOrderById(id, {
+      if (orderExist.restaurantId !== restaurantId) {
+        throw next(new HttpException(401, "Unauthorized"));
+      }
+
+      const updatedOrder = await this.orderService.updateOrderById(orderId, {
         status: "accepted",
       });
 
@@ -387,7 +388,7 @@ class OrderController {
 
   restaurantRejectOrder = async (req, res, next) => {
     try {
-      const { orderId: id } = req.params.id;
+      const { orderId } = req.params;
       const { restaurantId } = req.params.restaurantId;
 
       const restaurantExist = await this.restaurantService.getRestaurantById(
@@ -398,17 +399,17 @@ class OrderController {
         throw next(new HttpException(404, "Restaurant does not exist"));
       }
 
-      if (restaurantExist._id !== restaurantId) {
-        throw next(new HttpException(401, "Unauthorized"));
-      }
-
-      const orderExist = await this.orderService.getOrderById(id);
+      const orderExist = await this.orderService.getOrderById(orderId);
 
       if (!orderExist) {
         throw next(new HttpException(404, "Order does not exist"));
       }
 
-      const updatedOrder = await this.orderService.updateOrderById(id, {
+      if (orderExist.restaurantId !== restaurantId) {
+        throw next(new HttpException(401, "Unauthorized"));
+      }
+
+      const updatedOrder = await this.orderService.updateOrderById(orderId, {
         status: "rejected",
       });
 
