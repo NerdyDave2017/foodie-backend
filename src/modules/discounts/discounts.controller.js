@@ -85,17 +85,19 @@ class SpecialDiscountController {
 
   getDiscountById = async (req, res, next) => {
     try {
-      const { id } = req.params;
+      const { discountId } = req.params;
 
       const discountExist = await this.specialDiscountService.getDiscountById(
-        id
+        discountId
       );
 
       if (!discountExist) {
         throw next(new HttpException(404, "Discount not found"));
       }
 
-      const discount = await this.specialDiscountService.getDiscountById(id);
+      const discount = await this.specialDiscountService.getDiscountById(
+        discountId
+      );
 
       const data = {
         id: discount._id,
