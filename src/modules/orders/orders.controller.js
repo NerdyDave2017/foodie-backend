@@ -246,8 +246,6 @@ class OrderController {
 
       const orders = await this.orderService.getOrderByUserId(userId);
 
-      console.log(orders);
-
       const datas = orders.map((order) => {
         return {
           id: order._id,

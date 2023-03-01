@@ -6,6 +6,7 @@ const orderController = new OrderController();
 Router.get("/", orderController.getOrders);
 Router.post("/create", orderController.createOrder);
 Router.get("/user/:userId", orderController.getOrderByUserId);
+Router.get("/restaurant/:restaurantId", orderController.getOrderByRestaurantId);
 Router.get("/tracking/:trackingId", orderController.getOrderByTrackingId);
 Router.patch("/update/:orderId/:userId", orderController.updateOrderById);
 Router.patch(

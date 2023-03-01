@@ -56,7 +56,7 @@ class OrderService {
     } catch (error) {}
   };
 
-  getOrderbyRestaurantId = async (restaurantId) => {
+  getOrderByRestaurantId = async (restaurantId) => {
     try {
       const order = await this.orders.find({ restaurantId: restaurantId });
       return order;
