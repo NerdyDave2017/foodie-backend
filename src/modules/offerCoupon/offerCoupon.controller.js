@@ -92,30 +92,30 @@ class SpecialOfferController {
 
   getOfferById = async (req, res, next) => {
     try {
-      const { id } = req.params;
+      const { offerId } = req.params;
 
-      const offerExist = await this.specialOfferService.getOfferById(id);
+      const offerExist = await this.specialOfferService.getOfferById(offerId);
 
       if (!offerExist) {
         throw next(new HttpException(404, "Offer not found"));
       }
 
-      const offer = await this.specialOfferService.getOfferById(id);
+      const offer = await this.specialOfferService.getOfferById(offerId);
 
       const data = {
-        id: newOffer._id,
-        code: newOffer.code,
-        restaurantId: newOffer.restaurantId,
-        name: newOffer.name,
-        imageUrl: newOffer.imageUrl,
-        couponType: newOffer.couponType,
-        active: newOffer.active,
-        couponValue: newOffer.couponValue,
-        startDate: newOffer.startDate,
-        endDate: newOffer.endDate,
-        expired: newOffer.expired,
-        usabilityLimit: newOffer.usabilityLimit,
-        usageCount: newOffer.usageCount,
+        id: offer._id,
+        code: offer.code,
+        restaurantId: offer.restaurantId,
+        name: offer.name,
+        imageUrl: offer.imageUrl,
+        couponType: offer.couponType,
+        active: offer.active,
+        couponValue: offer.couponValue,
+        startDate: offer.startDate,
+        endDate: offer.endDate,
+        expired: offer.expired,
+        usabilityLimit: offer.usabilityLimit,
+        usageCount: offer.usageCount,
       };
 
       return res.status(200).json({
