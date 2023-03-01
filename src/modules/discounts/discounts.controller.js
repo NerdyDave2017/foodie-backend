@@ -156,7 +156,7 @@ class SpecialDiscountController {
       return res.status(200).json({
         status: "success",
         message: "All Restaurant discounts",
-        discounts,
+        datas,
       });
     } catch (error) {
       next(error);
