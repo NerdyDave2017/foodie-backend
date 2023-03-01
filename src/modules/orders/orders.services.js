@@ -56,7 +56,12 @@ class OrderService {
     } catch (error) {}
   };
 
-  getOrderbyRestaurantId = async (restaurantId) => {};
+  getOrderbyRestaurantId = async (restaurantId) => {
+    try {
+      const order = await this.orders.find({ restaurantId: restaurantId });
+      return order;
+    } catch (error) {}
+  };
 
   getOrderByTrackingId = async (trackingId) => {
     try {
