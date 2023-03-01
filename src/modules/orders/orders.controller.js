@@ -447,15 +447,15 @@ class OrderController {
 
   deleteOrderById = async (req, res, next) => {
     try {
-      const id = req.params.id;
+      const orderId = req.params.id;
 
-      const orderExist = await this.orderService.getOrderById(id);
+      const orderExist = await this.orderService.getOrderById(orderId);
 
       if (!orderExist) {
         throw next(new HttpException(404, "Order does not exist"));
       }
 
-      await this.orderService.deleteOrderById(id);
+      await this.orderService.deleteOrderById(orderId);
       res.status(200).json({
         status: "success",
         message: "Order deleted",
