@@ -174,46 +174,17 @@ class SpecialOfferController {
 
   activateOffer = async (req, res, next) => {
     try {
-      const { id, restaurantId } = req.body;
+      const { offerId } = req.params;
 
-      const restaurantExist = await this.restaurantService.findRestaurantById(
-        restaurantId
-      );
-
-      if (!restaurantExist) {
-        throw next(new HttpException(404, "Restaurant not found"));
-      }
-
-      const offerExist = await this.specialOfferService.getOfferById(id);
+      const offerExist = await this.specialOfferService.getOfferById(offerId);
 
       if (!offerExist) {
         throw next(new HttpException(404, "Offer not found"));
       }
 
-      const offer = await this.specialOfferService.updateOfferById(id, {
-        active: true,
-      });
-
-      const data = {
-        id: newOffer._id,
-        code: newOffer.code,
-        restaurantId: newOffer.restaurantId,
-        name: newOffer.name,
-        imageUrl: newOffer.imageUrl,
-        couponType: newOffer.couponType,
-        active: newOffer.active,
-        couponValue: newOffer.couponValue,
-        startDate: newOffer.startDate,
-        endDate: newOffer.endDate,
-        expired: newOffer.expired,
-        usabilityLimit: newOffer.usabilityLimit,
-        usageCount: newOffer.usageCount,
-      };
-
       return res.status(200).json({
         status: "success",
         message: "Offer activated",
-        data,
       });
     } catch (error) {
       next(error);
@@ -224,7 +195,7 @@ class SpecialOfferController {
     try {
       const { offerId } = req.params;
 
-      const offerExist = await this.specialOfferService.getOfferById(id);
+      const offerExist = await this.specialOfferService.getOfferById(offerId);
 
       if (!offerExist) {
         throw next(new HttpException(404, "Offer not found"));
