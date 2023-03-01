@@ -6,30 +6,30 @@ class OrderService {
     this.orders = Orders;
   }
 
-  async createOrder(order) {
+  createOrder = async (order) => {
     try {
       const newOrder = await this.orders.create(order);
       return newOrder;
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  async getOrders() {
+  getOrders = async () => {
     try {
       const orders = await this.orders.find();
       return orders;
     } catch (error) {}
-  }
+  };
 
-  async getOrderById(id) {
+  getOrderById = async (id) => {
     try {
       const order = await this.orders.findById(id);
       return order;
     } catch (error) {}
-  }
+  };
 
-  async updateOrderById(id, order) {
+  updateOrderById = async (id, order) => {
     try {
       const updatedOrder = await this.orders.findByIdAndUpdate(
         id,
@@ -40,23 +40,25 @@ class OrderService {
       );
       return updatedOrder;
     } catch (error) {}
-  }
+  };
 
-  async deleteOrderById(id) {
+  deleteOrderById = async (id) => {
     try {
       const deletedOrder = await this.orders.findByIdAndDelete(id);
       return deletedOrder;
     } catch (error) {}
-  }
+  };
 
-  async getOrderByUserId(userId) {
+  getOrderByUserId = async (userId) => {
     try {
       const order = await this.orders.find({ userId: userId });
       return order;
     } catch (error) {}
-  }
+  };
 
-  async getOrderByTrackingId(trackingId) {
+  getOrderbyRestaurantId = async (restaurantId) => {};
+
+  getOrderByTrackingId = async (trackingId) => {
     try {
       const order = await this.orders.findOne({
         trackingId: trackingId,
@@ -64,7 +66,7 @@ class OrderService {
 
       return order;
     } catch (err) {}
-  }
+  };
 }
 
 module.exports = OrderService;
