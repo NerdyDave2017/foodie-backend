@@ -4,7 +4,7 @@ const RestaurantSchema = new mongoose.Schema(
     restaurantName: { type: String, required: true, default: "" },
     restaurantPhone: { type: String, required: true, default: "" },
     Decription: { type: String, default: "" },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "Users" }, // references the _id field in the user collection
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" }, // references the _id field in the user collection
     restaurantImage: { type: String, default: "" },
     categories: {
       type: String,
@@ -33,40 +33,13 @@ const RestaurantSchema = new mongoose.Schema(
     },
     services: [{ type: String }],
     openingHours: {
-      monday: {
-        open: { type: Boolean },
-        startTime: { type: String },
-        endTime: { type: String },
+      weekdays: {
+        openingTime: { type: String },
+        closingTime: { type: String },
       },
-      tuesday: {
-        open: { type: Boolean },
-        startTime: { type: String },
-        endTime: { type: String },
-      },
-      wednesday: {
-        open: { type: Boolean },
-        startTime: { type: String },
-        endTime: { type: String },
-      },
-      thursday: {
-        open: { type: Boolean },
-        startTime: { type: String },
-        endTime: { type: String },
-      },
-      friday: {
-        open: { type: Boolean },
-        startTime: { type: String },
-        endTime: { type: String },
-      },
-      saturday: {
-        open: { type: Boolean },
-        startTime: { type: String },
-        endTime: { type: String },
-      },
-      sunday: {
-        open: { type: Boolean },
-        startTime: { type: String },
-        endTime: { type: String },
+      weekeends: {
+        openingTime: { type: String },
+        closingTime: { type: String },
       },
       default: {},
     },
