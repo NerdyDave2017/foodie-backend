@@ -219,7 +219,7 @@ class DineInController {
   };
 
   deleteDineIn = async (req, res, next) => {
-    const { userId, dineInId } = req.body;
+    const { userId, dineInId } = req.params;
     try {
       // Check if the user exists
       const userExists = await this.userService.findUserById(userId);
