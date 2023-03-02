@@ -77,11 +77,13 @@ class UserController {
       return res
         .status(200)
         .json({ status: "success", message: "New driver created", data });
-    } catch (err) {}
+    } catch (err) {
+      next(err);
+    }
   };
 
   updateData = async (req, res, next) => {
-    const { id } = req.body;
+    const { id } = req.params;
     try {
       const restaurant = await this.driverService.findDriverById(id);
 
@@ -114,11 +116,11 @@ class UserController {
         data,
       });
     } catch (error) {
-      return res.status(400).json({ error });
+      next(error);
     }
   };
 
-  fetchAllDrivers = async (req, res) => {
+  fetchAllDrivers = async (req, res, next) => {
     try {
       const drivers = await this.driverService.fetchAllRestaurants();
 
@@ -145,7 +147,33 @@ class UserController {
         .status(200)
         .json({ status: "success", message: "All Drivers", datas });
     } catch (error) {
-      return res.status(400).json({ error });
+      next(error);
+    }
+  };
+
+  deleteDriver = async (req, res, next) => {
+    try {
+      const { userId, driverId } = req.params;
+
+      const userExists = this.userService.findUserById(userId);
+
+      if (!userExists) {
+        throw next(new UserNotFound());
+      }
+
+      const driverExist = this.driverService.findDriverById(driverId);
+
+      if (!driverExist) {
+        throw next(new HttpException(404, "Driver not found"));
+      }
+
+      await this.driverService.deleteDriverById(driverId);
+
+      return res
+        .status(200)
+        .json({ status: "success", message: "Driver deleted" });
+    } catch (err) {
+      next(err);
     }
   };
 }

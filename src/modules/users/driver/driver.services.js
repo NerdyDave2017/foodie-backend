@@ -44,6 +44,14 @@ class DriverService {
       return drivers;
     } catch (error) {}
   };
+
+  deleteDriverById = async (id) => {
+    try {
+      const driver = await this.drivers.findByIdAndDelete(id);
+
+      return driver;
+    } catch (err) {}
+  };
 }
 
 module.exports = DriverService;
