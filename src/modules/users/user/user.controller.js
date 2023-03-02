@@ -115,14 +115,15 @@ class UserController {
   };
 
   updateData = async (req, res, next) => {
-    const { id, ...rest } = req.body;
+    const { id } = req.params;
+    const userData = req.body;
     try {
       const user = await this.userService.findUserById(id);
       if (!user) {
         throw next(new UserNotFound());
       }
 
-      const updatedUser = await this.userService.updateData(id, { ...rest });
+      const updatedUser = await this.userService.updateData(id, userData);
 
       const data = {
         id: user._id,
@@ -155,7 +156,8 @@ class UserController {
   };
 
   updatePassword = async (req, res, next) => {
-    const { email, id, password, newPassword } = req.body;
+    const { id } = req.params;
+    const { password, newPassword } = req.body;
     try {
       const user = await this.userService.findUserById(id);
       if (!user) {
@@ -305,20 +307,20 @@ class UserController {
   };
 
   deleteUser = async (req, res, next) => {
-    const { email, password } = req.body;
+    const { id } = req.params;
     try {
       const user = await this.userService.findUserById(id);
       if (!user) {
         throw next(new UserNotFound());
       }
 
-      const validPassword = await matchPassword(password, user.password);
+      // const validPassword = await matchPassword(password, user.password);
 
-      if (!validPassword) {
-        throw next(new InvalidCredentials());
-      }
+      // if (!validPassword) {
+      //   throw next(new InvalidCredentials());
+      // }
 
-      await this.userService.deleteUser(email);
+      await this.userService.deleteUser(id);
       return res
         .status(200)
         .json({ status: "success", message: "User deleted" });

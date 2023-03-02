@@ -5,8 +5,8 @@ const userController = new UserController();
 
 Router.post("/register", userController.register);
 Router.post("/login", userController.login);
-Router.patch("/update", userController.updateData);
-Router.patch("/updatePassword", userController.updatePassword);
+Router.patch("/update/:id", userController.updateData);
+Router.patch("/updatePassword/:id", userController.updatePassword);
 Router.patch("/bankDetails/:userId", userController.updateBankDetails);
 Router.get("/bankDetails/:userId", userController.getBankDetails);
 Router.get("/", userController.fetchAllUsers);

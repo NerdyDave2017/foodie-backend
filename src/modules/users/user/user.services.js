@@ -109,9 +109,9 @@ class UserService {
     } catch (error) {}
   };
 
-  deleteUser = async (email) => {
+  deleteUser = async (id) => {
     try {
-      const deleteUser = await this.users.deleteOne({ email: email });
+      const deleteUser = await this.users.findByIdAndDelete(id);
       return deleteUser;
     } catch (error) {}
   };
