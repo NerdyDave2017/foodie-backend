@@ -120,6 +120,43 @@ class UserController {
     }
   };
 
+  fetchDriverById = async (req, res, next) => {
+    try {
+      const { driverId } = req.params;
+
+      const driverExist = this.driverService.findDriverById(driverId);
+
+      if (!driverExist) {
+        throw next(new HttpException(404, "Driver not found"));
+      }
+
+      const driver = this.driverService.findDriverById(driverId);
+
+      const data = {
+        id: driver._id,
+        userId: driver.userId,
+        firstname: driver.firstname,
+        lastname: driver.lastname,
+        gender: driver.gender,
+        dob: driver.dob,
+        email: driver.email,
+        phone: driver.phone,
+        vehicleName: driver.vehicleName,
+        vehicleModel: driver.vehicleModel,
+        vehiclePlateNo: driver.vehiclePlateNo,
+        vehicleColor: driver.vehicleColor,
+        isActive: driver.isActive,
+        location: driver.location,
+      };
+
+      return res.status(200).json({
+        status: "success",
+        message: "Driver found",
+        data,
+      });
+    } catch (err) {}
+  };
+
   fetchAllDrivers = async (req, res, next) => {
     try {
       const drivers = await this.driverService.fetchAllRestaurants();
