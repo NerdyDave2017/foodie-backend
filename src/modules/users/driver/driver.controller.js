@@ -85,9 +85,9 @@ class UserController {
   updateData = async (req, res, next) => {
     const { id } = req.params;
     try {
-      const restaurant = await this.driverService.findDriverById(id);
+      const driver = await this.driverService.findDriverById(id);
 
-      if (!restaurant) {
+      if (!driver) {
         throw next(new HttpException(404, "Driver not found"));
       }
 
