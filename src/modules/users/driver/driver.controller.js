@@ -154,7 +154,9 @@ class UserController {
         message: "Driver found",
         data,
       });
-    } catch (err) {}
+    } catch (err) {
+      next(err);
+    }
   };
 
   fetchAllDrivers = async (req, res, next) => {
