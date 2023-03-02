@@ -53,12 +53,30 @@ class UserController {
       /* Updating the role of the user to driver. */
       await this.userService.updateRole(driverData.userId, "driver");
       /* Updating the user data with the driver id. */
-      const user = await this.userService.updateData({
+      await this.userService.updateData({
         driver: driver._id,
       });
+
+      const data = {
+        id: driver._id,
+        userId: driver.userId,
+        firstname: driver.firstname,
+        lastname: driver.lastname,
+        gender: driver.gender,
+        dob: driver.dob,
+        email: driver.email,
+        phone: driver.phone,
+        vehicleName: driver.vehicleName,
+        vehicleModel: driver.vehicleModel,
+        vehiclePlateNo: driver.vehiclePlateNo,
+        vehicleColor: driver.vehicleColor,
+        isActive: driver.isActive,
+        location: driver.location,
+      };
+
       return res
         .status(200)
-        .json({ status: "success", message: "New driver created", user });
+        .json({ status: "success", message: "New driver created", data });
     } catch (err) {}
   };
 
