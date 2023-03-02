@@ -52,7 +52,7 @@ class RestaurantController {
     }
   };
 
-  updateData = async (req, res, next) => {
+  updateREstaurant = async (req, res, next) => {
     const { id } = req.params;
     const restaurantData = req.body;
     try {
