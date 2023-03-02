@@ -26,9 +26,15 @@ class RestaurantService {
 
   findOneAndUpdate = async (id, restaurantData) => {
     try {
-      const restaurant = await this.restaurants.findByIdAndUpdate(id, {
-        restaurantData,
-      });
+      const restaurant = await this.restaurants.findByIdAndUpdate(
+        id,
+        {
+          ...restaurantData,
+        },
+        {
+          new: true,
+        }
+      );
       return restaurant;
     } catch (error) {}
   };

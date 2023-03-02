@@ -20,11 +20,14 @@ class UserService {
   findUserById = async (id) => {
     try {
       const user = await this.users.findById(id);
+
       // .populate("Restaurants")
       // .populate("Drivers");
 
       return user;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   findUserByEmail = async (email) => {

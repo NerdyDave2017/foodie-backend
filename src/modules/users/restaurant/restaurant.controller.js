@@ -67,16 +67,16 @@ class RestaurantController {
 
       const data = {
         id: updatedRestaurant._id,
-        updatedRestaurantName: updatedRestaurant.restaurantName,
-        updatedRestaurantPhone: updatedRestaurant.restaurantPhone,
+        restaurantName: updatedRestaurant.restaurantName,
+        restaurantPhone: updatedRestaurant.restaurantPhone,
         description: updatedRestaurant.description,
         userId: updatedRestaurant.userId,
-        updatedRestaurantImage: updatedRestaurant.restaurantImage,
+        restaurantImage: updatedRestaurant.restaurantImage,
         categories: updatedRestaurant.categories,
         services: updatedRestaurant.services,
         openingHours: updatedRestaurant.openingHours,
         items: updatedRestaurant.items,
-        updatedRestaurantAddress: updatedRestaurant.restaurantAddress,
+        restaurantAddress: updatedRestaurant.restaurantAddress,
         deliverySetting: updatedRestaurant.deliverySetting,
         delivery: updatedRestaurant.delivery,
       };
