@@ -46,6 +46,22 @@ class UserController {
   //   }
   // };
 
+  createDriver = async (req, res, next) => {
+    try {
+      const { owner } = req.body;
+      const driver = await this.driverService.createDriver({ owner });
+      /* Updating the role of the user to driver. */
+      await this.userService.updateRole(owner, "driver");
+      /* Updating the user data with the driver id. */
+      const user = await this.userService.updateData({
+        driver: driver._id,
+      });
+      return res
+        .status(200)
+        .json({ status: "success", message: "New driver created", user });
+    } catch (err) {}
+  };
+
   updateData = async (req, res, next) => {
     const { id } = req.body;
     try {
