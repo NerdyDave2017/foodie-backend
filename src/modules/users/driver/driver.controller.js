@@ -120,8 +120,30 @@ class UserController {
 
   fetchAllDrivers = async (req, res) => {
     try {
-      const { restaurants } = await this.driverService.fetchAllRestaurants();
-      return res.status(200).json({ restaurants });
+      const drivers = await this.driverService.fetchAllRestaurants();
+
+      const datas = drivers.map((driver) => {
+        return {
+          id: driver._id,
+          userId: driver.userId,
+          firstname: driver.firstname,
+          lastname: driver.lastname,
+          gender: driver.gender,
+          dob: driver.dob,
+          email: driver.email,
+          phone: driver.phone,
+          vehicleName: driver.vehicleName,
+          vehicleModel: driver.vehicleModel,
+          vehiclePlateNo: driver.vehiclePlateNo,
+          vehicleColor: driver.vehicleColor,
+          isActive: driver.isActive,
+          location: driver.location,
+        };
+      });
+
+      return res
+        .status(200)
+        .json({ status: "success", message: "All Drivers", datas });
     } catch (error) {
       return res.status(400).json({ error });
     }
