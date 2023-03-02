@@ -38,7 +38,7 @@ class SpecialDiscountService {
     try {
       const updatedDiscount = await this.specialDiscount.findByIdAndUpdate(
         id,
-        discount,
+        { ...discount },
         { new: true }
       );
       return updatedDiscount;
