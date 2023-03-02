@@ -48,10 +48,10 @@ class UserController {
 
   createDriver = async (req, res, next) => {
     try {
-      const { owner } = req.body;
-      const driver = await this.driverService.createDriver({ owner });
+      const driverData = req.body;
+      const driver = await this.driverService.createDriver(driverData);
       /* Updating the role of the user to driver. */
-      await this.userService.updateRole(owner, "driver");
+      await this.userService.updateRole(driverData.userId, "driver");
       /* Updating the user data with the driver id. */
       const user = await this.userService.updateData({
         driver: driver._id,
