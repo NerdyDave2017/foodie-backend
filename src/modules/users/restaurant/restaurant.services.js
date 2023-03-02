@@ -55,6 +55,13 @@ class RestaurantService {
       return restaurants;
     } catch (error) {}
   };
+
+  deleteRestaurant = async (id) => {
+    try {
+      const restaurant = await this.restaurants.findByIdAndDelete(id);
+      return restaurant;
+    } catch (error) {}
+  };
 }
 
 module.exports = RestaurantService;

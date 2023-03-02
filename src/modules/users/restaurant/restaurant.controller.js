@@ -51,7 +51,7 @@ class RestaurantController {
     }
   };
 
-  updateREstaurant = async (req, res, next) => {
+  updateRestaurant = async (req, res, next) => {
     const { id } = req.params;
     const restaurantData = req.body;
     try {
@@ -176,6 +176,26 @@ class RestaurantController {
         status: "success",
         message: "All restaurants",
         restaurants,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  deleteRestaurant = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const restaurant = await this.restaurantService.findRestaurantById(id);
+
+      if (!restaurant) {
+        throw next(new HttpException(404, "Restaurant not found"));
+      }
+
+      await this.restaurantService.deleteRestaurant(id);
+
+      return res.status(200).json({
+        status: "success",
+        message: "Restaurant deleted",
       });
     } catch (error) {
       next(error);
