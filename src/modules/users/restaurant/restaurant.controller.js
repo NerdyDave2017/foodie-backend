@@ -11,17 +11,16 @@ class RestaurantController {
   }
 
   create = async (req, res, next) => {
-    const { userEmail, ...rest } = req.body;
+    const { userId } = req.body;
     try {
-      const user = await this.userService.findUserByEmail(userEmail);
+      const user = await this.userService.findUserById(userId);
       if (!user) {
         throw next(new UserNotFound());
       }
 
-      const restaurant = await this.restaurantService.createRestaurant({
-        user: user._id,
-        ...rest,
-      });
+      const restaurant = await this.restaurantService.createRestaurant(
+        req.body
+      );
 
       // update user role & add restaurant id to user
       await this.userService.updateRestaurants(user._id, restaurant._id);
@@ -31,7 +30,7 @@ class RestaurantController {
         id: restaurant._id,
         restaurantName: restaurant.restaurantName,
         restaurantPhone: restaurant.restaurantPhone,
-        Decription: restaurant.Decription,
+        decription: restaurant.description,
         userId: restaurant.userId,
         restaurantImage: restaurant.restaurantImage,
         categories: restaurant.categories,
