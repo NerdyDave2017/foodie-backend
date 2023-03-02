@@ -12,6 +12,7 @@ Router.get(
 Router.patch("/activate/:offerId", offerCouponController.activateOffer);
 Router.patch("/deactivate/:offerId", offerCouponController.deactivateOffer);
 Router.delete("/delete/:offerId", offerCouponController.deleteOffer);
+Router.patch("/update/:offerId", offerCouponController.updateOffer);
 Router.get("/:offerId", offerCouponController.getOfferById);
 
 module.exports = Router;

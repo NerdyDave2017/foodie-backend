@@ -7,7 +7,7 @@ Router.post("/create", restaurantController.create);
 Router.patch("/update/:id", restaurantController.updateRestaurant);
 Router.get("/", restaurantController.getAllRestaurants);
 Router.get("/user/:userId", restaurantController.getUserRestaurants);
-Router.delete("/:id", restaurantController.deleteRestaurant);
+Router.delete("delete/:id", restaurantController.deleteRestaurant);
 Router.get("/:id", restaurantController.getRestaurantById);
 
 module.exports = Router;

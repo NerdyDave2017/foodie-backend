@@ -38,7 +38,7 @@ class SpecialOfferService {
     try {
       const updatedOffer = await this.specialOffer.findByIdAndUpdate(
         id,
-        offer,
+        { ...offer },
         { new: true }
       );
       return updatedOffer;

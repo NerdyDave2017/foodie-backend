@@ -210,6 +210,48 @@ class SpecialOfferController {
     }
   };
 
+  updateOffer = async (req, res, next) => {
+    try {
+      const { offerId } = req.params;
+      const offer = req.body;
+
+      const offerExist = await this.specialOfferService.getOfferById(offerId);
+
+      if (!offerExist) {
+        throw next(new HttpException(404, "Offer not found"));
+      }
+
+      const updatedOffer = await this.specialOfferService.updateOfferById(
+        offerId,
+        offer
+      );
+
+      const data = {
+        id: updatedOffer._id,
+        code: updatedOffer.code,
+        restaurantId: updatedOffer.restaurantId,
+        name: updatedOffer.name,
+        imageUrl: updatedOffer.imageUrl,
+        couponType: updatedOffer.couponType,
+        active: updatedOffer.active,
+        couponValue: updatedOffer.couponValue,
+        startDate: updatedOffer.startDate,
+        endDate: updatedOffer.endDate,
+        expired: updatedOffer.expired,
+        usabilityLimit: updatedOffer.usabilityLimit,
+        usageCount: updatedOffer.usageCount,
+      };
+
+      return res.status(200).json({
+        status: "success",
+        message: "Offer updated",
+        data,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   deleteOffer = async (req, res, next) => {
     try {
       const { offerId } = req.params;
