@@ -19,7 +19,7 @@ class UserService {
 
   findUserById = async (id) => {
     try {
-      const user = await this.users.findById(id, { password: 0 });
+      const user = await this.users.findById(id);
       // .populate("Restaurants")
       // .populate("Drivers");
 

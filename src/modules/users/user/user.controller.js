@@ -163,9 +163,11 @@ class UserController {
     const { password, newPassword } = req.body;
     try {
       const user = await this.userService.findUserById(id);
+
       if (!user) {
         throw next(new UserNotFound());
       }
+
       const validPassword = await matchPassword(password, user.password);
 
       if (!validPassword) {
