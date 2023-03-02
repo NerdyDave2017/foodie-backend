@@ -3,7 +3,7 @@ const RestaurantSchema = new mongoose.Schema(
   {
     restaurantName: { type: String, required: true, default: "" },
     restaurantPhone: { type: String, required: true, default: "" },
-    Decription: { type: String, default: "" },
+    description: { type: String, default: "" },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" }, // references the _id field in the user collection
     restaurantImage: { type: String, default: "" },
     categories: {
