@@ -90,10 +90,28 @@ class UserController {
       }
 
       const updatedDriver = await this.driverService.findOneAndUpdate(req.body);
+
+      const data = {
+        id: updatedDriver._id,
+        userId: updatedDriver.userId,
+        firstname: updatedDriver.firstname,
+        lastname: updatedDriver.lastname,
+        gender: updatedDriver.gender,
+        dob: updatedDriver.dob,
+        email: updatedDriver.email,
+        phone: updatedDriver.phone,
+        vehicleName: updatedDriver.vehicleName,
+        vehicleModel: updatedDriver.vehicleModel,
+        vehiclePlateNo: updatedDriver.vehiclePlateNo,
+        vehicleColor: updatedDriver.vehicleColor,
+        isActive: updatedDriver.isActive,
+        location: updatedDriver.location,
+      };
+
       return res.status(200).json({
         status: "success",
         message: "Driver updated",
-        updatedDriver,
+        data,
       });
     } catch (error) {
       return res.status(400).json({ error });
