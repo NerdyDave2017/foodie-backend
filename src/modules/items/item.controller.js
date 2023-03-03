@@ -12,6 +12,7 @@ class ItemController {
 
   createItem = async (req, res, next) => {
     const { restaurantId } = req.body;
+
     try {
       // Check if the restaurant exists
       const restaurantExists = await this.restaurantService.findRestaurantById(
@@ -23,6 +24,7 @@ class ItemController {
       }
 
       const item = await this.itemService.createItem(req.body);
+      console.log(item);
 
       //Add itemId to restaurant model
       await this.restaurantService.updateItem(item._id, restaurantId);

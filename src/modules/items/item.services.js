@@ -11,7 +11,9 @@ class ItemService {
       const newItem = await this.items.create(item);
 
       return newItem;
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   getAllItems = async () => {
