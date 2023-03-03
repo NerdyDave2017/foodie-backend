@@ -501,7 +501,7 @@ class OrderController {
     try {
       const { orderId, userId } = req.params;
 
-      const userExist = await this.userService.getUserById(userId);
+      const userExist = await this.userService.findUserById(userId);
 
       if (!userExist) {
         throw next(new HttpException(404, "User does not exist"));
@@ -511,6 +511,10 @@ class OrderController {
 
       if (!orderExist) {
         throw next(new HttpException(404, "Order does not exist"));
+      }
+
+      if (String(orderExist.userId) !== userId) {
+        throw next(new HttpException(401, "Unauthorized"));
       }
 
       await this.orderService.deleteOrderById(orderId);

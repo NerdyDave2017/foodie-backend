@@ -23,7 +23,6 @@ class OrderService {
   };
 
   getOrderById = async (id) => {
-    console.log(id);
     try {
       const order = await this.orders.findById(id);
       return order;
