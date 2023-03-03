@@ -127,15 +127,15 @@ class OrderController {
 
   getOrderById = async (req, res, next) => {
     try {
-      const id = req.params.id;
+      const { orderId } = req.params;
 
-      const orderExist = await this.orderService.getOrderById(id);
+      const orderExist = await this.orderService.getOrderById(orderId);
 
       if (!orderExist) {
         throw next(new HttpException(404, "Order does not exist"));
       }
 
-      const order = await this.orderService.getOrderById(id);
+      const order = await this.orderService.getOrderById(orderId);
 
       const data = {
         id: order._id,
@@ -192,7 +192,7 @@ class OrderController {
         throw next(new HttpException(404, "Order does not exist"));
       }
 
-      if (orderExist.userId !== userId) {
+      if (String(orderExist.userId) !== userId) {
         throw next(new HttpException(401, "Unauthorized"));
       }
 
@@ -394,7 +394,7 @@ class OrderController {
         throw next(new HttpException(404, "Order does not exist"));
       }
 
-      if (orderExist.restaurantId !== restaurantId) {
+      if (String(orderExist.restaurantId) !== restaurantId) {
         throw next(new HttpException(401, "Unauthorized"));
       }
 
@@ -454,7 +454,7 @@ class OrderController {
         throw next(new HttpException(404, "Order does not exist"));
       }
 
-      if (orderExist.restaurantId !== restaurantId) {
+      if (String(orderExist.restaurantId) !== restaurantId) {
         throw next(new HttpException(401, "Unauthorized"));
       }
 

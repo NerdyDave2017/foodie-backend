@@ -234,7 +234,7 @@ class DineInController {
         throw next(new HttpException(404, "DineIn not found"));
       }
 
-      if (dineInExist.userId !== userId) {
+      if (String(dineInExist.userId) !== userId) {
         throw next(new HttpException(401, "Unauthorized"));
       }
 

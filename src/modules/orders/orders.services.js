@@ -23,10 +23,13 @@ class OrderService {
   };
 
   getOrderById = async (id) => {
+    console.log(id);
     try {
       const order = await this.orders.findById(id);
       return order;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   updateOrderById = async (id, order) => {
