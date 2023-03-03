@@ -5,6 +5,7 @@ const InvalidCredentials = require("../../../exceptions/InvalidCredentials");
 const HttpException = require("../../../exceptions/HttpExceptions");
 const matchPassword = require("../../../utils/matchPassword");
 const generateToken = require("../../../utils/generateToken");
+const encryptPassword = require("../../../utils/encryptPassword");
 
 class UserController {
   constructor() {
@@ -72,7 +73,7 @@ class UserController {
       if (!user) {
         throw next(new UserNotFound());
       }
-
+      console.log(user.password, password);
       const validPassword = await matchPassword(password, user.password);
 
       // (validPassword);
@@ -161,6 +162,7 @@ class UserController {
   updatePassword = async (req, res, next) => {
     const { id } = req.params;
     const { password, newPassword } = req.body;
+    console.log(password, newPassword);
     try {
       const user = await this.userService.findUserById(id);
 
@@ -168,13 +170,18 @@ class UserController {
         throw next(new UserNotFound());
       }
 
+      console.log(user.password, password);
+
       const validPassword = await matchPassword(password, user.password);
 
       if (!validPassword) {
         throw next(new InvalidCredentials());
       }
+
+      const hashedPassword = await encryptPassword(newPassword);
+
       const updatedUser = await this.userService.updateData(id, {
-        password: newPassword,
+        password: hashedPassword,
       });
 
       const data = {
