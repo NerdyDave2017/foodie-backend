@@ -61,7 +61,7 @@ class UserController {
       /* Updating the role of the user to driver. */
       await this.userService.updateRole(driverData.userId, "driver");
       /* Updating the user data with the driver id. */
-      await this.userService.updateData({
+      await this.userService.updateData(driverData.userId, {
         driver: String(driver._id),
       });
 
@@ -100,7 +100,10 @@ class UserController {
         throw next(new HttpException(404, "Driver not found"));
       }
 
-      const updatedDriver = await this.driverService.findOneAndUpdate(req.body);
+      const updatedDriver = await this.driverService.findDriverAndUpdate(
+        id,
+        req.body
+      );
 
       const data = {
         id: updatedDriver._id,
@@ -134,13 +137,11 @@ class UserController {
     try {
       const { driverId } = req.params;
 
-      const driverExist = this.driverService.findDriverById(driverId);
+      const driver = await this.driverService.findDriverById(driverId);
 
-      if (!driverExist) {
+      if (!driver) {
         throw next(new HttpException(404, "Driver not found"));
       }
-
-      const driver = this.driverService.findDriverById(driverId);
 
       const data = {
         id: driver._id,
@@ -159,6 +160,8 @@ class UserController {
         isActive: driver.isActive,
         location: driver.location,
       };
+
+      console.log(data);
 
       return res.status(200).json({
         status: "success",

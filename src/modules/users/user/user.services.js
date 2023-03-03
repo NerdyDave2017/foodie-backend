@@ -41,7 +41,6 @@ class UserService {
   };
 
   updateData = async (id, userData) => {
-    console.log(userData, "userData");
     try {
       const updatedUser = await this.users.findByIdAndUpdate(
         id,
@@ -53,7 +52,6 @@ class UserService {
         }
       );
 
-      console.log(updatedUser, "updatedUser");
       // .populate("Restaurants")
       // .populate("Drivers");
       return updatedUser;

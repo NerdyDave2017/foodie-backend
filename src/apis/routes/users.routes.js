@@ -11,5 +11,6 @@ Router.patch("/bankDetails/:userId", userController.updateBankDetails);
 Router.get("/bankDetails/:userId", userController.getBankDetails);
 Router.get("/", userController.fetchAllUsers);
 Router.delete("/delete/:id", userController.deleteUser);
+Router.get("/:id", userController.fetchUserById);
 
 module.exports = Router;

@@ -19,7 +19,9 @@ class DriverService {
     try {
       const driver = await this.drivers.findById(id);
       return driver;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   findDriverByUser = async (userId) => {
@@ -29,11 +31,17 @@ class DriverService {
     } catch (error) {}
   };
 
-  findOneAndUpdate = async (id, driverData) => {
+  findDriverAndUpdate = async (id, driverData) => {
     try {
-      const driver = await this.drivers.findByIdAndUpdate(id, {
-        driverData,
-      });
+      const driver = await this.drivers.findByIdAndUpdate(
+        id,
+        {
+          ...driverData,
+        },
+        {
+          new: true,
+        }
+      );
       return driver;
     } catch (error) {}
   };
