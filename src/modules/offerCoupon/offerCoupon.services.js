@@ -10,7 +10,9 @@ class SpecialOfferService {
     try {
       const newOffer = await this.specialOffer.create(offer);
       return newOffer;
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   getAllOffers = async () => {

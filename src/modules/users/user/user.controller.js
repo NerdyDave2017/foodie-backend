@@ -235,6 +235,45 @@ class UserController {
     }
   };
 
+  fetchUserById = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const user = await this.userService.findUserById(id);
+      if (!user) {
+        throw next(new UserNotFound());
+      }
+
+      const data = {
+        id: user._id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        profileImageURL: user.profileImageURL,
+        role: user.role,
+        settings: user.settings,
+        shippingAddress: user.shippingAddress,
+        walletAmount: user.walletAmount,
+        bankDetails: user.bankDetails,
+        fcmToken: user.fcmToken,
+        active: user.active,
+        appIdentifier: user.appIdentifier,
+        stripeCustomer: user.stripeCustomer,
+        lastOnlineTimestamp: user.lastOnlineTimestamp,
+        favourites: user.favourites,
+        restaurants: user.restaurants,
+        driver: user.driver,
+      };
+
+      return res
+
+        .status(200)
+        .json({ status: "success", message: "User fetched", data });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   fetchAllUsers = async (req, res, next) => {
     try {
       const users = await this.userService.fetchAllUser();

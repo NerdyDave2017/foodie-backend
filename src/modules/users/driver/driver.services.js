@@ -8,11 +8,11 @@ class DriverService {
 
   createDriver = async (driverData) => {
     try {
-      const newDriver = new this.drivers.create({
-        ...driverData,
-      });
+      const newDriver = await this.drivers.create(driverData);
       return newDriver;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   findDriverById = async (id) => {

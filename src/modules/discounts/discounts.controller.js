@@ -25,8 +25,6 @@ class SpecialDiscountController {
         ...discount,
       });
 
-      console.log(newDiscount);
-
       const data = {
         id: newDiscount._id,
         name: newDiscount.name,

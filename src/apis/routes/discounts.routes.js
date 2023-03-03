@@ -13,6 +13,6 @@ Router.patch("/update/:discountId", discountController.updateDiscount);
 Router.patch("/activate/:discountId", discountController.activateDiscount);
 Router.patch("/deactivate/:discountId", discountController.deactivateDiscount);
 Router.delete("/delete/:discountId", discountController.deleteDiscount);
-Router.get("/:discountd", discountController.getDiscountById);
+Router.get("/:discountId", discountController.getDiscountById);
 
 module.exports = Router;

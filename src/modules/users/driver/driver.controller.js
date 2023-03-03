@@ -48,13 +48,21 @@ class UserController {
 
   createDriver = async (req, res, next) => {
     try {
+      const { userId } = req.body;
       const driverData = req.body;
+
+      const user = await this.userService.findUserById(userId);
+
+      if (!user) {
+        throw next(new HttpException(404, "User not found"));
+      }
+
       const driver = await this.driverService.createDriver(driverData);
       /* Updating the role of the user to driver. */
       await this.userService.updateRole(driverData.userId, "driver");
       /* Updating the user data with the driver id. */
       await this.userService.updateData({
-        driver: driver._id,
+        driver: String(driver._id),
       });
 
       const data = {
@@ -69,6 +77,7 @@ class UserController {
         vehicleName: driver.vehicleName,
         vehicleModel: driver.vehicleModel,
         vehiclePlateNo: driver.vehiclePlateNo,
+        vehicleImage: driver.vehicleImage,
         vehicleColor: driver.vehicleColor,
         isActive: driver.isActive,
         location: driver.location,
@@ -105,6 +114,7 @@ class UserController {
         vehicleName: updatedDriver.vehicleName,
         vehicleModel: updatedDriver.vehicleModel,
         vehiclePlateNo: updatedDriver.vehiclePlateNo,
+        vehicleImage: updatedDriver.vehicleImage,
         vehicleColor: updatedDriver.vehicleColor,
         isActive: updatedDriver.isActive,
         location: updatedDriver.location,
@@ -144,6 +154,7 @@ class UserController {
         vehicleName: driver.vehicleName,
         vehicleModel: driver.vehicleModel,
         vehiclePlateNo: driver.vehiclePlateNo,
+        vehicleImage: driver.vehicleImage,
         vehicleColor: driver.vehicleColor,
         isActive: driver.isActive,
         location: driver.location,
@@ -161,7 +172,7 @@ class UserController {
 
   fetchAllDrivers = async (req, res, next) => {
     try {
-      const drivers = await this.driverService.fetchAllRestaurants();
+      const drivers = await this.driverService.fetchAllDrivers();
 
       const datas = drivers.map((driver) => {
         return {
@@ -176,6 +187,7 @@ class UserController {
           vehicleName: driver.vehicleName,
           vehicleModel: driver.vehicleModel,
           vehiclePlateNo: driver.vehiclePlateNo,
+          vehicleImage: driver.vehicleImage,
           vehicleColor: driver.vehicleColor,
           isActive: driver.isActive,
           location: driver.location,
