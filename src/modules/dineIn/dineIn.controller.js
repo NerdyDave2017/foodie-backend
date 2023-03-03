@@ -34,7 +34,7 @@ class DineInController {
 
       const dineIn = await this.dineInService.createDineIn(req.body);
 
-      data = {
+      const data = {
         id: dineIn._id,
         restaurantCost: dineIn.restaurantCost,
         isDineActive: dineIn.isDineActive,
@@ -159,7 +159,7 @@ class DineInController {
 
       const dineIn = await this.dineInService.getDineInById(id);
 
-      data = {
+      const data = {
         id: dineIn._id,
         restaurantCost: dineIn.restaurantCost,
         isDineActive: dineIn.isDineActive,
@@ -199,7 +199,7 @@ class DineInController {
 
       const dineIn = await this.dineInService.updateDineIn(dineInId, req.body);
 
-      data = {
+      const data = {
         id: dineIn._id,
         restaurantCost: dineIn.restaurantCost,
         isDineActive: dineIn.isDineActive,

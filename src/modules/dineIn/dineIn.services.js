@@ -8,10 +8,12 @@ class DineInService {
 
   createDineIn = async (dineIn) => {
     try {
-      const newDineIn = await this.dineIn.create(item);
+      const newDineIn = await this.dineIn.create(dineIn);
 
       return newDineIn;
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   getAllDineIn = async () => {

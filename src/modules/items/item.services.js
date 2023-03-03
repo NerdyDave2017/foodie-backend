@@ -34,7 +34,9 @@ class ItemService {
     try {
       const item = await this.items.findById(id);
       return item;
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   updateItem = async (id, data) => {
@@ -47,7 +49,9 @@ class ItemService {
         }
       );
       return item;
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   deleteItem = async (id) => {

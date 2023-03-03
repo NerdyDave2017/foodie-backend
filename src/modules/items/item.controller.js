@@ -1,6 +1,7 @@
 const ItemService = require("./item.services");
 const RestaurantService = require("../users/restaurant/restaurant.services");
 const HttpException = require("../../exceptions/HttpExceptions");
+const mongoose = require("mongoose");
 
 class ItemController {
   itemService;
@@ -216,7 +217,7 @@ class ItemController {
         throw next(new HttpException(404, "Item not found"));
       }
 
-      if (itemExist.restaurantId !== restaurantId) {
+      if (String(itemExist.restaurantId) !== restaurantId) {
         throw next(new HttpException(403, "Forbidden"));
       }
 
@@ -274,14 +275,14 @@ class ItemController {
         throw next(new HttpException(404, "Item not found"));
       }
 
-      if (itemExist.restaurantId !== restaurantId) {
+      if (String(itemExist.restaurantId) !== restaurantId) {
         throw next(new HttpException(403, "Restaurant Unauthorized"));
       }
 
       await this.itemService.deleteItem(itemId);
       return res
         .status(200)
-        .json({ status: "success", message: "Item deleted", item });
+        .json({ status: "success", message: "Item deleted" });
     } catch (err) {
       next(err);
     }
