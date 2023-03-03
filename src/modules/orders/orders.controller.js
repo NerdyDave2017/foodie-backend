@@ -378,9 +378,11 @@ class OrderController {
   restaurantAcceptOrder = async (req, res, next) => {
     try {
       const { orderId } = req.params;
-      const { restaurantId } = req.params.restaurantId;
+      const { restaurantId } = req.params;
 
-      const restaurantExist = await this.restaurantService.getRestaurantById(
+      console.log(orderId, restaurantId);
+
+      const restaurantExist = await this.restaurantService.findRestaurantById(
         restaurantId
       );
 
@@ -438,9 +440,9 @@ class OrderController {
   restaurantRejectOrder = async (req, res, next) => {
     try {
       const { orderId } = req.params;
-      const { restaurantId } = req.params.restaurantId;
+      const { restaurantId } = req.params;
 
-      const restaurantExist = await this.restaurantService.getRestaurantById(
+      const restaurantExist = await this.restaurantService.findRestaurantById(
         restaurantId
       );
 
