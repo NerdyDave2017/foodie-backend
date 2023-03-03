@@ -37,11 +37,10 @@ const RestaurantSchema = new mongoose.Schema(
         openingTime: { type: String },
         closingTime: { type: String },
       },
-      weekeends: {
+      weekends: {
         openingTime: { type: String },
         closingTime: { type: String },
       },
-      default: {},
     },
     items: [
       {
