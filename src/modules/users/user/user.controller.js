@@ -325,7 +325,9 @@ class UserController {
       if (!user) {
         throw next(new UserNotFound());
       }
-      const updatedUser = await this.userService.updateData(userId, bankData);
+      const updatedUser = await this.userService.updateData(userId, {
+        bankDetails: bankData,
+      });
 
       const bankDetails = updatedUser.bankDetails;
 
