@@ -8,6 +8,6 @@ Router.post("/create", itemController.createItem);
 Router.delete("/delete/:itemId/:restaurantId", itemController.deleteItem);
 Router.patch("/update/:itemId/:restaurantId", itemController.updateItem);
 Router.get("/restaurant/:restaurantId", itemController.getRestaurantItems);
-Router.get("/:id", itemController.getItemById);
+Router.get("/:itemId", itemController.getItemById);
 
 module.exports = Router;
