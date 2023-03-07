@@ -50,7 +50,7 @@ class RestaurantService {
 
   findUserRestaurants = async (userId) => {
     try {
-      const restaurants = await this.restaurants.find({ user: userId });
+      const restaurants = await this.restaurants.find({ userId: userId });
       return restaurants;
     } catch (error) {}
   };
