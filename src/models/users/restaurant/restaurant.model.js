@@ -25,7 +25,7 @@ const RestaurantSchema = new mongoose.Schema(
           "Japanese",
           "New Mexican",
           "Sandwiches",
-          "Mediterrenean",
+          "Mediterranean",
         ],
         message: "{VALUE} is not supported",
       },
